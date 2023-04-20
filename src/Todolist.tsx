@@ -1,8 +1,22 @@
-import React, {MouseEvent} from "react";
-import {TasksType} from "./App";
+import React, {useState} from "react";
+import {FilterType, TasksType} from "./App";
 
 export const Todolist: React.FC<TodolistProps> = (props) => {
     const {title, tasks, removeTask, ...restProps} = props
+
+    let [filter, setFilter] = useState<FilterType>('all')
+
+    const tasksFilter = (filter: FilterType) => {
+        setFilter(filter)
+    }
+
+    let filteredTasks = tasks
+    if(filter === 'active'){
+        filteredTasks =  tasks.filter(el => !el.isDone)
+    }
+    if(filter === 'complete'){
+        filteredTasks =  tasks.filter(el => el.isDone)
+    }
 
 
     return (
@@ -13,10 +27,9 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
                 <button>+</button>
             </div>
             <ul>
-                {tasks.map(el => {
+                {filteredTasks.map(el => {
                     const onClickRemove = () => {
                         removeTask(el.id)
-                        console.log(el.id)
                     }
                     return (
                         <li key = {el.id}><input type = "checkbox" checked = {el.isDone} />
@@ -27,9 +40,18 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
                 })}
             </ul>
             <div>
-                <button>All</button>
-                <button>Active</button>
-                <button>Completed</button>
+                <button onClick = {() => {
+                    tasksFilter('all')
+                }}>All
+                </button>
+                <button onClick = {() => {
+                    tasksFilter('active')
+                }}>Active
+                </button>
+                <button onClick = {() => {
+                    tasksFilter('complete')
+                }}>Completed
+                </button>
             </div>
         </div>
     )
@@ -38,5 +60,6 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
 type TodolistProps = {
     title: string
     tasks: Array<TasksType>
-    removeTask: (id: number) => void
+    removeTask: (id: string) => void
+
 }
