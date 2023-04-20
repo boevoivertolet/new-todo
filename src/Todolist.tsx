@@ -1,24 +1,28 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {FilterType, TasksType} from "./App";
+import {MyButton} from "./components/MyButton";
 
 export const Todolist: React.FC<TodolistProps> = (props) => {
-    const {title, tasks, removeTask, ...restProps} = props
+    const {title, tasks, removeTask, addTask, ...restProps} = props
 
     let [filter, setFilter] = useState<FilterType>('all')
     let [inputValue, setInputValue] = useState<string>('')
-    const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
-        setInputValue(e.currentTarget.value)
 
-    }
-    const addTask = () => {
-        restProps.addTask(inputValue)
+
+    const onChangeTextHandler = (e: ChangeEvent<HTMLInputElement>) => setInputValue(e.currentTarget.value)
+    const addTaskHandler = () => {
+        addTask(inputValue)
         setInputValue('')
     }
-    const enterPress = (e: KeyboardEvent<HTMLInputElement>) => {
+    const enterPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
-            restProps.addTask(inputValue)
+            addTask(inputValue)
             setInputValue('')
         }
+    }
+
+    const removeTaskHandler = (id: string) => {
+        removeTask(id)
     }
 
 
@@ -40,36 +44,31 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
         <div>
             <h3>{title}</h3>
             <div>
-                <input onKeyDown = {enterPress} onChange = {onChangeInput} value = {inputValue} />
-                <button onClick = {addTask}>+
-                </button>
+                <input onKeyDown = {enterPressHandler} onChange = {onChangeTextHandler} value = {inputValue} />
+                <MyButton callBack = {addTaskHandler}>+</MyButton>
             </div>
             <ul>
                 {filteredTasks.map(el => {
-                    const onClickRemove = () => {
-                        removeTask(el.id)
-                    }
                     return (
                         <li key = {el.id}><input type = "checkbox" checked = {el.isDone} />
                             <span>{el.title}</span>
-                            <button onClick = {onClickRemove}>-</button>
+                            <MyButton callBack = {() => removeTaskHandler(el.id)}>-</MyButton>
                         </li>
                     )
                 })}
             </ul>
             <div>
-                <button onClick = {() => {
+                <MyButton callBack = {() => {
                     tasksFilter('all')
-                }}>All
-                </button>
-                <button onClick = {() => {
+                }}>all</MyButton>
+                <MyButton callBack = {() => {
                     tasksFilter('active')
-                }}>Active
-                </button>
-                <button onClick = {() => {
+                }}>active
+                </MyButton>
+                <MyButton callBack = {() => {
                     tasksFilter('complete')
-                }}>Completed
-                </button>
+                }}>complete
+                </MyButton>
             </div>
         </div>
     )
