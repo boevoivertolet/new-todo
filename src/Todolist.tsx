@@ -1,18 +1,24 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {FilterType, TasksType} from "./App";
 
 export const Todolist: React.FC<TodolistProps> = (props) => {
     const {title, tasks, removeTask, ...restProps} = props
 
     let [filter, setFilter] = useState<FilterType>('all')
-    let [value, setValue] = useState<string>('')
+    let [inputValue, setInputValue] = useState<string>('')
     const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
-        setValue(e.currentTarget.value)
+        setInputValue(e.currentTarget.value)
 
     }
     const addTask = () => {
-        restProps.addTask(value)
-        setValue('')
+        restProps.addTask(inputValue)
+        setInputValue('')
+    }
+    const enterPress = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            restProps.addTask(inputValue)
+            setInputValue('')
+        }
     }
 
 
@@ -24,6 +30,7 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
     if (filter === 'active') {
         filteredTasks = tasks.filter(el => !el.isDone)
     }
+
     if (filter === 'complete') {
         filteredTasks = tasks.filter(el => el.isDone)
     }
@@ -33,7 +40,7 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
         <div>
             <h3>{title}</h3>
             <div>
-                <input onChange = {onChangeInput} value = {value} />
+                <input onKeyDown = {enterPress} onChange = {onChangeInput} value = {inputValue} />
                 <button onClick = {addTask}>+
                 </button>
             </div>
