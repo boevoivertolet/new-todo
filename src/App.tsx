@@ -13,6 +13,10 @@ function App() {
 
 
     const removeTask = (id: string) => setTasks(tasks.filter(el => el.id != id))
+    const addTask = (title: string) => {
+        setTasks([{id: v1(), title: title, isDone: false}, ...tasks])
+
+    }
 
 
     return (
@@ -21,6 +25,7 @@ function App() {
                 title = {'what to learn'}
                 tasks = {tasks}
                 removeTask = {removeTask}
+                addTask = {addTask}
             />
         </div>
     );
