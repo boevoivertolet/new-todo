@@ -3,7 +3,7 @@ import {FilterType, TasksType} from "./App";
 import {MyButton} from "./components/MyButton";
 
 export const Todolist: React.FC<TodolistProps> = (props) => {
-    const {title, tasks, removeTask, addTask, ...restProps} = props
+    const {title, tasks, removeTask, addTask, changeTaskStatus, ...restProps} = props
 
     let [filter, setFilter] = useState<FilterType>('all')
     let [inputValue, setInputValue] = useState<string>('')
@@ -49,8 +49,13 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
             </div>
             <ul>
                 {filteredTasks.map(el => {
+                    const onChangeCheckboxHandler = (e: ChangeEvent<HTMLInputElement>) => {
+                        changeTaskStatus(el.id, e.currentTarget.checked)
+                    }
+
                     return (
-                        <li key = {el.id}><input type = "checkbox" checked = {el.isDone} />
+                        <li key = {el.id}><input type = "checkbox" checked = {el.isDone}
+                                                 onChange = {onChangeCheckboxHandler} />
                             <span>{el.title}</span>
                             <MyButton callBack = {() => removeTaskHandler(el.id)}>-</MyButton>
                         </li>
@@ -79,5 +84,6 @@ type TodolistProps = {
     tasks: Array<TasksType>
     removeTask: (id: string) => void
     addTask: (title: string) => void
+    changeTaskStatus: (id: string, isDone: boolean) => void
 
 }

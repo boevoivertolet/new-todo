@@ -15,7 +15,10 @@ function App() {
     const removeTask = (id: string) => setTasks(tasks.filter(el => el.id != id))
     const addTask = (title: string) => {
         setTasks([{id: v1(), title: title, isDone: false}, ...tasks])
-
+    }
+    const changeTaskStatus = (id: string, isDone: boolean) => {
+        setTasks(tasks.map(el => el.id === id ? {...el, isDone: isDone} : el))
+        console.log(tasks[2].isDone +' ' + ' '+  tasks[2].title)
     }
 
 
@@ -26,6 +29,7 @@ function App() {
                 tasks = {tasks}
                 removeTask = {removeTask}
                 addTask = {addTask}
+                changeTaskStatus={changeTaskStatus}
             />
         </div>
     );
@@ -37,5 +41,8 @@ export type TasksType = {
     isDone: boolean
 }
 export type FilterType = 'all' | 'active' | 'complete'
+
+
+
 
 export default App;
