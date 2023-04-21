@@ -5,6 +5,7 @@ import {v1} from "uuid";
 
 function App() {
 
+
     const [tasks, setTasks] = useState<Array<TasksType>>([
         {id: v1(), title: 'HTML&CSS', isDone: true},
         {id: v1(), title: 'JS', isDone: true},
@@ -18,7 +19,6 @@ function App() {
     }
     const changeTaskStatus = (id: string, isDone: boolean) => {
         setTasks(tasks.map(el => el.id === id ? {...el, isDone: isDone} : el))
-        console.log(tasks[2].isDone +' ' + ' '+  tasks[2].title)
     }
 
 
@@ -29,19 +29,17 @@ function App() {
                 tasks = {tasks}
                 removeTask = {removeTask}
                 addTask = {addTask}
-                changeTaskStatus={changeTaskStatus}
+                changeTaskStatus = {changeTaskStatus}
             />
         </div>
     );
 }
-
+export type FilterType = 'all' | 'active' | 'complete'
 export type TasksType = {
     id: string
     title: string
     isDone: boolean
 }
-export type FilterType = 'all' | 'active' | 'complete'
-
 
 
 

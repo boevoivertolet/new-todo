@@ -1,17 +1,26 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {FilterType, TasksType} from "./App";
 import {MyButton} from "./components/MyButton";
+import s from './Todolist.module.css'
 
 export const Todolist: React.FC<TodolistProps> = (props) => {
     const {title, tasks, removeTask, addTask, changeTaskStatus, ...restProps} = props
 
     let [filter, setFilter] = useState<FilterType>('all')
     let [inputValue, setInputValue] = useState<string>('')
+    let [error, setError] = useState<boolean>(false)
 
 
-    const onChangeTextHandler = (e: ChangeEvent<HTMLInputElement>) => setInputValue(e.currentTarget.value)
+    const onChangeTextHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setInputValue(e.currentTarget.value)
+        setError(false)
+    }
     const addTaskHandler = () => {
-        addTask(inputValue)
+        if (inputValue === '') {
+            setError(true)
+            return
+        }
+        addTask(inputValue.trim())
         setInputValue('')
     }
     const enterPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -44,9 +53,14 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
         <div>
             <h3>{title}</h3>
             <div>
-                <input onKeyDown = {enterPressHandler} onChange = {onChangeTextHandler} value = {inputValue} />
+                <input
+                    className = {error ? s.error : ''}
+                    onKeyDown = {enterPressHandler}
+                    onChange = {onChangeTextHandler}
+                    value = {inputValue} />
                 <MyButton callBack = {addTaskHandler}>+</MyButton>
             </div>
+            {error && <span className = {s.error__message}>Field is required</span>}
             <ul>
                 {filteredTasks.map(el => {
                     const onChangeCheckboxHandler = (e: ChangeEvent<HTMLInputElement>) => {
