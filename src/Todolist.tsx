@@ -1,23 +1,23 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {FilterType, TasksType} from "./App";
-import {MyButton} from "./components/MyButton";
-import s from './Todolist.module.css'
+import {MyButton} from "./common/components/MyButton";
+import s from './Todolist.module.scss'
 
 export const Todolist: React.FC<TodolistProps> = (props) => {
     const {title, tasks, removeTask, addTask, changeTaskStatus, ...restProps} = props
 
     let [filter, setFilter] = useState<FilterType>('all')
     let [inputValue, setInputValue] = useState<string>('')
-    let [error, setError] = useState<boolean>(false)
+    let [error, setError] = useState<string | null>(null)
 
 
     const onChangeTextHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setInputValue(e.currentTarget.value)
-        setError(false)
+        setError(null)
     }
     const addTaskHandler = () => {
         if (inputValue === '') {
-            setError(true)
+            setError('Field is required')
             return
         }
         addTask(inputValue.trim())
@@ -50,17 +50,18 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
 
 
     return (
-        <div>
+        <div className={s.todolist}>
             <h3>{title}</h3>
             <div>
                 <input
+                    onBlur={()=>{setError(null)}}
                     className = {error ? s.error : ''}
                     onKeyDown = {enterPressHandler}
                     onChange = {onChangeTextHandler}
                     value = {inputValue} />
                 <MyButton callBack = {addTaskHandler}>+</MyButton>
             </div>
-            {error && <span className = {s.error__message}>Field is required</span>}
+            {error && <span className = {s.error__message}>{error}</span>}
             <ul>
                 {filteredTasks.map(el => {
                     const onChangeCheckboxHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -76,7 +77,7 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
                     )
                 })}
             </ul>
-            <div>
+            <div className={s.btn__block}>
                 <MyButton callBack = {() => {
                     tasksFilter('all')
                 }}>all</MyButton>

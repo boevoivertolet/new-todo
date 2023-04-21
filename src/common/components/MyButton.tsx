@@ -1,5 +1,5 @@
 import React from "react";
-
+import s from './MyButton.module.scss'
 
 export const MyButton: React.FC<MyButtonProps> = (props) => {
     const {callBack, title, disabled, children, ...restProps} = props
@@ -8,7 +8,7 @@ export const MyButton: React.FC<MyButtonProps> = (props) => {
         callBack()
     }
     return (
-        <button className = {'btn'} onClick = {onClickHandler} disabled = {disabled}>{children}</button>
+        <button className = {s.btn} onClick = {onClickHandler} disabled = {disabled}>{children}</button>
     );
 };
 

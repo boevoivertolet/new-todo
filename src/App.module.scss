@@ -1,0 +1,10 @@
+@import 'common/styles/sass/variables';
+
+.app {
+  padding: 30px;
+  display: flex;
+  background: #28fefc;
+  height: 100vh;
+  color: $textColor;
+  background: $backgroundColor;
+}

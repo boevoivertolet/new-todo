@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-import './App.css';
 import {Todolist} from "./Todolist";
 import {v1} from "uuid";
+import s from './App.module.scss'
 
 function App() {
 
@@ -23,7 +23,7 @@ function App() {
 
 
     return (
-        <div className = "App">
+        <div className = {s.app}>
             <Todolist
                 title = {'what to learn'}
                 tasks = {tasks}
