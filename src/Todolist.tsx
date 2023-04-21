@@ -78,14 +78,14 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
                 })}
             </ul>
             <div className={s.btn__block}>
-                <MyButton callBack = {() => {
+                <MyButton active={filter === 'all'} callBack = {() => {
                     tasksFilter('all')
                 }}>all</MyButton>
-                <MyButton callBack = {() => {
+                <MyButton  active={filter === 'active'}  callBack = {() => {
                     tasksFilter('active')
                 }}>active
                 </MyButton>
-                <MyButton callBack = {() => {
+                <MyButton  active={filter === 'complete'}  callBack = {() => {
                     tasksFilter('complete')
                 }}>complete
                 </MyButton>

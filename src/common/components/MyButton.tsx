@@ -2,13 +2,14 @@ import React from "react";
 import s from './MyButton.module.scss'
 
 export const MyButton: React.FC<MyButtonProps> = (props) => {
-    const {callBack, title, disabled, children, ...restProps} = props
+    const {callBack, title, disabled, children, active, ...restProps} = props
 
     const onClickHandler = () => {
         callBack()
     }
     return (
-        <button className = {s.btn} onClick = {onClickHandler} disabled = {disabled}>{children}</button>
+        <button className = {active ? `${s.btn + ' ' + s.btn__active}` : s.btn} onClick = {onClickHandler}
+                disabled = {disabled}>{children}</button>
     );
 };
 
@@ -18,4 +19,5 @@ type MyButtonProps = {
     disabled?: boolean
     children?: React.ReactNode
     title?: string
+    active?: boolean
 }

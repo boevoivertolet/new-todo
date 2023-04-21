@@ -2,9 +2,13 @@
 
 
 .btn {
-    box-sizing: border-box;
-    border: grey 1px solid;
-    border-radius: 6px;
-    background: #16BCD6;
-    color: $textColor;
+  box-sizing: border-box;
+  border: grey 1px solid;
+  border-radius: 6px;
+  background: #16BCD6;
+  color: $textColor;
+
+}
+.btn__active {
+  background: transparent;
 }
