@@ -24,13 +24,16 @@ function App() {
 
     return (
         <div className = {s.app}>
-            <Todolist
-                title = {'what to learn'}
-                tasks = {tasks}
-                removeTask = {removeTask}
-                addTask = {addTask}
-                changeTaskStatus = {changeTaskStatus}
-            />
+            <header> Header </header>
+            <div className={s.app__container}>
+                <Todolist
+                    title = {'what to learn'}
+                    tasks = {tasks}
+                    removeTask = {removeTask}
+                    addTask = {addTask}
+                    changeTaskStatus = {changeTaskStatus}
+                />
+            </div>
         </div>
     );
 }

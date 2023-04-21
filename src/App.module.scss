@@ -1,10 +1,16 @@
 @import 'common/styles/sass/variables';
 
 .app {
-  padding: 30px;
+  padding: 10px;
   display: flex;
-  background: #28fefc;
+  flex-direction: column;
   height: 100vh;
   color: $textColor;
-  background: $backgroundColor;
+  background: #FFFBE7;
+
+  .app__container {
+    width: 100%;
+    height: 100%;
+    background: #612124;
+  }
 }
