@@ -2,6 +2,8 @@ import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {FilterType, TasksType} from "./App";
 import {MyButton} from "./common/components/MyButton";
 import s from './Todolist.module.scss'
+import {MyCheckBox} from "./common/components/MyCheckBox";
+import {MyInput} from "./common/components/MyInput";
 
 export const Todolist: React.FC<TodolistProps> = (props) => {
     const {title, tasks, removeTask, addTask, changeTaskStatus, ...restProps} = props
@@ -11,8 +13,8 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
     let [error, setError] = useState<string | null>(null)
 
 
-    const onChangeTextHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setInputValue(e.currentTarget.value)
+    const onChangeTextHandler = (value: string) => {
+        setInputValue(value)
         setError(null)
     }
     const addTaskHandler = () => {
@@ -23,8 +25,8 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
         addTask(inputValue.trim())
         setInputValue('')
     }
-    const enterPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
+    const enterPressHandler = (key: string) => {
+        if (key === 'Enter') {
             addTask(inputValue)
             setInputValue('')
         }
@@ -49,43 +51,47 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
     }
 
 
+    const onChangeCheckboxHandler = (id: string, checked: boolean) => {
+        changeTaskStatus(id, checked)
+    }
+
+
     return (
-        <div className={s.todolist}>
+        <div className = {s.todolist}>
             <h3>{title}</h3>
             <div>
-                <input
-                    onBlur={()=>{setError(null)}}
-                    className = {error ? s.error : ''}
-                    onKeyDown = {enterPressHandler}
-                    onChange = {onChangeTextHandler}
+                <MyInput
+                    placeholder={'whats to do ?'}
+                    error={error}
+                    onEnterKey={enterPressHandler}
+                    callBack = {onChangeTextHandler}
                     value = {inputValue} />
+
                 <MyButton callBack = {addTaskHandler}>+</MyButton>
             </div>
             {error && <span className = {s.error__message}>{error}</span>}
             <ul>
                 {filteredTasks.map(el => {
-                    const onChangeCheckboxHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                        changeTaskStatus(el.id, e.currentTarget.checked)
-                    }
 
                     return (
-                        <li key = {el.id}><input type = "checkbox" checked = {el.isDone}
-                                                 onChange = {onChangeCheckboxHandler} />
+                        <li className = {el.isDone ? s.isDone : ''} key = {el.id}>
+                            <MyCheckBox checked = {el.isDone}
+                                        callBack = {(checked) => onChangeCheckboxHandler(el.id, checked)} />
                             <span>{el.title}</span>
                             <MyButton callBack = {() => removeTaskHandler(el.id)}>-</MyButton>
                         </li>
                     )
                 })}
             </ul>
-            <div className={s.btn__block}>
-                <MyButton active={filter === 'all'} callBack = {() => {
+            <div className = {s.btn__block}>
+                <MyButton active = {filter === 'all'} callBack = {() => {
                     tasksFilter('all')
                 }}>all</MyButton>
-                <MyButton  active={filter === 'active'}  callBack = {() => {
+                <MyButton active = {filter === 'active'} callBack = {() => {
                     tasksFilter('active')
                 }}>active
                 </MyButton>
-                <MyButton  active={filter === 'complete'}  callBack = {() => {
+                <MyButton active = {filter === 'complete'} callBack = {() => {
                     tasksFilter('complete')
                 }}>complete
                 </MyButton>
