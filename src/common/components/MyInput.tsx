@@ -2,7 +2,7 @@ import React, {ChangeEvent, KeyboardEvent} from 'react';
 import s from './MyInput.module.scss'
 
 export const MyInput: React.FC<MyInputProps> = (props) => {
-    const {callBack, value, onEnterKey,placeholder, error, ...restProps} = props
+    const {callBack, value, onEnterKey, placeholder, error, ...restProps} = props
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         callBack(e.currentTarget.value)
@@ -15,7 +15,7 @@ export const MyInput: React.FC<MyInputProps> = (props) => {
     return (
         <>
             <input className = {error ? s.error : s.input} type = {'text'} onChange = {onChangeHandler}
-                   onKeyDown = {onKeyDownHandler} value = {value} placeholder={placeholder} />
+                   onKeyDown = {onKeyDownHandler} value = {value} placeholder = {placeholder} />
 
         </>
 
@@ -23,7 +23,7 @@ export const MyInput: React.FC<MyInputProps> = (props) => {
 };
 
 type MyInputProps = {
-    error: string | null
+    error?: string | null
     callBack: (value: string) => void
     value: string
     onEnterKey: (key: string) => void

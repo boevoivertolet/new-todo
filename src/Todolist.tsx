@@ -1,4 +1,4 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import React, {useState} from "react";
 import {FilterType, TasksType} from "./App";
 import {MyButton} from "./common/components/MyButton";
 import s from './Todolist.module.scss'
@@ -6,9 +6,8 @@ import {MyCheckBox} from "./common/components/MyCheckBox";
 import {MyInput} from "./common/components/MyInput";
 
 export const Todolist: React.FC<TodolistProps> = (props) => {
-    const {title, tasks, removeTask, addTask, changeTaskStatus, ...restProps} = props
+    const {title, tasks, removeTask, addTask, changeTaskStatus,changeFilter, filter, todolistId, ...restProps} = props
 
-    let [filter, setFilter] = useState<FilterType>('all')
     let [inputValue, setInputValue] = useState<string>('')
     let [error, setError] = useState<string | null>(null)
 
@@ -37,9 +36,7 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
     }
 
 
-    const tasksFilter = (filter: FilterType) => {
-        setFilter(filter)
-    }
+
 
     let filteredTasks = tasks
     if (filter === 'active') {
@@ -61,38 +58,38 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
             <h3>{title}</h3>
             <div>
                 <MyInput
-                    placeholder={'whats to do ?'}
-                    error={error}
-                    onEnterKey={enterPressHandler}
+                    placeholder = {'whats to do ?                                                                                                           '}
+                    error = {error}
+                    onEnterKey = {enterPressHandler}
                     callBack = {onChangeTextHandler}
                     value = {inputValue} />
 
                 <MyButton callBack = {addTaskHandler}>+</MyButton>
             </div>
             {error && <span className = {s.error__message}>{error}</span>}
-            <ul>
+            <div className = {s.tasks__block}>
                 {filteredTasks.map(el => {
 
                     return (
-                        <li className = {el.isDone ? s.isDone : ''} key = {el.id}>
+                        <div className = {el.isDone ? s.isDone : ''} key = {el.id}>
                             <MyCheckBox checked = {el.isDone}
                                         callBack = {(checked) => onChangeCheckboxHandler(el.id, checked)} />
                             <span>{el.title}</span>
                             <MyButton callBack = {() => removeTaskHandler(el.id)}>-</MyButton>
-                        </li>
+                        </div>
                     )
                 })}
-            </ul>
+            </div>
             <div className = {s.btn__block}>
                 <MyButton active = {filter === 'all'} callBack = {() => {
-                    tasksFilter('all')
+                    changeFilter(todolistId, 'all')
                 }}>all</MyButton>
                 <MyButton active = {filter === 'active'} callBack = {() => {
-                    tasksFilter('active')
+                    changeFilter(todolistId, 'active')
                 }}>active
                 </MyButton>
                 <MyButton active = {filter === 'complete'} callBack = {() => {
-                    tasksFilter('complete')
+                    changeFilter(todolistId, 'complete')
                 }}>complete
                 </MyButton>
             </div>
@@ -101,10 +98,14 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
 
 }
 type TodolistProps = {
+    todolistId: string
     title: string
     tasks: Array<TasksType>
     removeTask: (id: string) => void
     addTask: (title: string) => void
     changeTaskStatus: (id: string, isDone: boolean) => void
+    filter: FilterType
+    changeFilter:(todolistId: string, filter: FilterType)=>void
+
 
 }
