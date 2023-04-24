@@ -47,8 +47,8 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
     }
 
 
-    const onChangeCheckboxHandler = (id: string, checked: boolean) => {
-        changeTaskStatus(id, checked)
+    const onChangeCheckboxHandler = (todolistId: string,id: string, checked: boolean) => {
+        changeTaskStatus(todolistId,id, checked)
     }
 
 
@@ -72,7 +72,7 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
                     return (
                         <div className = {el.isDone ? s.isDone : ''} key = {el.id}>
                             <MyCheckBox checked = {el.isDone}
-                                        callBack = {(checked) => onChangeCheckboxHandler(el.id, checked)} />
+                                        callBack = {(checked) => onChangeCheckboxHandler(todolistId,el.id, checked)} />
                             <span>{el.title}</span>
                             <MyButton callBack = {() => removeTaskHandler(el.id, todolistId)}>-</MyButton>
                         </div>
@@ -102,7 +102,7 @@ type TodolistProps = {
     tasks: TasksType
     removeTask: (todolistId: string, id: string) => void
     addTask: (todolistId: string,title: string) => void
-    changeTaskStatus: (id: string, isDone: boolean) => void
+    changeTaskStatus: (todolistId: string,id: string, isDone: boolean) => void
     filter: FilterType
     changeFilter: (todolistId: string, filter: FilterType) => void
 }
