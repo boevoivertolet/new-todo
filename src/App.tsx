@@ -6,7 +6,6 @@ import s from './App.module.scss'
 function App() {
 
 
-
     let todolistID1 = v1()
     let todolistID2 = v1()
 
@@ -29,13 +28,15 @@ function App() {
     })
 
 
-    const removeTask = (todolistId:string,id: string ) => {
-        setTasks({...tasks, [todolistId]:tasks[todolistId].filter(t=> t.id !== id)})
+    const removeTask = (todolistId: string, id: string) => {
+        setTasks({...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== id)})
 
 
         // setTasks(tasks.filter(el => el.id != id))
     }
-    const addTask = (title: string) => {
+    const addTask = (todolistId: string, title: string) => {
+         setTasks({...tasks, [todolistId]:[...tasks[todolistId],{id: v1(), title: title, isDone: false}]})
+
 
         // setTasks([{id: v1(), title: title, isDone: false}, ...tasks])
     }
@@ -84,7 +85,7 @@ export type TodolistsType = {
 }
 
 export type TasksType = {
-   [key:string]: TaskType[]
+    [key: string]: TaskType[]
 }
 
 

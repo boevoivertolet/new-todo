@@ -21,19 +21,19 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
             setError('Field is required')
             return
         }
-        addTask(inputValue.trim())
+        addTask(todolistId , inputValue.trim())
         setInputValue('')
     }
-    const enterPressHandler = (key: string) => {
+    const enterPressHandler = ( key: string) => {
         if (key === 'Enter') {
-            addTask(inputValue)
+            addTask(todolistId, inputValue)
             setInputValue('')
         }
     }
 
     const removeTaskHandler = (todolistId: string, id: string) => {
         removeTask(id, todolistId)
-        console.log(id, todolistId)
+
     }
 
 
@@ -101,7 +101,7 @@ type TodolistProps = {
     title: string
     tasks: TasksType
     removeTask: (todolistId: string, id: string) => void
-    addTask: (title: string) => void
+    addTask: (todolistId: string,title: string) => void
     changeTaskStatus: (id: string, isDone: boolean) => void
     filter: FilterType
     changeFilter: (todolistId: string, filter: FilterType) => void
