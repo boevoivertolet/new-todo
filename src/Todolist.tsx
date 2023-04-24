@@ -6,7 +6,7 @@ import {MyCheckBox} from "./common/components/MyCheckBox";
 import {MyInput} from "./common/components/MyInput";
 
 export const Todolist: React.FC<TodolistProps> = (props) => {
-    const {title, tasks, removeTask, addTask, changeTaskStatus,changeFilter, filter, todolistId, ...restProps} = props
+    const {title, tasks, removeTask, addTask, changeTaskStatus, changeFilter, filter, todolistId, ...restProps} = props
 
     let [inputValue, setInputValue] = useState<string>('')
     let [error, setError] = useState<string | null>(null)
@@ -31,20 +31,19 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
         }
     }
 
-    const removeTaskHandler = (id: string) => {
-        removeTask(id)
+    const removeTaskHandler = (todolistId: string, id: string) => {
+        removeTask(id, todolistId)
+        console.log(id, todolistId)
     }
 
 
-
-
-    let filteredTasks = tasks
+    let filteredTasks = tasks[todolistId]
     if (filter === 'active') {
-        filteredTasks = tasks.filter(el => !el.isDone)
+        filteredTasks = tasks[todolistId].filter(el => !el.isDone)
     }
 
     if (filter === 'complete') {
-        filteredTasks = tasks.filter(el => el.isDone)
+        filteredTasks = tasks[todolistId].filter(el => el.isDone)
     }
 
 
@@ -75,7 +74,7 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
                             <MyCheckBox checked = {el.isDone}
                                         callBack = {(checked) => onChangeCheckboxHandler(el.id, checked)} />
                             <span>{el.title}</span>
-                            <MyButton callBack = {() => removeTaskHandler(el.id)}>-</MyButton>
+                            <MyButton callBack = {() => removeTaskHandler(el.id, todolistId)}>-</MyButton>
                         </div>
                     )
                 })}
@@ -100,12 +99,15 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
 type TodolistProps = {
     todolistId: string
     title: string
-    tasks: Array<TasksType>
-    removeTask: (id: string) => void
+    tasks: TasksType
+    removeTask: (todolistId: string, id: string) => void
     addTask: (title: string) => void
     changeTaskStatus: (id: string, isDone: boolean) => void
     filter: FilterType
-    changeFilter:(todolistId: string, filter: FilterType)=>void
-
-
+    changeFilter: (todolistId: string, filter: FilterType) => void
+}
+export type TaskType = {
+    id: string
+    title: string
+    isDone: boolean
 }
