@@ -6,7 +6,18 @@ import {MyCheckBox} from "./common/components/MyCheckBox";
 import {MyInput} from "./common/components/MyInput";
 
 export const Todolist: React.FC<TodolistProps> = (props) => {
-    const {title, tasks, removeTask, addTask, changeTaskStatus, changeFilter, filter, todolistId, ...restProps} = props
+    const {
+        title,
+        tasks,
+        removeTask,
+        addTask,
+        changeTaskStatus,
+        changeFilter,
+        removeTodolist,
+        filter,
+        todolistId,
+        ...restProps
+    } = props
 
     let [inputValue, setInputValue] = useState<string>('')
     let [error, setError] = useState<string | null>(null)
@@ -21,10 +32,10 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
             setError('Field is required')
             return
         }
-        addTask(todolistId , inputValue.trim())
+        addTask(todolistId, inputValue.trim())
         setInputValue('')
     }
-    const enterPressHandler = ( key: string) => {
+    const enterPressHandler = (key: string) => {
         if (key === 'Enter') {
             addTask(todolistId, inputValue)
             setInputValue('')
@@ -47,14 +58,21 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
     }
 
 
-    const onChangeCheckboxHandler = (todolistId: string,id: string, checked: boolean) => {
-        changeTaskStatus(todolistId,id, checked)
+    const onChangeCheckboxHandler = (todolistId: string, id: string, checked: boolean) => {
+        changeTaskStatus(todolistId, id, checked)
     }
 
+    const removeTodolistHandler = () => {
+        removeTodolist(todolistId)
+    }
 
     return (
         <div className = {s.todolist}>
-            <h3>{title}</h3>
+            <h3>
+                {title}
+                <MyButton callBack = {removeTodolistHandler}>-</MyButton>
+            </h3>
+
             <div>
                 <MyInput
                     placeholder = {'whats to do ?                                                                                                           '}
@@ -72,7 +90,7 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
                     return (
                         <div className = {el.isDone ? s.isDone : ''} key = {el.id}>
                             <MyCheckBox checked = {el.isDone}
-                                        callBack = {(checked) => onChangeCheckboxHandler(todolistId,el.id, checked)} />
+                                        callBack = {(checked) => onChangeCheckboxHandler(todolistId, el.id, checked)} />
                             <span>{el.title}</span>
                             <MyButton callBack = {() => removeTaskHandler(el.id, todolistId)}>-</MyButton>
                         </div>
@@ -97,12 +115,13 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
 
 }
 type TodolistProps = {
+    removeTodolist: (todolistId: string) => void
     todolistId: string
     title: string
     tasks: TasksType
     removeTask: (todolistId: string, id: string) => void
-    addTask: (todolistId: string,title: string) => void
-    changeTaskStatus: (todolistId: string,id: string, isDone: boolean) => void
+    addTask: (todolistId: string, title: string) => void
+    changeTaskStatus: (todolistId: string, id: string, isDone: boolean) => void
     filter: FilterType
     changeFilter: (todolistId: string, filter: FilterType) => void
 }
