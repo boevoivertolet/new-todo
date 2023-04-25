@@ -50,7 +50,7 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
     return (
         <div className = {s.todolist}>
             <div className={s.title__block}>
-                <EditableInput value = {title} />
+                <EditableInput value = {title}  />
                 <MyButton callBack = {removeTodolistHandler}>-</MyButton>
             </div>
 

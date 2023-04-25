@@ -40,7 +40,7 @@ export const AddItemForm: React.FC<AddItemFormProps> = (props) => {
     return (
         <div className = {s.add__item__form}>
             <div className = {s.input__button__block}>
-                <MyInput callBack = {onChangeTextHandler} value = {value} onEnterKey = {enterPressHandler}
+                <MyInput callBack = {onChangeTextHandler} value = {value} onEnterKeyCallBack = {enterPressHandler}
                          error = {error}
                          placeholder = {placeholder} />
                 <MyButton callBack = {addItemHandler}>{title}</MyButton>

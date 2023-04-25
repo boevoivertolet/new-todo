@@ -2,21 +2,24 @@ import React, {ChangeEvent, KeyboardEvent} from 'react';
 import s from './MyInput.module.scss'
 
 export const MyInput: React.FC<MyInputProps> = (props) => {
-    const {callBack, value, onEnterKey, placeholder, error, blurCallBack, ...restProps} = props
+    const {callBack, value, onEnterKeyCallBack, placeholder, error, blurCallBack, ...restProps} = props
 
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const onChangeCallBackHandler = (e: ChangeEvent<HTMLInputElement>) => {
         callBack(e.currentTarget.value)
     }
-    const onKeyDownHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        onEnterKey(e.key)
+    const onEnterKeyHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            onEnterKeyCallBack(e.key)
+        }
     }
 
 
     return (
         <>
-            <input onBlur = {blurCallBack} className = {error ? s.error : s.input} type = {'text'}
-                   onChange = {onChangeHandler}
-                   onKeyDown = {onKeyDownHandler} value = {value} placeholder = {placeholder} autoFocus />
+            <input className = {error ? s.error : s.input} type = {'text'}
+                   onBlur = {blurCallBack}
+                   onChange = {onChangeCallBackHandler}
+                   onKeyDown = {onEnterKeyHandler} value = {value} placeholder = {placeholder} autoFocus />
 
         </>
 
@@ -27,7 +30,7 @@ type MyInputProps = {
     error?: string | null
     callBack: (value: string) => void
     value: string
-    onEnterKey: (key: string) => void
+    onEnterKeyCallBack: (key: string) => void
     placeholder?: string
     blurCallBack?: () => void
 
