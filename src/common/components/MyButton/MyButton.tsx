@@ -8,7 +8,7 @@ export const MyButton: React.FC<MyButtonProps> = (props) => {
         callBack()
     }
     return (
-        <button className = {active ? `${s.btn + ' ' + s.btn__active}` : s.btn} onClick = {onClickHandler}
+        <button title={title} className = {active ? `${s.btn + ' ' + s.btn__active}` : s.btn} onClick = {onClickHandler}
                 disabled = {disabled}>{children}</button>
     );
 };

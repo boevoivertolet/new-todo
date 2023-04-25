@@ -1,9 +1,9 @@
 import React, {useState} from "react";
 import {FilterType, TasksType} from "./App";
-import {MyButton} from "./common/components/MyButton";
+import {MyButton} from "./common/components/MyButton/MyButton";
 import s from './Todolist.module.scss'
-import {MyCheckBox} from "./common/components/MyCheckBox";
-import {MyInput} from "./common/components/MyInput";
+import {MyCheckBox} from "./common/components/MyCheckBox/MyCheckBox";
+import {AddItemForm} from "./common/components/AddItemForm/AddItemForm";
 
 export const Todolist: React.FC<TodolistProps> = (props) => {
     const {
@@ -74,16 +74,19 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
             </h3>
 
             <div>
-                <MyInput
-                    placeholder = {'whats to do ?                                                                                                           '}
-                    error = {error}
-                    onEnterKey = {enterPressHandler}
-                    callBack = {onChangeTextHandler}
-                    value = {inputValue} />
+                {/*<MyInput*/}
+                {/*    placeholder = {'whats to do ?'}*/}
+                {/*    error = {error}*/}
+                {/*    onEnterKey = {enterPressHandler}*/}
+                {/*    callBack = {onChangeTextHandler}*/}
+                {/*    value = {inputValue} />*/}
 
-                <MyButton callBack = {addTaskHandler}>+</MyButton>
+                {/*<MyButton callBack = {addTaskHandler}>+</MyButton>*/}
+                <AddItemForm placeholder = {'whats to do ?'} error = {error} onEnterKey = {enterPressHandler}
+                             onChange = {onChangeTextHandler} value = {inputValue} onClick = {addTaskHandler} title={'+'}/>
+
             </div>
-            {error && <span className = {s.error__message}>{error}</span>}
+
             <div className = {s.tasks__block}>
                 {filteredTasks.map(el => {
 
