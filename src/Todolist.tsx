@@ -19,28 +19,6 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
         ...restProps
     } = props
 
-    let [inputValue, setInputValue] = useState<string>('')
-    let [error, setError] = useState<string | null>(null)
-
-
-    const onChangeTextHandler = (value: string) => {
-        setInputValue(value)
-        setError(null)
-    }
-    const addTaskHandler = () => {
-        if (inputValue === '') {
-            setError('Field is required')
-            return
-        }
-        addTask(todolistId, inputValue.trim())
-        setInputValue('')
-    }
-    const enterPressHandler = (key: string) => {
-        if (key === 'Enter') {
-            addTask(todolistId, inputValue)
-            setInputValue('')
-        }
-    }
 
     const removeTaskHandler = (todolistId: string, id: string) => {
         removeTask(id, todolistId)
@@ -74,22 +52,12 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
             </h3>
 
             <div>
-                {/*<MyInput*/}
-                {/*    placeholder = {'whats to do ?'}*/}
-                {/*    error = {error}*/}
-                {/*    onEnterKey = {enterPressHandler}*/}
-                {/*    callBack = {onChangeTextHandler}*/}
-                {/*    value = {inputValue} />*/}
-
-                {/*<MyButton callBack = {addTaskHandler}>+</MyButton>*/}
-                <AddItemForm placeholder = {'whats to do ?'} error = {error} onEnterKey = {enterPressHandler}
-                             onChange = {onChangeTextHandler} value = {inputValue} onClick = {addTaskHandler} title={'+'}/>
-
+                <AddItemForm placeholder = {'whats to do ?'} onEnterKey = {(value) => addTask(todolistId, value)}
+                             addItem = {(value) => addTask(todolistId, value)} title = {'+'} />
             </div>
 
             <div className = {s.tasks__block}>
                 {filteredTasks.map(el => {
-
                     return (
                         <div className = {el.isDone ? s.isDone : ''} key = {el.id}>
                             <MyCheckBox checked = {el.isDone}

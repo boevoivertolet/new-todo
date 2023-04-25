@@ -1,15 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {MyInput} from "../MyInput/MyInput";
 import {MyButton} from "../MyButton/MyButton";
 import s from "./AddItemForm.module.scss";
 
 export const AddItemForm: React.FC<AddItemFormProps> = (props) => {
-
     const {
-        onChange,
-        onClick,
-        error,
-        value,
+        addItem,
         onEnterKey,
         placeholder,
         disabled,
@@ -19,25 +15,45 @@ export const AddItemForm: React.FC<AddItemFormProps> = (props) => {
         ...restProps
     } = props
 
-    return (
-        <div className={s.add__item__form}>
-            <div className={s.input__button__block}>
-                <MyInput callBack = {onChange} value = {value} onEnterKey = {onEnterKey} error = {error}
-                         placeholder = {placeholder} />
-                <MyButton callBack = {onClick}>{title}</MyButton>
-            </div>
 
+    const [value, setValue] = useState<string>('')
+    const [error, setError] = useState<string | null>(null)
+    const onChangeTextHandler = (value: string) => {
+        setValue(value)
+        setError(null)
+    }
+    const addItemHandler = () => {
+        if (value === '') {
+            setError('Field is required')
+            return
+        }
+        addItem(value.trim())
+        setValue('')
+    }
+    const enterPressHandler = (key: string) => {
+        if (key === 'Enter') {
+            addItem(value)
+            setValue('')
+        }
+    }
+
+
+    return (
+        <div className = {s.add__item__form}>
+            <div className = {s.input__button__block}>
+                <MyInput callBack = {onChangeTextHandler} value = {value} onEnterKey = {enterPressHandler}
+                         error = {error}
+                         placeholder = {placeholder} />
+                <MyButton callBack = {addItemHandler}>{title}</MyButton>
+            </div>
             {error && <span className = {s.error__message}>{error}</span>}
         </div>
     );
 };
 type AddItemFormProps = {
-    error?: string | null
-    onChange: (value: string) => void
-    value: string
     onEnterKey: (key: string) => void
     placeholder?: string
-    onClick: () => void
+    addItem: (value: string) => void
     disabled?: boolean
     children?: React.ReactNode
     title?: string
