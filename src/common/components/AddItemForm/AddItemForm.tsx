@@ -15,7 +15,6 @@ export const AddItemForm: React.FC<AddItemFormProps> = (props) => {
         ...restProps
     } = props
 
-
     const [value, setValue] = useState<string>('')
     const [error, setError] = useState<string | null>(null)
     const onChangeTextHandler = (value: string) => {

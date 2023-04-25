@@ -20,6 +20,8 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
     } = props
 
 
+    const addItemHandler = (value: string) => addTask(todolistId, value)
+
     const removeTaskHandler = (todolistId: string, id: string) => {
         removeTask(id, todolistId)
 
@@ -52,8 +54,8 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
             </h3>
 
             <div>
-                <AddItemForm placeholder = {'whats to do ?'} onEnterKey = {(value) => addTask(todolistId, value)}
-                             addItem = {(value) => addTask(todolistId, value)} title = {'+'} />
+                <AddItemForm placeholder = {'whats to do?'} onEnterKey = {addItemHandler}
+                             addItem = {addItemHandler} title = {'+'} />
             </div>
 
             <div className = {s.tasks__block}>
