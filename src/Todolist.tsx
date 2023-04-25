@@ -4,6 +4,7 @@ import {MyButton} from "./common/components/MyButton/MyButton";
 import s from './Todolist.module.scss'
 import {MyCheckBox} from "./common/components/MyCheckBox/MyCheckBox";
 import {AddItemForm} from "./common/components/AddItemForm/AddItemForm";
+import {EditableInput} from "./common/components/EditableInput/EditableInput";
 
 export const Todolist: React.FC<TodolistProps> = (props) => {
     const {
@@ -48,10 +49,10 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
 
     return (
         <div className = {s.todolist}>
-            <h3>
-                {title}
+            <div className={s.title__block}>
+                <EditableInput value = {title} />
                 <MyButton callBack = {removeTodolistHandler}>-</MyButton>
-            </h3>
+            </div>
 
             <div>
                 <AddItemForm placeholder = {'whats to do?'} onEnterKey = {addItemHandler}
@@ -61,10 +62,10 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
             <div className = {s.tasks__block}>
                 {filteredTasks.map(el => {
                     return (
-                        <div className = {el.isDone ? s.isDone : ''} key = {el.id}>
+                        <div className = {el.isDone ? `${s.task + ' ' + s.isDone}` : s.task} key = {el.id}>
                             <MyCheckBox checked = {el.isDone}
                                         callBack = {(checked) => onChangeCheckboxHandler(todolistId, el.id, checked)} />
-                            <span>{el.title}</span>
+                            <EditableInput value = {el.title} />
                             <MyButton callBack = {() => removeTaskHandler(el.id, todolistId)}>-</MyButton>
                         </div>
                     )
