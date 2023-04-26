@@ -33,6 +33,4 @@ type MyInputProps = {
     onEnterKeyCallBack: (key: string) => void
     placeholder?: string
     blurCallBack?: () => void
-
-
 }

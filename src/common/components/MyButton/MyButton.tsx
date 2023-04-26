@@ -1,5 +1,6 @@
 import React from "react";
 import s from './MyButton.module.scss'
+import {Button} from "@mui/material";
 
 export const MyButton: React.FC<MyButtonProps> = (props) => {
     const {callBack, title, disabled, children, active, ...restProps} = props
@@ -8,8 +9,8 @@ export const MyButton: React.FC<MyButtonProps> = (props) => {
         callBack()
     }
     return (
-        <button title={title} className = {active ? `${s.btn + ' ' + s.btn__active}` : s.btn} onClick = {onClickHandler}
-                disabled = {disabled}>{children}</button>
+        <Button  variant="contained" title={title} className = {active ? `${s.btn + ' ' + s.btn__active}` : s.btn} onClick = {onClickHandler}
+                disabled = {disabled}>{children}</Button>
     );
 };
 

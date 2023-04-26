@@ -63,6 +63,7 @@ function App() {
         const todolistId = v1()
         setTodolists([{id: todolistId, title: title, filter: 'all'}, ...todolists])
         setTasks({...tasks, [todolistId]: []})
+
     }
 
 
@@ -71,6 +72,7 @@ function App() {
             <header><AddItemForm title = {'+'} onEnterKey = {addTodolist} addItem = {addTodolist} /></header>
             <div className = {s.app__container}>
                 {todolists.map((tdl) => {
+                    console.log('todolist render')
                     return (
                         <Todolist
                             removeTodolist = {removeTodolist}

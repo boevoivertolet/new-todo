@@ -33,5 +33,4 @@ export const EditableInput: React.FC<EditableInputProps> = (props) => {
 
 type EditableInputProps = {
     value: string
-    // onEnterKey:()=> void
 }

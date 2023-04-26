@@ -5,6 +5,7 @@ import s from './Todolist.module.scss'
 import {MyCheckBox} from "./common/components/MyCheckBox/MyCheckBox";
 import {AddItemForm} from "./common/components/AddItemForm/AddItemForm";
 import {EditableInput} from "./common/components/EditableInput/EditableInput";
+import {ButtonGroup} from "@mui/material";
 
 export const Todolist: React.FC<TodolistProps> = (props) => {
     const {
@@ -49,8 +50,9 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
 
     return (
         <div className = {s.todolist}>
-            <div className={s.title__block}>
-                <EditableInput value = {title}  />
+            <div className = {s.title__block}>
+                <EditableInput value = {title} />
+
                 <MyButton callBack = {removeTodolistHandler}>-</MyButton>
             </div>
 
@@ -66,23 +68,27 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
                             <MyCheckBox checked = {el.isDone}
                                         callBack = {(checked) => onChangeCheckboxHandler(todolistId, el.id, checked)} />
                             <EditableInput value = {el.title} />
-                            <MyButton callBack = {() => removeTaskHandler(el.id, todolistId)}>-</MyButton>
+                            <MyButton  callBack = {() => removeTaskHandler(el.id, todolistId)}>-</MyButton>
                         </div>
                     )
                 })}
             </div>
-            <div className = {s.btn__block}>
-                <MyButton active = {filter === 'all'} callBack = {() => {
+            <ButtonGroup variant = "contained" aria-label = "outlined primary button group">
+                <MyButton disabled = {filter === 'all'}  active = {filter === 'all'} callBack = {() => {
                     changeFilter(todolistId, 'all')
                 }}>all</MyButton>
-                <MyButton active = {filter === 'active'} callBack = {() => {
+                <MyButton disabled = {filter === 'active'} active = {filter === 'active'} callBack = {() => {
                     changeFilter(todolistId, 'active')
                 }}>active
                 </MyButton>
-                <MyButton active = {filter === 'complete'} callBack = {() => {
+                <MyButton disabled = {filter === 'complete'} active = {filter === 'complete'} callBack = {() => {
                     changeFilter(todolistId, 'complete')
                 }}>complete
                 </MyButton>
+            </ButtonGroup>
+            <div className = {s.btn__block}>
+
+
             </div>
         </div>
     )
