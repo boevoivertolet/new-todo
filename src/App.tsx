@@ -69,23 +69,28 @@ function App() {
 
     return (
         <div className = {s.app}>
-            <header><AddItemForm title = {'+'} onEnterKey = {addTodolist} addItem = {addTodolist} /></header>
+            <header></header>
             <div className = {s.app__container}>
+                <div className={s.add__todolist}>
+                    <AddItemForm title = {'+'} onEnterKey = {addTodolist} addItem = {addTodolist} />
+                </div>
                 {todolists.map((tdl) => {
                     console.log('todolist render')
                     return (
                         <Todolist
-                            removeTodolist = {removeTodolist}
-                            changeFilter = {changeFilter}
-                            todolistId = {tdl.id}
-                            title = {tdl.title}
-                            tasks = {tasks}
-                            removeTask = {removeTask}
-                            addTask = {addTask}
-                            changeTaskStatus = {changeTaskStatus}
-                            filter = {tdl.filter}
-                            key = {tdl.id}
-                        />
+                                removeTodolist = {removeTodolist}
+                                changeFilter = {changeFilter}
+                                todolistId = {tdl.id}
+                                title = {tdl.title}
+                                tasks = {tasks}
+                                removeTask = {removeTask}
+                                addTask = {addTask}
+                                changeTaskStatus = {changeTaskStatus}
+                                filter = {tdl.filter}
+                                key = {tdl.id}
+                            />
+
+
                     )
                 })
 

@@ -6,6 +6,7 @@ import {MyCheckBox} from "./common/components/MyCheckBox/MyCheckBox";
 import {AddItemForm} from "./common/components/AddItemForm/AddItemForm";
 import {EditableInput} from "./common/components/EditableInput/EditableInput";
 import {ButtonGroup} from "@mui/material";
+import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 
 export const Todolist: React.FC<TodolistProps> = (props) => {
     const {
@@ -21,6 +22,17 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
         ...restProps
     } = props
 
+    const styleRemoveButton = {
+        maxWidth: '25px',
+        maxHeight: '25px',
+        minWidth: '25px',
+        minHeight: '25px',
+        borderRadius: '50%',
+        background: '#16BCD6'
+    }
+    const styleButtonBlock = {
+        background: '#16BCD6'
+    }
 
     const addItemHandler = (value: string) => addTask(todolistId, value)
 
@@ -50,10 +62,9 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
 
     return (
         <div className = {s.todolist}>
+            <ClearOutlinedIcon style = {{alignSelf: 'end'}} onClick = {removeTodolistHandler}></ClearOutlinedIcon>
             <div className = {s.title__block}>
                 <EditableInput value = {title} />
-
-                <MyButton callBack = {removeTodolistHandler}>-</MyButton>
             </div>
 
             <div>
@@ -68,22 +79,26 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
                             <MyCheckBox checked = {el.isDone}
                                         callBack = {(checked) => onChangeCheckboxHandler(todolistId, el.id, checked)} />
                             <EditableInput value = {el.title} />
-                            <MyButton  callBack = {() => removeTaskHandler(el.id, todolistId)}>-</MyButton>
+                            <MyButton style = {styleRemoveButton}
+                                      callBack = {() => removeTaskHandler(el.id, todolistId)}>-</MyButton>
                         </div>
                     )
                 })}
             </div>
             <ButtonGroup variant = "contained" aria-label = "outlined primary button group">
-                <MyButton disabled = {filter === 'all'}  active = {filter === 'all'} callBack = {() => {
-                    changeFilter(todolistId, 'all')
-                }}>all</MyButton>
-                <MyButton disabled = {filter === 'active'} active = {filter === 'active'} callBack = {() => {
-                    changeFilter(todolistId, 'active')
-                }}>active
+                <MyButton style = {styleButtonBlock} disabled = {filter === 'all'} active = {filter === 'all'}
+                          callBack = {() => {
+                              changeFilter(todolistId, 'all')
+                          }}>all</MyButton>
+                <MyButton style = {styleButtonBlock} disabled = {filter === 'active'} active = {filter === 'active'}
+                          callBack = {() => {
+                              changeFilter(todolistId, 'active')
+                          }}>active
                 </MyButton>
-                <MyButton disabled = {filter === 'complete'} active = {filter === 'complete'} callBack = {() => {
-                    changeFilter(todolistId, 'complete')
-                }}>complete
+                <MyButton style = {styleButtonBlock} disabled = {filter === 'complete'} active = {filter === 'complete'}
+                          callBack = {() => {
+                              changeFilter(todolistId, 'complete')
+                          }}>complete
                 </MyButton>
             </ButtonGroup>
             <div className = {s.btn__block}>

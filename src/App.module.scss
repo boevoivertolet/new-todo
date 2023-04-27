@@ -1,18 +1,26 @@
 @import 'common/styles/sass/variables';
 
 .app {
-
   padding: 10px;
   display: flex;
   flex-direction: column;
   color: $textColor;
   background: #FFFBE7;
 
+  .add__todolist {
+    border-radius: $borderRadius;
+    margin: 5px;
+    height: 57px;
+    background: #999999;
+    padding: 20px;
+    width: 250px;
+  }
+
   .app__container {
     display: flex;
     width: 100%;
     height: 100%;
-    background: $textColor;
+    background: $backgroundColor;
     min-height: 100vh;
   }
 }

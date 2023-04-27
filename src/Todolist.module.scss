@@ -1,12 +1,14 @@
+@import 'common/styles/sass/variables';
+
 .todolist {
-  background: aliceblue;
+  background: #999999;
   box-sizing: border-box;
   width: max-content;
   height: max-content;
-  min-width: 500px;
+  min-width: 300px;
   min-height: 300px;
   border: #612124 1px solid;
-  border-radius: 6px;
+  border-radius: $borderRadius;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,6 +31,7 @@
     min-height: 200px;
     width: 100%;
     max-width: 200px;
+    margin-bottom: 30px;
     .task{
       margin-top: 15px;
       justify-content: space-between;
