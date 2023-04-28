@@ -7,6 +7,7 @@ import {AddItemForm} from "./common/components/AddItemForm/AddItemForm";
 import {EditableInput} from "./common/components/EditableInput/EditableInput";
 import {ButtonGroup} from "@mui/material";
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 export const Todolist: React.FC<TodolistProps> = (props) => {
     const {
@@ -32,6 +33,13 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
     }
     const styleButtonBlock = {
         background: '#16BCD6'
+    }
+    const styleCheckBox = {
+        maxWidth: '15px',
+        maxHeight: '15px',
+        minWidth: '15px',
+        minHeight: '15px',
+        color: '#16BCD6'
     }
 
     const addItemHandler = (value: string) => addTask(todolistId, value)
@@ -76,11 +84,11 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
                 {filteredTasks.map(el => {
                     return (
                         <div className = {el.isDone ? `${s.task + ' ' + s.isDone}` : s.task} key = {el.id}>
-                            <MyCheckBox checked = {el.isDone}
+                            <MyCheckBox style = {styleCheckBox} checked = {el.isDone}
                                         callBack = {(checked) => onChangeCheckboxHandler(todolistId, el.id, checked)} />
                             <EditableInput value = {el.title} />
-                            <MyButton style = {styleRemoveButton}
-                                      callBack = {() => removeTaskHandler(el.id, todolistId)}>-</MyButton>
+                            <DeleteForeverIcon style={{color:'#16BCD6'}}
+                                onClick = {() => removeTaskHandler(el.id, todolistId)}>-</DeleteForeverIcon>
                         </div>
                     )
                 })}
