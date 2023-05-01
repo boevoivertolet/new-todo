@@ -56,7 +56,7 @@ export const AddItemForm: React.FC<AddItemFormProps> = (props) => {
                          placeholder = {placeholder} />
                 <MyButton style={styleAddButton} callBack = {addItemHandler}>{title}</MyButton>
             </div>
-            {error && <span className = {s.error__message}>{error}</span>}
+            {/*{error && <span className = {s.error__message}>{error}</span>}*/}
         </div>
     );
 };

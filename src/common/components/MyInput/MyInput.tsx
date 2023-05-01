@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 import {createTheme, styled, ThemeProvider} from "@mui/material";
 
 export const MyInput: React.FC<MyInputProps> = (props) => {
-    const {callBack, value, onEnterKeyCallBack, placeholder, error, blurCallBack,style, ...restProps} = props
+    const {callBack, value, onEnterKeyCallBack, placeholder, error, blurCallBack, style, ...restProps} = props
 
     const onChangeCallBackHandler = (e: ChangeEvent<HTMLInputElement>) => {
         callBack(e.currentTarget.value)
@@ -14,27 +14,7 @@ export const MyInput: React.FC<MyInputProps> = (props) => {
             onEnterKeyCallBack(e.key)
         }
     }
-    // const theme = createTheme({
-    //     components: {
-    //         MuiOutlinedInput: {
-    //             styleOverrides: {
-    //                 root: {
-    //                     '&:hover': {
-    //                         backgroundColor: 'blue',
-    //                         '.MuiOutlinedInput-notchedOutline': {
-    //                             borderColor: 'red',
-    //                             borderWidth: '8px',
-    //                         }
-    //                     },
-    //                     '.MuiOutlinedInput-notchedOutline': {
-    //                         borderColor: 'green',
-    //                         borderWidth: '4px',
-    //                     }
-    //                 },
-    //             },
-    //         },
-    //     },
-    // });
+
     const theme = createTheme({
         components: {
             MuiTextField: {
@@ -59,12 +39,12 @@ export const MyInput: React.FC<MyInputProps> = (props) => {
 
 
     return (
-        <ThemeProvider theme={theme}>
-            <TextField  id="outlined-basic" label={placeholder} variant="outlined" size={'small'} className = {error ? s.error : s.input} type = {'text'}
-                   onBlur = {blurCallBack}
-                   onChange = {onChangeCallBackHandler}
-                   onKeyDown = {onEnterKeyHandler} value = {value}  autoFocus />
-
+        <ThemeProvider theme = {theme}>
+            <TextField error = {!!error} id = "outlined-basic" label = {error ? error : placeholder} variant = "outlined"
+                       size = {'small'} className = {error ? s.error : s.input} type = {'text'}
+                       onBlur = {blurCallBack}
+                       onChange = {onChangeCallBackHandler}
+                       onKeyDown = {onEnterKeyHandler} value = {value} autoFocus />
         </ThemeProvider>
 
     );
