@@ -20,11 +20,11 @@ export const AddItemForm: React.FC<AddItemFormProps> = (props) => {
         maxHeight: '40px',
         minWidth: '40px',
         minHeight: '40px',
-        background: '#16BCD6'
+        // background: '#16BCD6'
     }
-    const styleInput = {
-        border: '#16BCD6'
-    }
+    // const styleInput = {
+    //     border: '#16BCD6'
+    // }
 
     const [value, setValue] = useState<string>('')
     const [error, setError] = useState<string | null>(null)
@@ -51,7 +51,7 @@ export const AddItemForm: React.FC<AddItemFormProps> = (props) => {
     return (
         <div className = {s.add__item__form}>
             <div className = {s.input__button__block}>
-                <MyInput style={styleInput} callBack = {onChangeTextHandler} value = {value} onEnterKeyCallBack = {enterPressHandler}
+                <MyInput callBack = {onChangeTextHandler} value = {value} onEnterKeyCallBack = {enterPressHandler}
                          error = {error}
                          placeholder = {placeholder} />
                 <MyButton style={styleAddButton} callBack = {addItemHandler}>{title}</MyButton>

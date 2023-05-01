@@ -73,9 +73,9 @@ function App() {
         <div className = {s.app}>
             <ButtonAppBar/>
             <div className = {s.app__container}>
-                <Paper elevation={3} className={s.add__todolist}>
+                <div className={s.add__todolist}>
                     <AddItemForm title = {'+'} onEnterKey = {addTodolist} addItem = {addTodolist} />
-                </Paper>
+                </div>
                 {todolists.map((tdl) => {
                     console.log('todolist render')
                     return (

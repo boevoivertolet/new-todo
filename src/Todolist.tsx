@@ -8,6 +8,7 @@ import {EditableInput} from "./common/components/EditableInput/EditableInput";
 import {ButtonGroup, Paper} from "@mui/material";
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import {Task} from "./common/components/Task/Task";
 
 export const Todolist: React.FC<TodolistProps> = (props) => {
     const {
@@ -23,31 +24,8 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
         ...restProps
     } = props
 
-    const styleRemoveButton = {
-        maxWidth: '25px',
-        maxHeight: '25px',
-        minWidth: '25px',
-        minHeight: '25px',
-        borderRadius: '50%',
-        background: '#16BCD6'
-    }
-    const styleButtonBlock = {
-        background: '#16BCD6'
-    }
-    const styleCheckBox = {
-        maxWidth: '15px',
-        maxHeight: '15px',
-        minWidth: '15px',
-        minHeight: '15px',
-        color: '#16BCD6'
-    }
 
     const addItemHandler = (value: string) => addTask(todolistId, value)
-
-    const removeTaskHandler = (todolistId: string, id: string) => {
-        removeTask(id, todolistId)
-
-    }
 
 
     let filteredTasks = tasks[todolistId]
@@ -60,16 +38,12 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
     }
 
 
-    const onChangeCheckboxHandler = (todolistId: string, id: string, checked: boolean) => {
-        changeTaskStatus(todolistId, id, checked)
-    }
-
     const removeTodolistHandler = () => {
         removeTodolist(todolistId)
     }
 
     return (
-        <Paper elevation={3} className = {s.todolist}>
+        <Paper elevation = {3} className = {s.todolist}>
             <ClearOutlinedIcon style = {{alignSelf: 'end'}} onClick = {removeTodolistHandler}></ClearOutlinedIcon>
             <div className = {s.title__block}>
                 <EditableInput value = {title} />
@@ -83,27 +57,22 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
             <div className = {s.tasks__block}>
                 {filteredTasks.map(el => {
                     return (
-                        <div className = {el.isDone ? `${s.task + ' ' + s.isDone}` : s.task} key = {el.id}>
-                            <MyCheckBox style = {styleCheckBox} checked = {el.isDone}
-                                        callBack = {(checked) => onChangeCheckboxHandler(todolistId, el.id, checked)} />
-                            <EditableInput value = {el.title} />
-                            <DeleteForeverIcon style={{color:'#16BCD6'}}
-                                onClick = {() => removeTaskHandler(el.id, todolistId)}>-</DeleteForeverIcon>
-                        </div>
+                        <Task todolistId = {todolistId} removeTask = {removeTask} title = {el.title} id = {el.id}
+                              isDone = {el.isDone} changeTaskStatus = {changeTaskStatus} />
                     )
                 })}
             </div>
             <ButtonGroup variant = "contained" aria-label = "outlined primary button group">
-                <MyButton style = {styleButtonBlock} disabled = {filter === 'all'} active = {filter === 'all'}
+                <MyButton disabled = {filter === 'all'} active = {filter === 'all'}
                           callBack = {() => {
                               changeFilter(todolistId, 'all')
                           }}>all</MyButton>
-                <MyButton style = {styleButtonBlock} disabled = {filter === 'active'} active = {filter === 'active'}
+                <MyButton disabled = {filter === 'active'} active = {filter === 'active'}
                           callBack = {() => {
                               changeFilter(todolistId, 'active')
                           }}>active
                 </MyButton>
-                <MyButton style = {styleButtonBlock} disabled = {filter === 'complete'} active = {filter === 'complete'}
+                <MyButton disabled = {filter === 'complete'} active = {filter === 'complete'}
                           callBack = {() => {
                               changeFilter(todolistId, 'complete')
                           }}>complete

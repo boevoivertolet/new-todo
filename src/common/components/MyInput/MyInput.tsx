@@ -1,7 +1,7 @@
 import React, {ChangeEvent, KeyboardEvent} from 'react';
 import s from './MyInput.module.scss'
 import TextField from "@mui/material/TextField";
-import {createTheme, styled, ThemeProvider} from "@mui/material";
+
 
 export const MyInput: React.FC<MyInputProps> = (props) => {
     const {callBack, value, onEnterKeyCallBack, placeholder, error, blurCallBack, style, ...restProps} = props
@@ -15,37 +15,17 @@ export const MyInput: React.FC<MyInputProps> = (props) => {
         }
     }
 
-    const theme = createTheme({
-        components: {
-            MuiTextField: {
-                styleOverrides: {
-                    root: {
-                        '&:hover': {
-                            backgroundColor: 'transparent',
-                            '.MuiOutlinedInput-notchedOutline': {
-                                borderColor: '#26CBFC',
-                                borderWidth: '1px',
-                            }
-                        },
-                        '.MuiOutlinedInput-notchedOutline': {
-                            borderColor: '#26CBFC',
-                            borderWidth: '1px',
-                        }
-                    },
-                },
-            },
-        },
-    });
+
 
 
     return (
-        <ThemeProvider theme = {theme}>
+
             <TextField error = {!!error} id = "outlined-basic" label = {error ? error : placeholder} variant = "outlined"
                        size = {'small'} className = {error ? s.error : s.input} type = {'text'}
                        onBlur = {blurCallBack}
                        onChange = {onChangeCallBackHandler}
                        onKeyDown = {onEnterKeyHandler} value = {value} autoFocus />
-        </ThemeProvider>
+
 
     );
 };
