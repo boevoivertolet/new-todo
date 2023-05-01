@@ -5,7 +5,7 @@ import s from './Todolist.module.scss'
 import {MyCheckBox} from "./common/components/MyCheckBox/MyCheckBox";
 import {AddItemForm} from "./common/components/AddItemForm/AddItemForm";
 import {EditableInput} from "./common/components/EditableInput/EditableInput";
-import {ButtonGroup} from "@mui/material";
+import {ButtonGroup, Paper} from "@mui/material";
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
@@ -69,7 +69,7 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
     }
 
     return (
-        <div className = {s.todolist}>
+        <Paper elevation={3} className = {s.todolist}>
             <ClearOutlinedIcon style = {{alignSelf: 'end'}} onClick = {removeTodolistHandler}></ClearOutlinedIcon>
             <div className = {s.title__block}>
                 <EditableInput value = {title} />
@@ -113,7 +113,7 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
 
 
             </div>
-        </div>
+        </Paper>
     )
 
 }

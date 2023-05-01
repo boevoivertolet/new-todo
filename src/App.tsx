@@ -4,6 +4,7 @@ import {v1} from "uuid";
 import s from './App.module.scss'
 import {AddItemForm} from "./common/components/AddItemForm/AddItemForm";
 import ButtonAppBar from "./common/components/AppBar/AppBar";
+import {Paper} from "@mui/material";
 
 function App() {
 
@@ -72,9 +73,9 @@ function App() {
         <div className = {s.app}>
             <ButtonAppBar/>
             <div className = {s.app__container}>
-                <div className={s.add__todolist}>
+                <Paper elevation={3} className={s.add__todolist}>
                     <AddItemForm title = {'+'} onEnterKey = {addTodolist} addItem = {addTodolist} />
-                </div>
+                </Paper>
                 {todolists.map((tdl) => {
                     console.log('todolist render')
                     return (
