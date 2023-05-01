@@ -3,6 +3,7 @@ import {TaskType, Todolist} from "./Todolist";
 import {v1} from "uuid";
 import s from './App.module.scss'
 import {AddItemForm} from "./common/components/AddItemForm/AddItemForm";
+import ButtonAppBar from "./common/components/AppBar/AppBar";
 
 function App() {
 
@@ -69,7 +70,7 @@ function App() {
 
     return (
         <div className = {s.app}>
-            <header></header>
+            <ButtonAppBar/>
             <div className = {s.app__container}>
                 <div className={s.add__todolist}>
                     <AddItemForm title = {'+'} onEnterKey = {addTodolist} addItem = {addTodolist} />
