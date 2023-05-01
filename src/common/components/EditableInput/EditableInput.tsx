@@ -21,7 +21,7 @@ export const EditableInput: React.FC<EditableInputProps> = (props) => {
     return (
         <div className = {s.editable__input}>
             {!editMode
-                ? <div onDoubleClick = {activateEditMod}>{value}</div>
+                ? <div className = {s.editable__div} onDoubleClick = {activateEditMod}>{value}</div>
                 :
                 <MyInput blurCallBack = {deActivateEditMod} callBack = {setValue} value = {value} onEnterKeyCallBack={deActivateEditMod}  />
 

@@ -1,13 +1,11 @@
-import React, {useState} from "react";
+import React from "react";
 import {FilterType, TasksType} from "./App";
 import {MyButton} from "./common/components/MyButton/MyButton";
 import s from './Todolist.module.scss'
-import {MyCheckBox} from "./common/components/MyCheckBox/MyCheckBox";
 import {AddItemForm} from "./common/components/AddItemForm/AddItemForm";
 import {EditableInput} from "./common/components/EditableInput/EditableInput";
 import {ButtonGroup, Paper} from "@mui/material";
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import {Task} from "./common/components/Task/Task";
 
 export const Todolist: React.FC<TodolistProps> = (props) => {

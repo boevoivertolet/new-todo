@@ -3,6 +3,7 @@ import s from './Task.module.scss';
 import {MyCheckBox} from "../MyCheckBox/MyCheckBox";
 import {EditableInput} from "../EditableInput/EditableInput";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import {Paper} from "@mui/material";
 
 export const Task: React.FC<TaskProps> = (props) => {
 
@@ -17,13 +18,13 @@ export const Task: React.FC<TaskProps> = (props) => {
 
 
     return (
-        <div className = {isDone ? `${s.task + ' ' + s.isDone}` : s.task} key = {id}>
+        <Paper className = {isDone ? `${s.task + ' ' + s.isDone}` : s.task} key = {id}>
             <MyCheckBox checked = {isDone}
                         callBack = {(checked) => onChangeCheckboxHandler(todolistId, id, checked)} />
             <EditableInput value = {title} />
-            <DeleteForeverIcon style = {{color: '#16BCD6'}}
+            <DeleteForeverIcon style = {{color: '#2374CE'}}
                                onClick = {() => removeTaskHandler(id, todolistId)}>-</DeleteForeverIcon>
-        </div>
+        </Paper>
     );
 };
 
