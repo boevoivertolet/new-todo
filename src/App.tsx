@@ -1,10 +1,9 @@
-import React, {Fragment, useState} from 'react';
+import React, {useState} from 'react';
 import {TaskType, Todolist} from "./Todolist";
 import {v1} from "uuid";
 import s from './App.module.scss'
 import {AddItemForm} from "./common/components/AddItemForm/AddItemForm";
 import ButtonAppBar from "./common/components/AppBar/AppBar";
-
 
 
 function App() {
@@ -113,6 +112,9 @@ export type TodolistsType = {
     filter: FilterType
 }
 
+// export type TasksType = {
+//     [key: string]: TaskType[]
+// }
 export type TasksType = {
     [key: string]: TaskType[]
 }
