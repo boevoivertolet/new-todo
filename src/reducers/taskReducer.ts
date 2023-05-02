@@ -1,7 +1,6 @@
 import {TasksType} from "../App";
 import {v1} from "uuid";
-import {todolistID1, todolistID2} from "./todolistsReducer";
-
+import {addTodolistAC, todolistID1, todolistID2} from "./todolistsReducer";
 
 
 const InitialState: TasksType = {
@@ -26,18 +25,35 @@ export const tasksReducer = (state: TasksType = InitialState, action: TasksActio
             }
         }
         case 'tasks/add' : {
-            return{
+            return {
                 ...state,
-                [action.payload.todolistId]: [{id: v1(), title: action.payload.title, isDone: false}, ...state[action.payload.todolistId]]
+                [action.payload.todolistId]: [{
+                    id: v1(),
+                    title: action.payload.title,
+                    isDone: false
+                }, ...state[action.payload.todolistId]]
             }
 
+        }
+        case 'tasks/change_status' : {
+            return {
+                ...state,
+                [action.payload.todolistId]: state[action.payload.todolistId].map(el => el.id === action.payload.id ? {
+                    ...el,
+                    isDone: action.payload.isDone
+                } : el)
+            }
+
+        }
+        case "todolists/add_todolist": {
+            return {...state, [action.payload.todolistId]: []}
         }
         default:
             return state
     }
 }
-
-export const remove = (todolistId: string, id: string) => {
+// AC
+export const removeAC = (todolistId: string, id: string) => {
     return {
         type: 'tasks/remove',
         payload: {
@@ -45,14 +61,28 @@ export const remove = (todolistId: string, id: string) => {
         }
     } as const
 }
-export const add = (todolistId: string,title: string) => {
+export const addAC = (todolistId: string, title: string) => {
     return {
         type: 'tasks/add',
         payload: {
-            todolistId,title
+            todolistId, title
+        }
+    } as const
+}
+export const changeStatusAC = (todolistId: string, id: string, isDone: boolean) => {
+    return {
+        type: 'tasks/change_status',
+        payload: {
+            todolistId, id, isDone
         }
     } as const
 }
 
+//Thunk
 
-export type TasksActionType = | ReturnType<typeof remove> | ReturnType<typeof add>
+
+export type TasksActionType =
+    | ReturnType<typeof removeAC>
+    | ReturnType<typeof addAC>
+    | ReturnType<typeof changeStatusAC>
+    | ReturnType<typeof addTodolistAC>
