@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {Fragment, useState} from 'react';
 import {TaskType, Todolist} from "./Todolist";
 import {v1} from "uuid";
 import s from './App.module.scss'
 import {AddItemForm} from "./common/components/AddItemForm/AddItemForm";
 import ButtonAppBar from "./common/components/AppBar/AppBar";
-import {Paper} from "@mui/material";
+
+
 
 function App() {
 
@@ -29,6 +30,8 @@ function App() {
             {id: v1(), title: 'GraphQL', isDone: false},
         ]
     })
+
+
 
 // Tasks
     const removeTask = (todolistId: string, id: string) => {
@@ -71,34 +74,32 @@ function App() {
 
     return (
         <div className = {s.app}>
-            <header><ButtonAppBar/></header>
-            <Paper className = {s.app__container}>
+            <header><ButtonAppBar /></header>
+            <div className = {s.app__container}>
                 <div className = {s.add__todolist}>
                     <AddItemForm title = {'+'} onEnterKey = {addTodolist} addItem = {addTodolist} />
                 </div>
-                {todolists.map((tdl) => {
-                    console.log('todolist render')
-                    return (
-                        <Todolist
-                            removeTodolist = {removeTodolist}
-                            changeFilter = {changeFilter}
-                            todolistId = {tdl.id}
-                            title = {tdl.title}
-                            tasks = {tasks}
-                            removeTask = {removeTask}
-                            addTask = {addTask}
-                            changeTaskStatus = {changeTaskStatus}
-                            filter = {tdl.filter}
-                            key = {tdl.id}
-                        />
-
-
-                    )
-                })
+                {todolists.length
+                    ? todolists.map((tdl) => {
+                        return (
+                            <Todolist
+                                removeTodolist = {removeTodolist}
+                                changeFilter = {changeFilter}
+                                todolistId = {tdl.id}
+                                title = {tdl.title}
+                                tasks = {tasks}
+                                removeTask = {removeTask}
+                                addTask = {addTask}
+                                changeTaskStatus = {changeTaskStatus}
+                                filter = {tdl.filter}
+                                key = {tdl.id}
+                            />
+                        )
+                    })
+                    : <h1 style={{color:'black'}}>to get started, create your first to-do list...</h1>
 
                 }
-
-            </Paper>
+            </div>
         </div>
     );
 }
