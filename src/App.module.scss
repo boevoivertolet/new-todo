@@ -1,24 +1,34 @@
 @import 'common/styles/sass/variables';
 
 .app {
+  width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-flow: column nowrap;
   color: $textColor;
 
-  .add__todolist {
-    border-radius: $borderRadius;
-    margin: 5px;
-    height: 57px;
-    //background: #999999;
-    padding: 20px;
-    width: 250px;
+  header {
+    position: fixed;
+    top: 0;
+    z-index: 100;
+    width: 100%;
   }
 
   .app__container {
+    position: relative;
+    top: 70px;
+    flex-wrap: wrap;
     display: flex;
     width: 100%;
     height: 100%;
-    //background: $backgroundColor;
     min-height: 100vh;
+
+    .add__todolist {
+      min-width: 400px;
+      border-radius: $borderRadius;
+      margin: 5px;
+      height: 57px;
+      padding: 20px;
+      width: 250px;
+    }
   }
 }

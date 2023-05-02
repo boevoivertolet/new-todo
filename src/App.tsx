@@ -71,26 +71,26 @@ function App() {
 
     return (
         <div className = {s.app}>
-            <ButtonAppBar/>
-            <div className = {s.app__container}>
-                <div className={s.add__todolist}>
+            <header><ButtonAppBar/></header>
+            <Paper className = {s.app__container}>
+                <div className = {s.add__todolist}>
                     <AddItemForm title = {'+'} onEnterKey = {addTodolist} addItem = {addTodolist} />
                 </div>
                 {todolists.map((tdl) => {
                     console.log('todolist render')
                     return (
                         <Todolist
-                                removeTodolist = {removeTodolist}
-                                changeFilter = {changeFilter}
-                                todolistId = {tdl.id}
-                                title = {tdl.title}
-                                tasks = {tasks}
-                                removeTask = {removeTask}
-                                addTask = {addTask}
-                                changeTaskStatus = {changeTaskStatus}
-                                filter = {tdl.filter}
-                                key = {tdl.id}
-                            />
+                            removeTodolist = {removeTodolist}
+                            changeFilter = {changeFilter}
+                            todolistId = {tdl.id}
+                            title = {tdl.title}
+                            tasks = {tasks}
+                            removeTask = {removeTask}
+                            addTask = {addTask}
+                            changeTaskStatus = {changeTaskStatus}
+                            filter = {tdl.filter}
+                            key = {tdl.id}
+                        />
 
 
                     )
@@ -98,7 +98,7 @@ function App() {
 
                 }
 
-            </div>
+            </Paper>
         </div>
     );
 }

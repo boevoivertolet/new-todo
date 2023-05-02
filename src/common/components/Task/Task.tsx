@@ -18,7 +18,7 @@ export const Task: React.FC<TaskProps> = (props) => {
 
 
     return (
-        <Paper className = {isDone ? `${s.task + ' ' + s.isDone}` : s.task} key = {id}>
+        <Paper style={{transition:'1s'}} className = {isDone ? `${s.task + ' ' + s.isDone}` : s.task} key = {id}>
             <MyCheckBox checked = {isDone}
                         callBack = {(checked) => onChangeCheckboxHandler(todolistId, id, checked)} />
             <EditableInput value = {title} />

@@ -3,19 +3,16 @@
 
 .task {
   height: 50px;
-  margin-top: 15px;
   justify-content: space-between;
   display: flex;
   align-items: center;
-  width: 90%;
-  transition: 1s;
+  width: 100%;
 
-  &:hover{
-    transform: scale(1.1);
+
+  &:hover {
     background: #f1efef;
   }
 }
-
 
 .isDone {
   opacity: 0.7;
