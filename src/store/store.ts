@@ -18,8 +18,7 @@ export type ThunkAppDispatchType = ThunkDispatch<AppRootStateType,
     any,
     AnyAction>
 export const useAppDispatch = () => useDispatch<ThunkAppDispatchType>()
-export const useAppSelector: TypedUseSelectorHook<AppRootStateType> =
-    useSelector
+export const useAppSelector: TypedUseSelectorHook<AppRootStateType> = useSelector
 
 
 // @ts-ignore
