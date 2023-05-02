@@ -3,18 +3,7 @@ import {v1} from "uuid";
 import {addTodolistAC, todolistID1, todolistID2} from "./todolistsReducer";
 
 
-const InitialState: TasksType = {
-    [todolistID1]: [
-        {id: v1(), title: 'HTML&CSS', isDone: true},
-        {id: v1(), title: 'JS', isDone: true},
-        {id: v1(), title: 'ReactJS', isDone: false},
-
-    ],
-    [todolistID2]: [
-        {id: v1(), title: 'Rest API', isDone: true},
-        {id: v1(), title: 'GraphQL', isDone: false},
-    ]
-}
+const InitialState: TasksType = {}
 
 export const tasksReducer = (state: TasksType = InitialState, action: TasksActionType) => {
     switch (action.type) {
