@@ -5,7 +5,7 @@ import s from './App.module.scss'
 import {AddItemForm} from "./common/components/AddItemForm/AddItemForm";
 import ButtonAppBar from "./common/components/AppBar/AppBar";
 import {useAppDispatch, useAppSelector} from "./store/store";
-import {remove} from "./reducers/taskReducer";
+import {add, remove} from "./reducers/taskReducer";
 
 
 function App() {
@@ -14,17 +14,13 @@ function App() {
     const todolists = useAppSelector(state => state.todolists)
 
 
-
-
 // Tasks
     const removeTask = (todolistId: string, id: string) => {
         dispatch(remove(todolistId, id))
-
-
-        // setTasks(tasks.filter(el => el.id != id))
     }
     const addTask = (todolistId: string, title: string) => {
         // setTasks({...tasks, [todolistId]: [{id: v1(), title: title, isDone: false}, ...tasks[todolistId]]})
+        dispatch(add(todolistId, title))
 
 
         // setTasks([{id: v1(), title: title, isDone: false}, ...tasks])

@@ -25,6 +25,13 @@ export const tasksReducer = (state: TasksType = InitialState, action: TasksActio
                 [action.payload.todolistId]: state[action.payload.todolistId].filter(t => t.id !== action.payload.id)
             }
         }
+        case 'tasks/add' : {
+            return{
+                ...state,
+                [action.payload.todolistId]: [{id: v1(), title: action.payload.title, isDone: false}, ...state[action.payload.todolistId]]
+            }
+
+        }
         default:
             return state
     }
@@ -37,8 +44,15 @@ export const remove = (todolistId: string, id: string) => {
             todolistId, id
         }
     } as const
-
+}
+export const add = (todolistId: string,title: string) => {
+    return {
+        type: 'tasks/add',
+        payload: {
+            todolistId,title
+        }
+    } as const
 }
 
 
-export type TasksActionType = | ReturnType<typeof remove>
+export type TasksActionType = | ReturnType<typeof remove> | ReturnType<typeof add>
