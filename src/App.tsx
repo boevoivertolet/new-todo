@@ -8,6 +8,7 @@ import { addAC, changeStatusAC, removeAC } from './reducers/taskReducer'
 import {
 	addTodolistAC,
 	changeFilterAC,
+	changeTodolistTitleAC,
 	removeTodolistAC
 } from './reducers/todolistsReducer'
 
@@ -45,6 +46,13 @@ function App() {
 		dispatch(addTodolistAC(title))
 	}
 
+	const changeTodolistTitle = (id: string, title: string) => {
+		dispatch(changeTodolistTitleAC(id, title))
+	}
+	const changeTaskTitle = (id: string, title: string) => {
+		// dispatch(changeTaskTitleAC(id, title))
+	}
+
 	return (
 		<div className={s.app}>
 			<header>
@@ -62,6 +70,7 @@ function App() {
 					todolists.map((tdl) => {
 						return (
 							<Todolist
+								changeTodolistTitle={changeTodolistTitle}
 								removeTodolist={removeTodolist}
 								changeFilter={changeFilter}
 								todolistId={tdl.id}
@@ -70,6 +79,7 @@ function App() {
 								removeTask={removeTask}
 								addTask={addTask}
 								changeTaskStatus={changeTaskStatus}
+								changeTaskTitle={changeTaskTitle}
 								filter={tdl.filter}
 								key={tdl.id}
 							/>
