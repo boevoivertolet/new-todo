@@ -1,3 +1,4 @@
+import { FilterType } from './../App'
 import { v1 } from 'uuid'
 import { TodolistsType } from '../App'
 import {
@@ -50,4 +51,31 @@ test('todolist title should be changed', () => {
 
 	expect(endState.length).toBe(2)
 	expect(endState[0].title).toBe('new title')
+})
+test('todolist filter should be changed', () => {
+	let todolistId1 = v1()
+	let todolistId2 = v1()
+
+	const startState: Array<TodolistsType> = [
+		{ id: todolistId1, title: 'What to learn', filter: 'all' },
+		{ id: todolistId2, title: 'What to  buy', filter: 'all' }
+	]
+
+	let action: ActionType = {
+		type: 'todolists/change_filter',
+		payload: { todolistId: todolistId1, filter: 'active' }
+	}
+
+	type ActionType = {
+		type: 'todolists/change_filter'
+		payload: {
+			todolistId: string
+			filter: FilterType
+		}
+	}
+
+	const endState = todolistReducer(startState, action)
+
+	expect(endState.length).toBe(2)
+	expect(endState[0].filter).toBe('active')
 })
