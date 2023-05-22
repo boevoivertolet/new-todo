@@ -27,7 +27,7 @@ export const Task: React.FC<TaskProps> = (props) => {
 		changeTaskStatus(todolistId, id, checked)
 	}
 
-	const changeTodolistTitleHandler = (title: string) => {
+	const changeTaskTitleHandler = (title: string) => {
 		changeTaskTitle(todolistId, title)
 	}
 
@@ -43,7 +43,7 @@ export const Task: React.FC<TaskProps> = (props) => {
 				}
 			/>
 			<EditableInput
-				changeTodolistTitle={changeTodolistTitleHandler}
+				changeTodolistTitle={changeTaskTitleHandler}
 				value={title}
 			/>
 			<DeleteForeverIcon
