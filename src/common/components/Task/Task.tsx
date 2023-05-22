@@ -28,7 +28,7 @@ export const Task: React.FC<TaskProps> = (props) => {
 	}
 
 	const changeTaskTitleHandler = (title: string) => {
-		changeTaskTitle(todolistId, title)
+		changeTaskTitle(todolistId, id, title)
 	}
 
 	return (
@@ -56,7 +56,7 @@ export const Task: React.FC<TaskProps> = (props) => {
 }
 
 type TaskProps = {
-	changeTaskTitle: (todolistId: string, title: string) => void
+	changeTaskTitle: (id: string, taskId: string, title: string) => void
 	todolistId: string
 	id: string
 	isDone: boolean

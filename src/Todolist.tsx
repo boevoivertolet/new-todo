@@ -112,7 +112,7 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
 }
 type TodolistProps = {
 	changeTodolistTitle: (id: string, title: string) => void
-	changeTaskTitle: (id: string, title: string) => void
+	changeTaskTitle: (id: string, taskId: string, title: string) => void
 	removeTodolist: (todolistId: string) => void
 	todolistId: string
 	title: string

@@ -4,7 +4,12 @@ import s from './App.module.scss'
 import { AddItemForm } from './common/components/AddItemForm/AddItemForm'
 import ButtonAppBar from './common/components/AppBar/AppBar'
 import { useAppDispatch, useAppSelector } from './store/store'
-import { addAC, changeStatusAC, removeAC } from './reducers/taskReducer'
+import {
+	addAC,
+	changeStatusAC,
+	changeTaskTitleAC,
+	removeAC
+} from './reducers/taskReducer'
 import {
 	addTodolistAC,
 	changeFilterAC,
@@ -49,8 +54,8 @@ function App() {
 	const changeTodolistTitle = (id: string, title: string) => {
 		dispatch(changeTodolistTitleAC(id, title))
 	}
-	const changeTaskTitle = (id: string, title: string) => {
-		// dispatch(changeTaskTitleAC(id, title))
+	const changeTaskTitle = (id: string, taskId: string, title: string) => {
+		dispatch(changeTaskTitleAC(id, taskId, title))
 	}
 
 	return (
