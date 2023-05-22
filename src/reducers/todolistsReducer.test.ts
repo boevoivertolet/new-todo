@@ -8,6 +8,17 @@ import {
 	todolistReducer
 } from './todolistsReducer'
 
+// let todolistId1 = v1()
+// let todolistId2 = v1()
+// let startState: Array<TodolistsType>
+
+// beforeEach(() => {
+// 	const startState: Array<TodolistsType> = [
+// 		{ id: todolistId1, title: 'What to learn', filter: 'all' },
+// 		{ id: todolistId2, title: 'What to  buy', filter: 'all' }
+// 	]
+// })
+
 test('correct todolist should be removed', () => {
 	let todolistId1 = v1()
 	let todolistId2 = v1()
@@ -76,6 +87,6 @@ test('todolist filter should be changed', () => {
 
 	const endState = todolistReducer(startState, action)
 
-	expect(endState.length).toBe(2)
+	expect(startState[0].filter).toBe('all')
 	expect(endState[0].filter).toBe('active')
 })
