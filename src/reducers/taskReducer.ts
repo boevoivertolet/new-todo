@@ -7,7 +7,7 @@ const InitialState: TasksType = {}
 export const tasksReducer = (
 	state: TasksType = InitialState,
 	action: TasksActionType
-) => {
+): TasksType => {
 	switch (action.type) {
 		case 'tasks/remove': {
 			return {
@@ -18,10 +18,9 @@ export const tasksReducer = (
 			}
 		}
 		case 'todolists/remove_todolist': {
-			return {
-				...state,
-				[action.payload.todolistId]: []
-			}
+			let copyState = { ...state }
+			delete copyState[action.payload.todolistId]
+			return copyState
 		}
 		case 'tasks/add': {
 			return {
