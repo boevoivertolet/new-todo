@@ -8,7 +8,8 @@ import { ButtonGroup, Paper } from '@mui/material'
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined'
 import { Task } from './common/components/Task/Task'
 
-export const Todolist: React.FC<TodolistProps> = (props) => {
+export const Todolist: React.FC<TodolistProps> = React.memo((props) => {
+	console.log('Todolist called')
 	const {
 		title,
 		tasks,
@@ -112,7 +113,7 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
 			<div className={s.btn__block}></div>
 		</Paper>
 	)
-}
+})
 type TodolistProps = {
 	changeTodolistTitle: (id: string, title: string) => void
 	changeTaskTitle: (id: string, taskId: string, title: string) => void
