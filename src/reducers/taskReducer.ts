@@ -1,6 +1,6 @@
 import { TasksType } from '../App'
 import { v1 } from 'uuid'
-import { addTodolistAC } from './todolistsReducer'
+import { addTodolistAC, removeTodolistAC } from './todolistsReducer'
 
 const InitialState: TasksType = {}
 
@@ -15,6 +15,12 @@ export const tasksReducer = (
 				[action.payload.todolistId]: state[
 					action.payload.todolistId
 				].filter((t) => t.id !== action.payload.id)
+			}
+		}
+		case 'todolists/remove_todolist': {
+			return {
+				...state,
+				[action.payload.todolistId]: []
 			}
 		}
 		case 'tasks/add': {
@@ -121,3 +127,4 @@ export type TasksActionType =
 	| ReturnType<typeof changeStatusAC>
 	| ReturnType<typeof addTodolistAC>
 	| ReturnType<typeof changeTaskTitleAC>
+	| ReturnType<typeof removeTodolistAC>
