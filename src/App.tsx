@@ -44,7 +44,6 @@ function App() {
 	// Todolists
 	const removeTodolist = (todolistId: string) => {
 		dispatch(removeTodolistAC(todolistId))
-		// delete tasks[todolistId]
 	}
 
 	const addTodolist = (title: string) => {

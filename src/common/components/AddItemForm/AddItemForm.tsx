@@ -4,6 +4,8 @@ import { MyButton } from '../MyButton/MyButton'
 import s from './AddItemForm.module.scss'
 
 export const AddItemForm: React.FC<AddItemFormProps> = (props) => {
+	console.log('render AddItemForm')
+
 	const {
 		addItem,
 		onEnterKey,
@@ -26,7 +28,9 @@ export const AddItemForm: React.FC<AddItemFormProps> = (props) => {
 	const [error, setError] = useState<string | null>(null)
 	const onChangeTextHandler = (value: string) => {
 		setValue(value)
-		setError(null)
+		if (error !== null) {
+			setError(null)
+		}
 	}
 	const addItemHandler = () => {
 		if (value === '') {
