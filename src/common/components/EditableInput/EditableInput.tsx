@@ -2,38 +2,39 @@ import React, { useState } from 'react'
 import { MyInput } from '../MyInput/MyInput'
 import s from './EditableInput.module.scss'
 
-export const EditableInput: React.FC<EditableInputProps> = (props) => {
-	const { changeTodolistTitle, ...restProps } = props
-	const [editMode, setEditMode] = useState<boolean>(false)
-	const [value, setValue] = useState(restProps.value)
+export const EditableInput: React.FC<EditableInputProps> = React.memo(
+	(props) => {
+		const { changeTodolistTitle, ...restProps } = props
+		const [editMode, setEditMode] = useState<boolean>(false)
+		const [value, setValue] = useState(restProps.value)
 
-	const activateEditMod = () => {
-		setEditMode(true)
+		const activateEditMod = () => {
+			setEditMode(true)
+		}
+
+		const deActivateEditMod = () => {
+			setEditMode(false)
+			changeTodolistTitle(value)
+		}
+
+		return (
+			<div className={s.editable__input}>
+				{!editMode ? (
+					<div className={s.editable__div} onDoubleClick={activateEditMod}>
+						{value}
+					</div>
+				) : (
+					<MyInput
+						blurCallBack={deActivateEditMod}
+						callBack={setValue}
+						value={value}
+						onEnterKeyCallBack={deActivateEditMod}
+					/>
+				)}
+			</div>
+		)
 	}
-
-	const deActivateEditMod = () => {
-		setEditMode(false)
-		changeTodolistTitle(value)
-	}
-
-	return (
-		<div className={s.editable__input}>
-			{!editMode ? (
-				<div className={s.editable__div} onDoubleClick={activateEditMod}>
-					{value}
-				</div>
-			) : (
-				<MyInput
-					blurCallBack={deActivateEditMod}
-					callBack={setValue}
-					value={value}
-					onEnterKeyCallBack={deActivateEditMod}
-				/>
-			)}
-		</div>
-	)
-}
-
+)
 type EditableInputProps = {
 	value: string
 	changeTodolistTitle: (title: string) => void

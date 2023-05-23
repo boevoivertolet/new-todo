@@ -27,7 +27,7 @@ export const Todolist: React.FC<TodolistProps> = React.memo((props) => {
 
 	const addItemHandler = useCallback(
 		(value: string) => addTask(todolistId, value),
-		[]
+		[addTask, todolistId]
 	)
 
 	let filteredTasks = tasks[todolistId]
@@ -41,10 +41,13 @@ export const Todolist: React.FC<TodolistProps> = React.memo((props) => {
 
 	const removeTodolistHandler = useCallback(() => {
 		removeTodolist(todolistId)
-	}, [])
-	const changeTodolistTitleHandler = useCallback((title: string) => {
-		changeTodolistTitle(todolistId, title)
-	}, [])
+	}, [removeTodolist, todolistId])
+	const changeTodolistTitleHandler = useCallback(
+		(title: string) => {
+			changeTodolistTitle(todolistId, title)
+		},
+		[changeTodolistTitle, todolistId]
+	)
 
 	return (
 		<Paper elevation={3} className={s.todolist}>
@@ -88,25 +91,25 @@ export const Todolist: React.FC<TodolistProps> = React.memo((props) => {
 				<MyButton
 					disabled={filter === 'all'}
 					active={filter === 'all'}
-					callBack={() => {
+					callBack={useCallback(() => {
 						changeFilter(todolistId, 'all')
-					}}>
+					}, [changeFilter, todolistId])}>
 					all
 				</MyButton>
 				<MyButton
 					disabled={filter === 'active'}
 					active={filter === 'active'}
-					callBack={() => {
+					callBack={useCallback(() => {
 						changeFilter(todolistId, 'active')
-					}}>
+					}, [changeFilter, todolistId])}>
 					active
 				</MyButton>
 				<MyButton
 					disabled={filter === 'complete'}
 					active={filter === 'complete'}
-					callBack={() => {
+					callBack={useCallback(() => {
 						changeFilter(todolistId, 'complete')
-					}}>
+					}, [changeFilter, todolistId])}>
 					complete
 				</MyButton>
 			</ButtonGroup>

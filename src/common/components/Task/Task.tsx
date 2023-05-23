@@ -5,7 +5,7 @@ import { EditableInput } from '../EditableInput/EditableInput'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import { Paper } from '@mui/material'
 
-export const Task: React.FC<TaskProps> = (props) => {
+export const Task: React.FC<TaskProps> = React.memo((props) => {
 	const {
 		id,
 		isDone,
@@ -16,19 +16,25 @@ export const Task: React.FC<TaskProps> = (props) => {
 		changeTaskTitle,
 		...restProps
 	} = props
-	const removeTaskHandler = useCallback((todolistId: string, id: string) => {
-		removeTask(id, todolistId)
-	}, [])
+	const removeTaskHandler = useCallback(
+		(todolistId: string, id: string) => {
+			removeTask(id, todolistId)
+		},
+		[removeTask, id, todolistId]
+	)
 	const onChangeCheckboxHandler = useCallback(
 		(todolistId: string, id: string, checked: boolean) => {
 			changeTaskStatus(todolistId, id, checked)
 		},
-		[]
+		[changeTaskStatus, todolistId, id]
 	)
 
-	const changeTaskTitleHandler = useCallback((title: string) => {
-		changeTaskTitle(todolistId, id, title)
-	}, [])
+	const changeTaskTitleHandler = useCallback(
+		(title: string) => {
+			changeTaskTitle(todolistId, id, title)
+		},
+		[changeTaskTitle, todolistId, id]
+	)
 
 	return (
 		<Paper
@@ -52,8 +58,7 @@ export const Task: React.FC<TaskProps> = (props) => {
 			</DeleteForeverIcon>
 		</Paper>
 	)
-}
-
+})
 type TaskProps = {
 	changeTaskTitle: (id: string, taskId: string, title: string) => void
 	todolistId: string
