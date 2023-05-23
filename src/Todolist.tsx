@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { FilterType, TasksType } from './App'
 import { MyButton } from './common/components/MyButton/MyButton'
 import s from './Todolist.module.scss'
@@ -24,7 +24,10 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
 		...restProps
 	} = props
 
-	const addItemHandler = (value: string) => addTask(todolistId, value)
+	const addItemHandler = useCallback(
+		(value: string) => addTask(todolistId, value),
+		[]
+	)
 
 	let filteredTasks = tasks[todolistId]
 	if (filter === 'active') {
@@ -35,12 +38,12 @@ export const Todolist: React.FC<TodolistProps> = (props) => {
 		filteredTasks = tasks[todolistId].filter((el) => el.isDone)
 	}
 
-	const removeTodolistHandler = () => {
+	const removeTodolistHandler = useCallback(() => {
 		removeTodolist(todolistId)
-	}
-	const changeTodolistTitleHandler = (title: string) => {
+	}, [])
+	const changeTodolistTitleHandler = useCallback((title: string) => {
 		changeTodolistTitle(todolistId, title)
-	}
+	}, [])
 
 	return (
 		<Paper elevation={3} className={s.todolist}>

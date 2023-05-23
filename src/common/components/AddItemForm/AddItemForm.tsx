@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { memo, useState } from 'react'
 import { MyInput } from '../MyInput/MyInput'
 import { MyButton } from '../MyButton/MyButton'
 import s from './AddItemForm.module.scss'
 
-export const AddItemForm: React.FC<AddItemFormProps> = (props) => {
+export const AddItemForm: React.FC<AddItemFormProps> = React.memo((props) => {
 	console.log('render AddItemForm')
 
 	const {
@@ -63,7 +63,7 @@ export const AddItemForm: React.FC<AddItemFormProps> = (props) => {
 			</div>
 		</div>
 	)
-}
+})
 type AddItemFormProps = {
 	onEnterKey: (key: string) => void
 	placeholder?: string

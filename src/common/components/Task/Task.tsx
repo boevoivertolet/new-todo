@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import s from './Task.module.scss'
 import { MyCheckBox } from '../MyCheckBox/MyCheckBox'
 import { EditableInput } from '../EditableInput/EditableInput'
@@ -16,20 +16,19 @@ export const Task: React.FC<TaskProps> = (props) => {
 		changeTaskTitle,
 		...restProps
 	} = props
-	const removeTaskHandler = (todolistId: string, id: string) => {
+	const removeTaskHandler = useCallback((todolistId: string, id: string) => {
 		removeTask(id, todolistId)
-	}
-	const onChangeCheckboxHandler = (
-		todolistId: string,
-		id: string,
-		checked: boolean
-	) => {
-		changeTaskStatus(todolistId, id, checked)
-	}
+	}, [])
+	const onChangeCheckboxHandler = useCallback(
+		(todolistId: string, id: string, checked: boolean) => {
+			changeTaskStatus(todolistId, id, checked)
+		},
+		[]
+	)
 
-	const changeTaskTitleHandler = (title: string) => {
+	const changeTaskTitleHandler = useCallback((title: string) => {
 		changeTaskTitle(todolistId, id, title)
-	}
+	}, [])
 
 	return (
 		<Paper

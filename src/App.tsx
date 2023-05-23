@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { TaskType, Todolist } from './Todolist'
 import s from './App.module.scss'
 import { AddItemForm } from './common/components/AddItemForm/AddItemForm'
@@ -23,40 +23,44 @@ function App() {
 	const todolists = useAppSelector<TodolistsType[]>((state) => state.todolists)
 
 	// Tasks
-	const removeTask = (todolistId: string, id: string) => {
+	const removeTask = useCallback((todolistId: string, id: string) => {
 		dispatch(removeAC(todolistId, id))
-	}
-	const addTask = (todolistId: string, title: string) => {
+	}, [])
+	const addTask = useCallback((todolistId: string, title: string) => {
 		dispatch(addAC(todolistId, title))
-	}
-	const changeTaskStatus = (
-		todolistId: string,
-		id: string,
-		isDone: boolean
-	) => {
-		dispatch(changeStatusAC(todolistId, id, isDone))
-	}
+	}, [])
+	const changeTaskStatus = useCallback(
+		(todolistId: string, id: string, isDone: boolean) => {
+			dispatch(changeStatusAC(todolistId, id, isDone))
+		},
+		[]
+	)
 
-	const changeFilter = (todolistId: string, filter: FilterType) => {
-		dispatch(changeFilterAC(todolistId, filter))
-	}
+	const changeFilter = useCallback(
+		(todolistId: string, filter: FilterType) => {
+			dispatch(changeFilterAC(todolistId, filter))
+		},
+		[]
+	)
 
 	// Todolists
-	const removeTodolist = (todolistId: string) => {
+	const removeTodolist = useCallback((todolistId: string) => {
 		dispatch(removeTodolistAC(todolistId))
-	}
+	}, [])
 
-	const addTodolist = (title: string) => {
+	const addTodolist = useCallback((title: string) => {
 		dispatch(addTodolistAC(title))
-	}
+	}, [])
 
-	const changeTodolistTitle = (id: string, title: string) => {
+	const changeTodolistTitle = useCallback((id: string, title: string) => {
 		dispatch(changeTodolistTitleAC(id, title))
-	}
-	const changeTaskTitle = (id: string, taskId: string, title: string) => {
-		dispatch(changeTaskTitleAC(id, taskId, title))
-	}
-
+	}, [])
+	const changeTaskTitle = useCallback(
+		(id: string, taskId: string, title: string) => {
+			dispatch(changeTaskTitleAC(id, taskId, title))
+		},
+		[]
+	)
 	return (
 		<div className={s.app}>
 			<header>
