@@ -6,7 +6,7 @@ export let todolistID2 = v1()
 
 const InitialState: TodolistsType[] = []
 
-export const todolistReducer = (
+export const todolistsReducer = (
 	state: TodolistsType[] = InitialState,
 	action: TodolistsActionType
 ) => {
