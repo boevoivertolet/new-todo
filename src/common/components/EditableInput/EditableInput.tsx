@@ -4,6 +4,7 @@ import s from './EditableInput.module.scss'
 
 export const EditableInput: React.FC<EditableInputProps> = React.memo(
 	(props) => {
+		console.log('render EditableInput')
 		const { changeTodolistTitle, ...restProps } = props
 		const [editMode, setEditMode] = useState<boolean>(false)
 		const [value, setValue] = useState(restProps.value)
