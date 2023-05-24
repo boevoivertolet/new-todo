@@ -5,7 +5,7 @@ import {
 	addTodolistAC,
 	changeTodolistTitleAC,
 	removeTodolistAC,
-	todolistReducer
+	todolistsReducer
 } from './todolistsReducer'
 
 let todolistId1 = v1()
@@ -20,21 +20,21 @@ beforeEach(() => {
 })
 
 test('correct todolist should be removed', () => {
-	const endState = todolistReducer(startState, removeTodolistAC(todolistId1))
+	const endState = todolistsReducer(startState, removeTodolistAC(todolistId1))
 
 	expect(endState.length).toBe(1)
 	expect(endState[0].id).toBe(todolistId2)
 })
 
 test('todolist should be added', () => {
-	const endState = todolistReducer(startState, addTodolistAC('title'))
+	const endState = todolistsReducer(startState, addTodolistAC('title'))
 
 	expect(endState.length).toBe(3)
 	expect(endState[0].title).toBe('title')
 })
 
 test('todolist title should be changed', () => {
-	const endState = todolistReducer(
+	const endState = todolistsReducer(
 		startState,
 		changeTodolistTitleAC(todolistId1, 'new title')
 	)
@@ -56,7 +56,7 @@ test('todolist filter should be changed', () => {
 		}
 	}
 
-	const endState = todolistReducer(startState, action)
+	const endState = todolistsReducer(startState, action)
 
 	expect(startState[0].filter).toBe('all')
 	expect(endState[0].filter).toBe('active')

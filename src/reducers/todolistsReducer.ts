@@ -6,10 +6,10 @@ export let todolistID2 = v1()
 
 const InitialState: TodolistsType[] = []
 
-export const todolistReducer = (
+export const todolistsReducer = (
 	state: TodolistsType[] = InitialState,
 	action: TodolistsActionType
-) => {
+): TodolistsType[] => {
 	switch (action.type) {
 		case 'todolists/change_filter': {
 			return state.map((tdl) =>
