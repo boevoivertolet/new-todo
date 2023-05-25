@@ -22,5 +22,13 @@ export const todolistAPI = {
 			settings
 		)
 		return promise
+	},
+	createTodolists(title: string) {
+		const promise = axios.post(
+			'https://social-network.samuraijs.com/api/1.1/todo-lists',
+			{ title },
+			settings
+		)
+		return promise
 	}
 }
