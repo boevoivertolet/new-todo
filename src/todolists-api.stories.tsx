@@ -1,4 +1,3 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { todolistAPI } from './api/todolist-api'
 
@@ -10,7 +9,7 @@ export const GetTodolists = () => {
 	const [state, setState] = useState<any>(null)
 	useEffect(() => {
 		todolistAPI.getTodolists().then((res) => {
-			setState(res.data)
+			setState(res.data[0])
 		})
 	}, [])
 

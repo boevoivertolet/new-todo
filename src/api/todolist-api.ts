@@ -10,19 +10,52 @@ import { instance } from './instance'
 
 export const todolistAPI = {
 	updateTodolist(todolistId: string, title: string) {
-		const promise = instance.put(`todo-lists/${todolistId}`, { title: title })
+		const promise = instance.put<UpdateTodolistResponseType>(
+			`todo-lists/${todolistId}`,
+			{ title: title }
+		)
 		return promise
 	},
 	getTodolists() {
-		const promise = instance.get('todo-lists')
+		const promise = instance.get<Array<TodolistType>>('todo-lists')
 		return promise
 	},
 	createTodolists(title: string) {
-		const promise = instance.post('todo-lists', { title })
+		const promise = instance.post<CreateTodolistResponseType>('todo-lists', {
+			title
+		})
 		return promise
 	},
 	deleteTodolist(todolistId: string) {
-		const promise = instance.delete(`todo-lists/${todolistId}`)
+		const promise = instance.delete<DeleteTodolistResponseType>(
+			`todo-lists/${todolistId}`
+		)
 		return promise
 	}
+}
+type TodolistType = {
+	id: string
+	addedDate: string
+	order: number
+	title: string
+}
+type CreateTodolistResponseType = {
+	resultCode: number
+	messages: Array<string>
+	fieldsErrors: Array<string>
+	data: {
+		item: TodolistType
+	}
+}
+type UpdateTodolistResponseType = {
+	resultCode: number
+	messages: Array<string>
+	fieldsErrors: Array<string>
+	data: {}
+}
+type DeleteTodolistResponseType = {
+	resultCode: number
+	messages: Array<string>
+	fieldsErrors: Array<string>
+	data: {}
 }
