@@ -1,5 +1,6 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import { todolistAPI } from './api/todolist-api'
 
 export default {
 	title: 'API'
@@ -59,19 +60,30 @@ export const DeleteTodolist = () => {
 
 	return <div>{JSON.stringify(state)}</div>
 }
+// export const UpdateTodolistTitle = () => {
+// 	const [state, setState] = useState<any>(null)
+// 	useEffect(() => {
+// 		axios
+// 			.put(
+// 				`https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}`,
+// 				{ title: 'REACT>>>>>>>>' },
+// 				settings
+// 			)
+// 			.then((res) => {
+// 				setState(res.data)
+// 			})
+// 	}, [])
+
+// 	return <div>{JSON.stringify(state)}</div>
+// }
 export const UpdateTodolistTitle = () => {
 	const [state, setState] = useState<any>(null)
 	useEffect(() => {
-		axios
-			.put(
-				`https://social-network.samuraijs.com/api/1.1/todo-lists/${todolistId}`,
-				{ title: 'REACT>>>>>>>>' },
-				settings
-			)
-			.then((res) => {
-				setState(res.data)
-			})
+		const todolistId = 'd9f995f4-d173-46a2-ad7b-0d2be4b41543'
+		todolistAPI.updateTodolist(todolistId, 'SOME NEW TITLE').then((res) => {
+			setState(res.data)
+		})
 	}, [])
 
-	return <div>{JSON.stringify(state)}</div>
+	return <div> {JSON.stringify(state)}</div>
 }
