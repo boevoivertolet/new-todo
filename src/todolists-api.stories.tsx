@@ -6,11 +6,6 @@ export default {
 	title: 'API'
 }
 
-const settings = {
-	withCredentials: true,
-	'API-KEY': 'b9a47b16-0cbb-4fe2-8152-303706b5e3c1' as const
-}
-
 export const GetTodolists = () => {
 	const [state, setState] = useState<any>(null)
 	useEffect(() => {
@@ -36,7 +31,7 @@ export const CreateTodolist = () => {
 export const DeleteTodolist = () => {
 	const [state, setState] = useState<any>(null)
 	useEffect(() => {
-		const todolistId = 'd9f995f4-d173-46a2-ad7b-0d2be4b41543'
+		const todolistId = 'c5c136b4-2757-4fc7-8990-c51a264abd42'
 		todolistAPI.deleteTodolist(todolistId).then((res) => {
 			setState(res.data)
 		})
@@ -48,10 +43,12 @@ export const DeleteTodolist = () => {
 export const UpdateTodolistTitle = () => {
 	const [state, setState] = useState<any>(null)
 	useEffect(() => {
-		const todolistId = 'd9f995f4-d173-46a2-ad7b-0d2be4b41543'
-		todolistAPI.updateTodolist(todolistId, 'SOME NEW TITLE').then((res) => {
-			setState(res.data)
-		})
+		const todolistId = 'c5c136b4-2757-4fc7-8990-c51a264abd42'
+		todolistAPI
+			.updateTodolist(todolistId, '19234619826734918762349186273419823764')
+			.then((res) => {
+				setState(res.data)
+			})
 	}, [])
 
 	return <div> {JSON.stringify(state)}</div>
