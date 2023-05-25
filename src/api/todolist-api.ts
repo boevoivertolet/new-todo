@@ -10,7 +10,7 @@ import { instance } from './instance'
 
 export const todolistAPI = {
 	updateTodolist(todolistId: string, title: string) {
-		const promise = instance.put<UpdateTodolistResponseType>(
+		const promise = instance.put<ResponseType<{}>>(
 			`todo-lists/${todolistId}`,
 			{ title: title }
 		)
@@ -21,13 +21,17 @@ export const todolistAPI = {
 		return promise
 	},
 	createTodolists(title: string) {
-		const promise = instance.post<CreateTodolistResponseType>('todo-lists', {
+		const promise = instance.post<
+			ResponseType<{
+				item: TodolistType
+			}>
+		>('todo-lists', {
 			title
 		})
 		return promise
 	},
 	deleteTodolist(todolistId: string) {
-		const promise = instance.delete<DeleteTodolistResponseType>(
+		const promise = instance.delete<ResponseType<{}>>(
 			`todo-lists/${todolistId}`
 		)
 		return promise
@@ -39,23 +43,10 @@ type TodolistType = {
 	order: number
 	title: string
 }
-type CreateTodolistResponseType = {
+
+export type ResponseType<D> = {
 	resultCode: number
 	messages: Array<string>
 	fieldsErrors: Array<string>
-	data: {
-		item: TodolistType
-	}
-}
-type UpdateTodolistResponseType = {
-	resultCode: number
-	messages: Array<string>
-	fieldsErrors: Array<string>
-	data: {}
-}
-type DeleteTodolistResponseType = {
-	resultCode: number
-	messages: Array<string>
-	fieldsErrors: Array<string>
-	data: {}
+	data: D
 }
