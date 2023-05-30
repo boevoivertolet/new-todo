@@ -14,10 +14,9 @@ import {
 	addTodolistAC,
 	changeFilterAC,
 	changeTodolistTitleAC,
-	removeTodolistAC,
-	setTodolistAC
+	fetchTodolists,
+	removeTodolistAC
 } from './reducers/todolistsReducer'
-import { todolistAPI } from './api/todolist-api'
 
 function App() {
 	const dispatch = useAppDispatch()
@@ -25,10 +24,7 @@ function App() {
 	const todolists = useAppSelector<TodolistsType[]>((state) => state.todolists)
 
 	useEffect(() => {
-		todolistAPI.getTodolists().then((res) => {
-			let todos = res.data
-			dispatch(setTodolistAC(todos))
-		})
+		dispatch(fetchTodolists)
 	}, [])
 
 	// Tasks
