@@ -3,7 +3,7 @@ import { instance } from './instance'
 
 export const taskAPI = {
 	updateTask(todolistId: string, taskId: string, title: string) {
-		const promise = instance.put(
+		const promise = instance.put<TasksResponseType<{}>>(
 			`/todo-lists/${todolistId}/tasks/${taskId}`,
 			{
 				title: title
@@ -18,7 +18,7 @@ export const taskAPI = {
 		return promise
 	},
 	createTasks(todolistId: string, title: string) {
-		const promise = instance.post<TasksResponseType>(
+		const promise = instance.post<TasksResponseType<{}>>(
 			`todo-lists/${todolistId}/tasks`,
 			{
 				title
@@ -27,7 +27,7 @@ export const taskAPI = {
 		return promise
 	},
 	deleteTasks(todolistId: string, taskId: string) {
-		const promise = instance.delete<TasksResponseType>(
+		const promise = instance.delete<TasksResponseType<{}>>(
 			`/todo-lists/${todolistId}/tasks/${taskId}`
 		)
 		return promise
@@ -52,10 +52,10 @@ type GetTasksResponseType = {
 	totalCount: number
 	error: string
 }
-type TasksResponseType = {
+type TasksResponseType<D> = {
 	resultCode: number
 	messages: Array<string>
-	data: TaskType
+	data: D
 }
 
 // export type ResponseType<D> = {
