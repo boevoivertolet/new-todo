@@ -18,13 +18,16 @@ export const taskAPI = {
 		return promise
 	},
 	createTasks(todolistId: string, title: string) {
-		const promise = instance.post(`todo-lists/${todolistId}/tasks`, {
-			title
-		})
+		const promise = instance.post<TasksResponseType>(
+			`todo-lists/${todolistId}/tasks`,
+			{
+				title
+			}
+		)
 		return promise
 	},
 	deleteTasks(todolistId: string, taskId: string) {
-		const promise = instance.delete(
+		const promise = instance.delete<TasksResponseType>(
 			`/todo-lists/${todolistId}/tasks/${taskId}`
 		)
 		return promise
@@ -43,10 +46,16 @@ type TaskType = {
 	order: number
 	addedDate: string
 }
+
 type GetTasksResponseType = {
 	items: Array<TaskType>
 	totalCount: number
 	error: string
+}
+type TasksResponseType = {
+	resultCode: number
+	messages: Array<string>
+	data: TaskType
 }
 
 // export type ResponseType<D> = {
