@@ -12,7 +12,9 @@ export const taskAPI = {
 		return promise
 	},
 	getTasks(todolistId: string) {
-		const promise = instance.get(`todo-lists/${todolistId}/tasks`)
+		const promise = instance.get<GetTasksResponseType>(
+			`todo-lists/${todolistId}/tasks`
+		)
 		return promise
 	},
 	createTasks(todolistId: string, title: string) {
@@ -28,11 +30,28 @@ export const taskAPI = {
 		return promise
 	}
 }
-type TaskType = {}
-
-export type ResponseType<D> = {
-	resultCode: number
-	messages: Array<string>
-	fieldsErrors: Array<string>
-	data: D
+type TaskType = {
+	description: string
+	title: string
+	completed: boolean
+	status: number
+	priority: number
+	startDate: string
+	deadline: string
+	id: string
+	todoListId: string
+	order: number
+	addedDate: string
 }
+type GetTasksResponseType = {
+	items: Array<TaskType>
+	totalCount: number
+	error: string
+}
+
+// export type ResponseType<D> = {
+// 	resultCode: number
+// 	messages: Array<string>
+// 	fieldsErrors: Array<string>
+// 	data: D
+// }

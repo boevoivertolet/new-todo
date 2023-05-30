@@ -10,7 +10,7 @@ export const GetTasks = () => {
 	const todolistId = '4380d5b6-88d7-4adc-ac5e-b41a8dfb73a2'
 	useEffect(() => {
 		taskAPI.getTasks(todolistId).then((res) => {
-			setState(res.data.items)
+			setState(res.data)
 		})
 	}, [])
 
