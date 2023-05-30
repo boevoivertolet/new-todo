@@ -1,5 +1,6 @@
 import { FilterType, TodolistsType } from '../App'
 import { v1 } from 'uuid'
+import { TodolistType } from '../api/todolist-api'
 
 export let todolistID1 = v1()
 export let todolistID2 = v1()
@@ -11,6 +12,9 @@ export const todolistsReducer = (
 	action: TodolistsActionType
 ): TodolistsType[] => {
 	switch (action.type) {
+		case 'todolists/set_todolists': {
+			return action.payload.todolists.map((tl) => ({ ...tl, filter: 'all' }))
+		}
 		case 'todolists/change_filter': {
 			return state.map((tdl) =>
 				tdl.id === action.payload.todolistId
@@ -50,6 +54,14 @@ export const todolistsReducer = (
 	}
 }
 
+export const setTodolistAC = (todolists: Array<TodolistType>) => {
+	return {
+		type: 'todolists/set_todolists',
+		payload: {
+			todolists
+		}
+	} as const
+}
 export const changeFilterAC = (todolistId: string, filter: FilterType) => {
 	return {
 		type: 'todolists/change_filter',
@@ -92,3 +104,4 @@ export type TodolistsActionType =
 	| ReturnType<typeof addTodolistAC>
 	| ReturnType<typeof changeFilterAC>
 	| ReturnType<typeof changeTodolistTitleAC>
+	| ReturnType<typeof setTodolistAC>
