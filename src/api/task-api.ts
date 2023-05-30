@@ -2,24 +2,29 @@ import axios from 'axios'
 import { instance } from './instance'
 
 export const taskAPI = {
-	updateTask(taskId: string, title: string) {
-		const promise = instance.put(`tasks/${taskId}`, {
-			title: title
-		})
+	updateTask(todolistId: string, taskId: string, title: string) {
+		const promise = instance.put(
+			`/todo-lists/${todolistId}/tasks/${taskId}`,
+			{
+				title: title
+			}
+		)
 		return promise
 	},
-	getTasks() {
-		const promise = instance.get('tasks')
+	getTasks(todolistId: string) {
+		const promise = instance.get(`todo-lists/${todolistId}/tasks`)
 		return promise
 	},
-	createTasks(title: string) {
-		const promise = instance.post('tasks', {
+	createTasks(todolistId: string, title: string) {
+		const promise = instance.post(`todo-lists/${todolistId}/tasks`, {
 			title
 		})
 		return promise
 	},
-	deleteTasks(taskId: string) {
-		const promise = instance.delete(`tasks/${taskId}`)
+	deleteTasks(todolistId: string, taskId: string) {
+		const promise = instance.delete(
+			`/todo-lists/${todolistId}/tasks/${taskId}`
+		)
 		return promise
 	}
 }
