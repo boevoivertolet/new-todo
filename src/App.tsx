@@ -11,6 +11,7 @@ import {
 	removeAC
 } from './reducers/taskReducer'
 import {
+	TodolistDomainType,
 	addTodolistAC,
 	changeFilterAC,
 	changeTodolistTitleAC,
@@ -21,11 +22,9 @@ import {
 function App() {
 	const dispatch = useAppDispatch()
 	const tasks = useAppSelector((state) => state.tasks)
-	const todolists = useAppSelector<TodolistsType[]>((state) => state.todolists)
-
-	useEffect(() => {
-		dispatch(fetchTodolists)
-	}, [])
+	const todolists = useAppSelector<TodolistDomainType[]>(
+		(state) => state.todolists
+	)
 
 	// Tasks
 	const removeTask = useCallback((todolistId: string, id: string) => {
@@ -66,6 +65,10 @@ function App() {
 		},
 		[]
 	)
+	useEffect(() => {
+		dispatch(fetchTodolists)
+	}, [])
+
 	return (
 		<div className={s.app}>
 			<header>
@@ -110,11 +113,11 @@ function App() {
 
 export type FilterType = 'all' | 'active' | 'complete'
 
-export type TodolistsType = {
-	id: string
-	title: string
-	filter: FilterType
-}
+// export type TodolistsType = {
+// 	id: string
+// 	title: string
+// 	filter: FilterType
+// }
 
 export type TasksType = {
 	[key: string]: TaskType[]

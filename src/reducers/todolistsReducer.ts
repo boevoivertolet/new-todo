@@ -1,4 +1,4 @@
-import { FilterType, TodolistsType } from '../App'
+import { FilterType } from '../App'
 import { v1 } from 'uuid'
 import { TodolistType, todolistAPI } from '../api/todolist-api'
 import { Dispatch } from 'redux'
@@ -6,12 +6,12 @@ import { Dispatch } from 'redux'
 export let todolistID1 = v1()
 export let todolistID2 = v1()
 
-const InitialState: TodolistsType[] = []
+const InitialState: TodolistDomainType[] = []
 
 export const todolistsReducer = (
-	state: TodolistsType[] = InitialState,
+	state: TodolistDomainType[] = InitialState,
 	action: TodolistsActionType
-): TodolistsType[] => {
+): TodolistDomainType[] => {
 	switch (action.type) {
 		case 'todolists/set_todolists': {
 			return action.payload.todolists.map((tl) => ({ ...tl, filter: 'all' }))
@@ -44,7 +44,9 @@ export const todolistsReducer = (
 				{
 					id: action.payload.todolistId,
 					title: action.payload.title,
-					filter: 'all'
+					filter: 'all',
+					addedDate: '',
+					order: 0
 				},
 				...state
 			]
@@ -112,3 +114,4 @@ export type TodolistsActionType =
 	| ReturnType<typeof changeFilterAC>
 	| ReturnType<typeof changeTodolistTitleAC>
 	| ReturnType<typeof setTodolistAC>
+export type TodolistDomainType = TodolistType & { filter: FilterType }

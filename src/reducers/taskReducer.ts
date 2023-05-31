@@ -6,6 +6,10 @@ import {
 	setTodolistAC
 } from './todolistsReducer'
 
+import { Dispatch } from 'redux'
+import { taskAPI } from '../api/task-api'
+import { TaskType } from '../Todolist'
+
 const InitialState: TasksType = {}
 
 export const tasksReducer = (
@@ -18,6 +22,11 @@ export const tasksReducer = (
 			action.payload.todolists.forEach((tl) => {
 				stateCopy[tl.id] = []
 			})
+			return stateCopy
+		}
+		case 'todolists/set_tasks': {
+			const stateCopy = { ...state }
+			stateCopy[action.payload.todolistId] = action.payload.tasks
 			return stateCopy
 		}
 		case 'tasks/remove': {
@@ -82,6 +91,16 @@ export const tasksReducer = (
 	}
 }
 // AC
+export const setTasksAC = (todolistId: string, tasks: TaskType[]) => {
+	return {
+		type: 'todolists/set_tasks',
+		payload: {
+			todolistId,
+			tasks
+		}
+	} as const
+}
+
 export const removeAC = (todolistId: string, id: string) => {
 	return {
 		type: 'tasks/remove',
@@ -131,6 +150,13 @@ export const changeTaskTitleAC = (
 
 //Thunk
 
+const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
+	taskAPI.getTasks(todolistId).then((res) => {
+		const tasks = res.data.items
+		dispatch(setTasksAC(todolistId, tasks))
+	})
+}
+
 export type TasksActionType =
 	| ReturnType<typeof removeAC>
 	| ReturnType<typeof addAC>
@@ -139,3 +165,4 @@ export type TasksActionType =
 	| ReturnType<typeof changeTaskTitleAC>
 	| ReturnType<typeof removeTodolistAC>
 	| ReturnType<typeof setTodolistAC>
+	| ReturnType<typeof setTasksAC>
