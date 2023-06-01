@@ -102,11 +102,11 @@ export const removeTodolistAC = (todolistId: string) => {
 	} as const
 }
 
-export const fetchTodolists = (dispatch: Dispatch) => {
-	todolistAPI.getTodolists().then((res) => {
-		dispatch(setTodolistAC(res.data))
-	})
-}
+// export const fetchTodolists = (dispatch: Dispatch) => {
+// 	todolistAPI.getTodolists().then((res) => {
+// 		dispatch(setTodolistAC(res.data))
+// 	})
+// }
 export const fetchTodolistsTC = () => (dispatch: Dispatch) => {
 	todolistAPI.getTodolists().then((res) => {
 		const todolists = res.data
