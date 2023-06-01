@@ -7,16 +7,17 @@ import { useAppDispatch, useAppSelector } from './store/store'
 import {
 	TasksStateType,
 	addAC,
+	addTasksTC,
 	changeStatusAC,
 	changeTaskTitleAC,
-	removeAC
+	removeAC,
+	removeTasksTC
 } from './reducers/taskReducer'
 import {
 	TodolistDomainType,
 	addTodolistAC,
 	changeFilterAC,
 	changeTodolistTitleAC,
-	fetchTodolists,
 	fetchTodolistsTC,
 	removeTodolistAC
 } from './reducers/todolistsReducer'
@@ -30,10 +31,10 @@ function App() {
 
 	// Tasks
 	const removeTask = useCallback((todolistId: string, id: string) => {
-		dispatch(removeAC(todolistId, id))
+		dispatch(removeTasksTC(todolistId, id))
 	}, [])
 	const addTask = useCallback((todolistId: string, title: string) => {
-		dispatch(addAC(todolistId, title))
+		dispatch(addTasksTC(todolistId, title))
 	}, [])
 	const changeTaskStatus = useCallback(
 		(todolistId: string, id: string, isDone: boolean) => {

@@ -17,7 +17,7 @@ export const taskAPI = {
 		)
 		return promise
 	},
-	createTasks(todolistId: string, title: string) {
+	createTask(todolistId: string, title: string) {
 		// const promise = instance.post<TasksResponseType<{ item: TaskType }>,AxiosResponse<{item: TaskType}>, {title: string}>(
 		const promise = instance.post<TasksResponseType<{ item: TaskType }>>(
 			`todo-lists/${todolistId}/tasks`,
@@ -51,10 +51,20 @@ export type TaskType = {
 	addedDate: string
 }
 
-// export type TasksType = {
-// 	[key: string]: TaskDomainType
-// }
+export enum TaskStatuses {
+	New = 0,
+	InProgress = 1,
+	Completed = 2,
+	Draft = 3
+}
 
+export enum TaskPriorities {
+	Low = 0,
+	Middle = 1,
+	Hi = 2,
+	Urgently = 3,
+	Later = 4
+}
 type GetTasksResponseType = {
 	items: Array<TaskType>
 	totalCount: number

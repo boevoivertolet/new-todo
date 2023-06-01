@@ -22,7 +22,7 @@ export const CreateTask = () => {
 	useEffect(() => {
 		const todolistId = '4380d5b6-88d7-4adc-ac5e-b41a8dfb73a2'
 		const title = 'Create Task another one'
-		taskAPI.createTasks(todolistId, title).then((res) => {
+		taskAPI.createTask(todolistId, title).then((res) => {
 			setState(res.data.data)
 		})
 	}, [])
