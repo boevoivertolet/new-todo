@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { FilterType, TasksType } from './App'
+import { FilterType } from './App'
 import { MyButton } from './common/components/MyButton/MyButton'
 import s from './Todolist.module.scss'
 import { AddItemForm } from './common/components/AddItemForm/AddItemForm'
@@ -7,6 +7,7 @@ import { EditableInput } from './common/components/EditableInput/EditableInput'
 import { ButtonGroup, Paper } from '@mui/material'
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined'
 import { Task } from './common/components/Task/Task'
+import { TaskType } from './api/task-api'
 
 export const Todolist: React.FC<TodolistProps> = React.memo((props) => {
 	console.log('Todolist called')
@@ -30,14 +31,14 @@ export const Todolist: React.FC<TodolistProps> = React.memo((props) => {
 		[addTask, todolistId]
 	)
 
-	let filteredTasks = tasks[todolistId]
-	if (filter === 'active') {
-		filteredTasks = tasks[todolistId].filter((el) => !el.isDone)
-	}
+	let filteredTasks = tasks
+	// if (filter === 'active') {
+	// 	filteredTasks = tasks[todolistId].filter((el) => !el.isDone)
+	// }
 
-	if (filter === 'complete') {
-		filteredTasks = tasks[todolistId].filter((el) => el.isDone)
-	}
+	// if (filter === 'complete') {
+	// 	filteredTasks = tasks[todolistId].filter((el) => el.isDone)
+	// }
 
 	const removeTodolistHandler = useCallback(() => {
 		removeTodolist(todolistId)
@@ -79,7 +80,6 @@ export const Todolist: React.FC<TodolistProps> = React.memo((props) => {
 							removeTask={removeTask}
 							title={el.title}
 							id={el.id}
-							isDone={el.isDone}
 							changeTaskStatus={changeTaskStatus}
 						/>
 					)
@@ -123,15 +123,10 @@ type TodolistProps = {
 	removeTodolist: (todolistId: string) => void
 	todolistId: string
 	title: string
-	tasks: TasksType
+	tasks: Array<TaskType>
 	removeTask: (todolistId: string, id: string) => void
 	addTask: (todolistId: string, title: string) => void
 	changeTaskStatus: (todolistId: string, id: string, isDone: boolean) => void
 	filter: FilterType
 	changeFilter: (todolistId: string, filter: FilterType) => void
-}
-export type TaskType = {
-	id: string
-	title: string
-	isDone: boolean
 }

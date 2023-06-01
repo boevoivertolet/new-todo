@@ -1,4 +1,3 @@
-import { TasksType } from '../App'
 import { v1 } from 'uuid'
 import {
 	addTodolistAC,
@@ -7,15 +6,14 @@ import {
 } from './todolistsReducer'
 
 import { Dispatch } from 'redux'
-import { taskAPI } from '../api/task-api'
-import { TaskType } from '../Todolist'
+import { TaskType, taskAPI } from '../api/task-api'
 
-const InitialState: TasksType = {}
+const InitialState: TasksStateType = {}
 
 export const tasksReducer = (
-	state: TasksType = InitialState,
+	state: TasksStateType = InitialState,
 	action: TasksActionType
-): TasksType => {
+): TasksStateType => {
 	switch (action.type) {
 		case 'todolists/set_todolists': {
 			const stateCopy = { ...state }
@@ -42,33 +40,33 @@ export const tasksReducer = (
 			delete copyState[action.payload.todolistId]
 			return copyState
 		}
-		case 'tasks/add': {
-			return {
-				...state,
-				[action.payload.todolistId]: [
-					{
-						id: v1(),
-						title: action.payload.title,
-						isDone: false
-					},
-					...state[action.payload.todolistId]
-				]
-			}
-		}
-		case 'tasks/change_status': {
-			return {
-				...state,
-				[action.payload.todolistId]: state[action.payload.todolistId].map(
-					(el) =>
-						el.id === action.payload.id
-							? {
-									...el,
-									isDone: action.payload.isDone
-							  }
-							: el
-				)
-			}
-		}
+		// case 'tasks/add': {
+		// 	return {
+		// 		...state,
+		// 		[action.payload.todolistId]: [
+		// 			{
+		// 				id: v1(),
+		// 				title: action.payload.title,
+		// 				isDone: false
+		// 			},
+		// 			...state[action.payload.todolistId]
+		// 		]
+		// 	}
+		// }
+		// case 'tasks/change_status': {
+		// 	return {
+		// 		...state,
+		// 		[action.payload.todolistId]: state[action.payload.todolistId].map(
+		// 			(el) =>
+		// 				el.id === action.payload.id
+		// 					? {
+		// 							...el,
+		// 							isDone: action.payload.isDone
+		// 					  }
+		// 					: el
+		// 		)
+		// 	}
+		// }
 		case 'todolists/add_todolist': {
 			return { ...state, [action.payload.todolistId]: [] }
 		}
@@ -166,3 +164,7 @@ export type TasksActionType =
 	| ReturnType<typeof removeTodolistAC>
 	| ReturnType<typeof setTodolistAC>
 	| ReturnType<typeof setTasksAC>
+
+export type TasksStateType = {
+	[key: string]: Array<TaskType>
+}

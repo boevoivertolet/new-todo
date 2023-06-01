@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect } from 'react'
-import { TaskType, Todolist } from './Todolist'
+import { Todolist } from './Todolist'
 import s from './App.module.scss'
 import { AddItemForm } from './common/components/AddItemForm/AddItemForm'
 import ButtonAppBar from './common/components/AppBar/AppBar'
 import { useAppDispatch, useAppSelector } from './store/store'
 import {
+	TasksStateType,
 	addAC,
 	changeStatusAC,
 	changeTaskTitleAC,
@@ -21,7 +22,7 @@ import {
 
 function App() {
 	const dispatch = useAppDispatch()
-	const tasks = useAppSelector((state) => state.tasks)
+	const tasks = useAppSelector<TasksStateType>((state) => state.tasks)
 	const todolists = useAppSelector<TodolistDomainType[]>(
 		(state) => state.todolists
 	)
@@ -84,6 +85,7 @@ function App() {
 				</div>
 				{todolists.length ? (
 					todolists.map((tdl) => {
+						let allTodolistTasks = tasks[tdl.id]
 						return (
 							<Todolist
 								changeTodolistTitle={changeTodolistTitle}
@@ -91,7 +93,7 @@ function App() {
 								changeFilter={changeFilter}
 								todolistId={tdl.id}
 								title={tdl.title}
-								tasks={tasks}
+								tasks={allTodolistTasks}
 								removeTask={removeTask}
 								addTask={addTask}
 								changeTaskStatus={changeTaskStatus}
@@ -113,14 +115,8 @@ function App() {
 
 export type FilterType = 'all' | 'active' | 'complete'
 
-// export type TodolistsType = {
-// 	id: string
-// 	title: string
-// 	filter: FilterType
+// export type TasksType = {
+// 	[key: string]: TaskType[]
 // }
-
-export type TasksType = {
-	[key: string]: TaskType[]
-}
 
 export default App

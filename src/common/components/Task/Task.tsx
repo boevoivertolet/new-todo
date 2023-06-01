@@ -8,7 +8,6 @@ import { Paper } from '@mui/material'
 export const Task: React.FC<TaskProps> = React.memo((props) => {
 	const {
 		id,
-		isDone,
 		title,
 		removeTask,
 		todolistId,
@@ -39,10 +38,11 @@ export const Task: React.FC<TaskProps> = React.memo((props) => {
 	return (
 		<Paper
 			style={{ transition: '1s' }}
-			className={isDone ? `${s.task + ' ' + s.isDone}` : s.task}
+			// className={isDone ? `${s.task + ' ' + s.isDone}` : s.task}
+			className={s.task}
 			key={id}>
 			<MyCheckBox
-				checked={isDone}
+				checked={false}
 				callBack={(checked) =>
 					onChangeCheckboxHandler(todolistId, id, checked)
 				}
@@ -63,7 +63,6 @@ type TaskProps = {
 	changeTaskTitle: (id: string, taskId: string, title: string) => void
 	todolistId: string
 	id: string
-	isDone: boolean
 	title: string
 	removeTask: (todolistId: string, id: string) => void
 	changeTaskStatus: (todolistId: string, id: string, isDone: boolean) => void

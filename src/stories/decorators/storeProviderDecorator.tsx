@@ -30,12 +30,60 @@ const initialGlobalState = {
 	],
 	tasks: {
 		['todolistId1']: [
-			{ id: v1(), title: 'HTML&CSS', isDone: true },
-			{ id: v1(), title: 'JS', isDone: false }
+			{
+				id: v1(),
+				title: 'HTML&CSS',
+				addedDate: '',
+				completed: false,
+				deadline: '',
+				description: '',
+				order: 0,
+				priority: 0,
+				startDate: '',
+				status: 0,
+				todoListId: ''
+			},
+			{
+				id: v1(),
+				title: 'JS',
+				addedDate: '',
+				completed: false,
+				deadline: '',
+				description: '',
+				order: 0,
+				priority: 0,
+				startDate: '',
+				status: 0,
+				todoListId: ''
+			}
 		],
 		['todolistId2']: [
-			{ id: v1(), title: 'Milk', isDone: false },
-			{ id: v1(), title: 'React Book', isDone: true }
+			{
+				id: v1(),
+				title: 'Milk',
+				addedDate: '',
+				completed: false,
+				deadline: '',
+				description: '',
+				order: 0,
+				priority: 0,
+				startDate: '',
+				status: 0,
+				todoListId: ''
+			},
+			{
+				id: v1(),
+				title: 'React Book',
+				addedDate: '',
+				completed: false,
+				deadline: '',
+				description: '',
+				order: 0,
+				priority: 0,
+				startDate: '',
+				status: 0,
+				todoListId: ''
+			}
 		]
 	}
 }
