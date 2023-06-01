@@ -107,6 +107,12 @@ export const fetchTodolists = (dispatch: Dispatch) => {
 		dispatch(setTodolistAC(res.data))
 	})
 }
+export const fetchTodolistsTC = () => (dispatch: Dispatch) => {
+	todolistAPI.getTodolists().then((res) => {
+		const todolists = res.data
+		dispatch(setTodolistAC(todolists))
+	})
+}
 
 export type TodolistsActionType =
 	| ReturnType<typeof removeTodolistAC>

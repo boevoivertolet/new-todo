@@ -17,6 +17,7 @@ import {
 	changeFilterAC,
 	changeTodolistTitleAC,
 	fetchTodolists,
+	fetchTodolistsTC,
 	removeTodolistAC
 } from './reducers/todolistsReducer'
 
@@ -67,7 +68,7 @@ function App() {
 		[]
 	)
 	useEffect(() => {
-		dispatch(fetchTodolists)
+		dispatch(fetchTodolistsTC())
 	}, [])
 
 	return (
