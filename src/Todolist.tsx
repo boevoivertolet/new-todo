@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { FilterType } from './App'
 import { MyButton } from './common/components/MyButton/MyButton'
 import s from './Todolist.module.scss'
@@ -8,8 +8,11 @@ import { ButtonGroup, Paper } from '@mui/material'
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined'
 import { Task } from './common/components/Task/Task'
 import { TaskType } from './api/task-api'
+import { useAppDispatch } from './store/store'
+import { fetchTasksTC } from './reducers/taskReducer'
 
 export const Todolist: React.FC<TodolistProps> = React.memo((props) => {
+	const dispatch = useAppDispatch()
 	console.log('Todolist called')
 	const {
 		title,
@@ -49,6 +52,10 @@ export const Todolist: React.FC<TodolistProps> = React.memo((props) => {
 		},
 		[changeTodolistTitle, todolistId]
 	)
+
+	useEffect(() => {
+		dispatch(fetchTasksTC(todolistId))
+	}, [])
 
 	return (
 		<Paper elevation={3} className={s.todolist}>
@@ -117,6 +124,7 @@ export const Todolist: React.FC<TodolistProps> = React.memo((props) => {
 		</Paper>
 	)
 })
+
 type TodolistProps = {
 	changeTodolistTitle: (id: string, title: string) => void
 	changeTaskTitle: (id: string, taskId: string, title: string) => void

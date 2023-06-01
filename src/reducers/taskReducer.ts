@@ -148,7 +148,7 @@ export const changeTaskTitleAC = (
 
 //Thunk
 
-const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
+export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
 	taskAPI.getTasks(todolistId).then((res) => {
 		const tasks = res.data.items
 		dispatch(setTasksAC(todolistId, tasks))
