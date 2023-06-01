@@ -6,12 +6,7 @@ import {
 } from './todolistsReducer'
 
 import { Dispatch } from 'redux'
-import {
-	TaskPriorities,
-	TaskStatuses,
-	TaskType,
-	taskAPI
-} from '../api/task-api'
+import { TaskType, taskAPI } from '../api/task-api'
 
 const InitialState: TasksStateType = {}
 
@@ -46,24 +41,13 @@ export const tasksReducer = (
 			return copyState
 		}
 		case 'tasks/add': {
-			const stateCopy = { ...state }
-			const newTask: TaskType = {
-				id: v1(),
-				title: action.payload.title,
-				status: TaskStatuses.New,
-				todoListId: action.payload.todolistId,
-				description: '',
-				startDate: '',
-				deadline: '',
-				addedDate: '',
-				order: 0,
-				priority: TaskPriorities.Low,
-				completed: false
+			return {
+				...state,
+				[action.payload.task.todoListId]: [
+					action.payload.task,
+					...state[action.payload.task.todoListId]
+				]
 			}
-			const tasks = stateCopy[action.payload.todolistId]
-			const newTasks = [newTask, ...tasks]
-			stateCopy[action.payload.todolistId] = newTasks
-			return stateCopy
 		}
 		// case 'tasks/change_status': {
 		// 	return {
@@ -120,12 +104,11 @@ export const removeAC = (todolistId: string, id: string) => {
 		}
 	} as const
 }
-export const addAC = (todolistId: string, title: string) => {
+export const addAC = (task: TaskType) => {
 	return {
 		type: 'tasks/add',
 		payload: {
-			todolistId,
-			title
+			task
 		}
 	} as const
 }
@@ -170,12 +153,12 @@ export const addTasksTC =
 	(todolistId: string, title: string) => (dispatch: Dispatch) => {
 		taskAPI.createTask(todolistId, title).then((res) => {
 			const task = res.data.data.item
-			dispatch(addAC(todolistId, task.title))
+			dispatch(addAC(task))
 		})
 	}
 export const removeTasksTC =
 	(todolistId: string, taskId: string) => (dispatch: Dispatch) => {
-		taskAPI.deleteTasks(todolistId, taskId).then((res) => {
+		taskAPI.deleteTasks(todolistId, taskId).then(() => {
 			dispatch(removeAC(todolistId, taskId))
 		})
 	}
