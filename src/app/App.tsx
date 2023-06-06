@@ -1,7 +1,7 @@
 import React from 'react'
-import {TodolistsList} from "./features/TodolistsList";
+import {TodolistsList} from "../features/TodolistsList";
 import s from "./App.module.scss";
-import ButtonAppBar from "./common/components/AppBar/AppBar";
+import ButtonAppBar from "../common/components/AppBar/AppBar";
 
 
 function App() {

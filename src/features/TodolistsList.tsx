@@ -1,8 +1,8 @@
 import React, {useCallback, useEffect} from 'react';
-import s from "../App.module.scss";
+import s from "../app/App.module.scss";
 import {AddItemForm} from "../common/components/AddItemForm/AddItemForm";
-import {Todolist} from "../Todolist";
-import {useAppDispatch, useAppSelector} from "../store/store";
+import {Todolist} from "./Todolist/Todolist";
+import {useAppDispatch, useAppSelector} from "../app/store";
 import {addTasksTC, removeTaskTC, TasksStateType, updateTaskTC} from "./taskReducer";
 import {
     addTodolistTC,

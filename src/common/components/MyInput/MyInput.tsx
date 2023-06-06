@@ -20,11 +20,11 @@ export const MyInput: React.FC<MyInputProps> = (props) => {
 
     return (
 
-            <TextField error = {!!error} id = "outlined-basic" label = {error ? error : placeholder} variant = "outlined"
+            <TextField  error = {!!error} id = "outlined-basic" label = {error ? error : placeholder} variant = "outlined"
                        size = {'small'} className = {error ? s.error : s.input} type = {'text'}
                        onBlur = {blurCallBack}
                        onChange = {onChangeCallBackHandler}
-                       onKeyDown = {onEnterKeyHandler} value = {value} autoFocus />
+                       onKeyDown = {onEnterKeyHandler} value = {value} />
 
 
     );

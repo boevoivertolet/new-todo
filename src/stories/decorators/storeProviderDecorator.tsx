@@ -4,7 +4,7 @@ import { combineReducers, legacy_createStore } from 'redux'
 import { v1 } from 'uuid'
 import { tasksReducer } from '../../features/taskReducer'
 import { todolistsReducer } from '../../features/todolistsReducer'
-import { AppRootStateType } from '../../store/store'
+import { AppRootStateType } from '../../app/store'
 
 const rootReducer = combineReducers({
 	tasks: tasksReducer,

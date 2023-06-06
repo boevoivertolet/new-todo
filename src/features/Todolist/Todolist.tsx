@@ -1,15 +1,15 @@
 import React, {useCallback, useEffect} from 'react'
-import {MyButton} from './common/components/MyButton/MyButton'
+import {MyButton} from '../../common/components/MyButton/MyButton'
 import s from './Todolist.module.scss'
-import {AddItemForm} from './common/components/AddItemForm/AddItemForm'
-import {EditableInput} from './common/components/EditableInput/EditableInput'
+import {AddItemForm} from '../../common/components/AddItemForm/AddItemForm'
+import {EditableInput} from '../../common/components/EditableInput/EditableInput'
 import {ButtonGroup, Paper} from '@mui/material'
 import ClearOutlinedIcon from '@mui/icons-material/ClearOutlined'
-import {Task} from './features/Todolist/Task/Task'
-import {TaskStatuses, TaskType} from './api/task-api'
-import {useAppDispatch} from './store/store'
-import {fetchTasksTC} from './features/taskReducer'
-import {FilterType} from "./features/TodolistsList";
+import {Task} from './Task/Task'
+import {TaskStatuses, TaskType} from '../../api/task-api'
+import {useAppDispatch} from '../../app/store'
+import {fetchTasksTC} from '../taskReducer'
+import {FilterType} from "../TodolistsList";
 
 export const Todolist: React.FC<TodolistProps> = React.memo((props) => {
     const dispatch = useAppDispatch()

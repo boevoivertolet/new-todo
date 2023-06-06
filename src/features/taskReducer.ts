@@ -2,7 +2,7 @@ import {addTodolistAC, removeTodolistAC, setTodolistAC} from './todolistsReducer
 
 import {Dispatch} from 'redux'
 import {taskAPI, TaskPriorities, TaskStatuses, TaskType, UpdateTaskModelType} from '../api/task-api'
-import {AppRootStateType} from '../store/store'
+import {AppRootStateType} from '../app/store'
 
 const InitialState: TasksStateType = {}
 
