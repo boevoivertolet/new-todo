@@ -12,7 +12,7 @@ const meta: Meta<typeof Task> = {
 		changeTaskStatus: action('Status changed inside Task'),
 		changeTaskTitle: action('Title changed inside Task'),
 		removeTask: action('Remove Button clicked changed inside Task'),
-		title: 'JS',
+		// title: 'JS',
 		todolistId: 'fgdosrg8rgjuh'
 	}
 }
@@ -24,6 +24,6 @@ export const TaskIsNotDoneStory: Story = {}
 
 export const TaskIsDoneStory: Story = {
 	args: {
-		title: 'CSS'
+		// title: 'CSS'
 	}
 }

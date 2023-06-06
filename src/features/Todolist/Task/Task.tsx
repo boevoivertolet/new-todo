@@ -1,20 +1,27 @@
-import React, { useCallback } from 'react'
+import React, {ChangeEvent, useCallback} from 'react'
 import s from './Task.module.scss'
-import { MyCheckBox } from '../MyCheckBox/MyCheckBox'
-import { EditableInput } from '../EditableInput/EditableInput'
+
+import { EditableInput } from '../../../common/components/EditableInput/EditableInput'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
-import { Paper } from '@mui/material'
+import {Checkbox, Paper} from '@mui/material'
+import { TaskStatuses, TaskType } from '../../../api/task-api'
 
 export const Task: React.FC<TaskProps> = React.memo((props) => {
 	const {
 		id,
-		title,
+		task,
 		removeTask,
 		todolistId,
 		changeTaskStatus,
 		changeTaskTitle,
 		...restProps
 	} = props
+	const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+		let newIsDoneValue = e.currentTarget.checked
+		changeTaskStatus(todolistId,task.id, newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New, )
+	}, [task.id, todolistId]);
+
+
 	const removeTaskHandler = useCallback(
 		(todolistId: string, id: string) => {
 			removeTask(id, todolistId)
@@ -22,8 +29,8 @@ export const Task: React.FC<TaskProps> = React.memo((props) => {
 		[removeTask, id, todolistId]
 	)
 	const onChangeCheckboxHandler = useCallback(
-		(todolistId: string, id: string, checked: boolean) => {
-			changeTaskStatus(todolistId, id, checked)
+		(todolistId: string, id: string, status: TaskStatuses) => {
+			changeTaskStatus(todolistId, id, status)
 		},
 		[changeTaskStatus, todolistId, id]
 	)
@@ -38,18 +45,17 @@ export const Task: React.FC<TaskProps> = React.memo((props) => {
 	return (
 		<Paper
 			style={{ transition: '1s' }}
-			// className={isDone ? `${s.task + ' ' + s.isDone}` : s.task}
 			className={s.task}
 			key={id}>
-			<MyCheckBox
-				checked={false}
-				callBack={(checked) =>
-					onChangeCheckboxHandler(todolistId, id, checked)
-				}
+			<Checkbox
+				checked={props.task.status === TaskStatuses.Completed}
+				color="primary"
+				onChange={onChangeHandler}
 			/>
+
 			<EditableInput
 				changeTodolistTitle={changeTaskTitleHandler}
-				value={title}
+				value={task.title}
 			/>
 			<DeleteForeverIcon
 				style={{ color: '#2374CE' }}
@@ -59,11 +65,18 @@ export const Task: React.FC<TaskProps> = React.memo((props) => {
 		</Paper>
 	)
 })
+
+
+
 type TaskProps = {
 	changeTaskTitle: (id: string, taskId: string, title: string) => void
 	todolistId: string
 	id: string
-	title: string
+	task: TaskType
 	removeTask: (todolistId: string, id: string) => void
-	changeTaskStatus: (todolistId: string, id: string, isDone: boolean) => void
+	changeTaskStatus: (
+		todolistId: string,
+		id: string,
+		status: TaskStatuses
+	) => void
 }

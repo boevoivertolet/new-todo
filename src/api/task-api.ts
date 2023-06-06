@@ -2,13 +2,12 @@ import { AxiosResponse } from 'axios'
 import { instance } from './instance'
 
 export const taskAPI = {
-	updateTask(todolistId: string, taskId: string, title: string) {
-		const promise = instance.put<TasksResponseType<{}>>(
-			`/todo-lists/${todolistId}/tasks/${taskId}`,
-			{
-				title: title
-			}
-		)
+	updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
+		const promise = instance.put<
+			ResponseType<{ item: TaskType }>,
+			AxiosResponse<ResponseType<{ item: TaskType }>>,
+			UpdateTaskModelType
+		>(`todo-lists/${todolistId}/tasks/${taskId}`, model)
 		return promise
 	},
 	getTasks(todolistId: string) {
@@ -51,6 +50,14 @@ export type TaskType = {
 	addedDate: string
 }
 
+export type UpdateTaskModelType = {
+	title: string
+	description: string
+	status: TaskStatuses
+	priority: TaskPriorities
+	startDate: string
+	deadline: string
+}
 export enum TaskStatuses {
 	New = 0,
 	InProgress = 1,

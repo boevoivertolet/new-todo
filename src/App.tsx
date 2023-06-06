@@ -1,26 +1,19 @@
-import React, { useCallback, useEffect } from 'react'
-import { Todolist } from './Todolist'
+import React, {useCallback, useEffect} from 'react'
+import {Todolist} from './Todolist'
 import s from './App.module.scss'
-import { AddItemForm } from './common/components/AddItemForm/AddItemForm'
+import {AddItemForm} from './common/components/AddItemForm/AddItemForm'
 import ButtonAppBar from './common/components/AppBar/AppBar'
-import { useAppDispatch, useAppSelector } from './store/store'
+import {useAppDispatch, useAppSelector} from './store/store'
+import {addTasksTC, removeTaskTC, TasksStateType, updateTaskTC} from './features/taskReducer'
 import {
-	TasksStateType,
-	addAC,
-	addTasksTC,
-	changeStatusAC,
-	changeTaskTitleAC,
-	removeAC,
-	removeTasksTC
-} from './reducers/taskReducer'
-import {
-	TodolistDomainType,
-	addTodolistAC,
+	addTodolistTC,
 	changeFilterAC,
-	changeTodolistTitleAC,
+	changeTodolistTitleTC,
 	fetchTodolistsTC,
-	removeTodolistAC
-} from './reducers/todolistsReducer'
+	removeTodolistTC,
+	TodolistDomainType
+} from './features/todolistsReducer'
+import {TaskStatuses} from './api/task-api'
 
 function App() {
 	const dispatch = useAppDispatch()
@@ -31,14 +24,23 @@ function App() {
 
 	// Tasks
 	const removeTask = useCallback((todolistId: string, id: string) => {
-		dispatch(removeTasksTC(todolistId, id))
+		dispatch(removeTaskTC(todolistId, id))
 	}, [])
 	const addTask = useCallback((todolistId: string, title: string) => {
 		dispatch(addTasksTC(todolistId, title))
 	}, [])
-	const changeTaskStatus = useCallback(
-		(todolistId: string, id: string, isDone: boolean) => {
-			dispatch(changeStatusAC(todolistId, id, isDone))
+
+	const changeTaskStatus = useCallback(function (
+		todolistId: string,
+		id: string,
+		status: TaskStatuses
+	) {
+		dispatch(updateTaskTC(todolistId , id, { status }))
+	},
+	[])
+	const changeTaskTitle = useCallback(
+		(id: string, taskId: string, title: string) => {
+			dispatch(updateTaskTC(id, taskId, {title}))
 		},
 		[]
 	)
@@ -52,22 +54,17 @@ function App() {
 
 	// Todolists
 	const removeTodolist = useCallback((todolistId: string) => {
-		dispatch(removeTodolistAC(todolistId))
+		dispatch(removeTodolistTC(todolistId))
 	}, [])
 
 	const addTodolist = useCallback((title: string) => {
-		dispatch(addTodolistAC(title))
+		dispatch(addTodolistTC(title))
 	}, [])
 
 	const changeTodolistTitle = useCallback((id: string, title: string) => {
-		dispatch(changeTodolistTitleAC(id, title))
+		dispatch(changeTodolistTitleTC(id, title))
 	}, [])
-	const changeTaskTitle = useCallback(
-		(id: string, taskId: string, title: string) => {
-			dispatch(changeTaskTitleAC(id, taskId, title))
-		},
-		[]
-	)
+
 	useEffect(() => {
 		dispatch(fetchTodolistsTC())
 	}, [])
@@ -117,8 +114,5 @@ function App() {
 
 export type FilterType = 'all' | 'active' | 'complete'
 
-// export type TasksType = {
-// 	[key: string]: TaskType[]
-// }
 
 export default App

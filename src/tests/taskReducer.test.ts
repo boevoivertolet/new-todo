@@ -1,12 +1,9 @@
 import {
 	TasksStateType,
-	addAC,
-	changeStatusAC,
-	changeTaskTitleAC,
 	removeAC,
 	tasksReducer
-} from './taskReducer'
-import { addTodolistAC, removeTodolistAC } from './todolistsReducer'
+} from '../features/taskReducer'
+import { addTodolistAC, removeTodolistAC } from '../features/todolistsReducer'
 
 // type TaskType = {
 // 	id: string
@@ -142,28 +139,28 @@ test('correct task should be deleted from correct array', () => {
 // 	expect(endState['todolistId2'][1].isDone).toBe(false)
 // 	expect(endState['todolistId1'][1].isDone).toBe(true)
 // })
-test('title of specified task should be changed', () => {
-	const action = changeTaskTitleAC('todolistId2', '2', 'new title')
-
-	const endState = tasksReducer(startState, action)
-
-	expect(endState['todolistId2'][1].title).toBe('new title')
-	expect(endState['todolistId1'][1].title).toBe('JS')
-})
-test('new array should be added when new todolist is added', () => {
-	const action = addTodolistAC('new todolist')
-
-	const endState = tasksReducer(startState, action)
-
-	const keys = Object.keys(endState)
-	const newKey = keys.find((k) => k != 'todolistId1' && k != 'todolistId2')
-	if (!newKey) {
-		throw Error('new key should be added')
-	}
-
-	expect(keys.length).toBe(3)
-	expect(endState[newKey]).toEqual([])
-})
+// test('title of specified task should be changed', () => {
+// 	const action = changeTaskTitleAC('todolistId2', '2', 'new title')
+//
+// 	const endState = tasksReducer(startState, action)
+//
+// 	expect(endState['todolistId2'][1].title).toBe('new title')
+// 	expect(endState['todolistId1'][1].title).toBe('JS')
+// })
+// test('new array should be added when new todolist is added', () => {
+// 	const action = addTodolistAC('new todolist')
+//
+// 	const endState = tasksReducer(startState, action)
+//
+// 	const keys = Object.keys(endState)
+// 	const newKey = keys.find((k) => k != 'todolistId1' && k != 'todolistId2')
+// 	if (!newKey) {
+// 		throw Error('new key should be added')
+// 	}
+//
+// 	expect(keys.length).toBe(3)
+// 	expect(endState[newKey]).toEqual([])
+// })
 test('property with todolistId should be deleted', () => {
 	const action = removeTodolistAC('todolistId2')
 

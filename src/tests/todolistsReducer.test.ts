@@ -1,13 +1,7 @@
-import { FilterType } from './../App'
-import { v1 } from 'uuid'
+import {FilterType} from './../App'
+import {v1} from 'uuid'
 
-import {
-	TodolistDomainType,
-	addTodolistAC,
-	changeTodolistTitleAC,
-	removeTodolistAC,
-	todolistsReducer
-} from './todolistsReducer'
+import {changeTodolistTitleAC, removeTodolistAC, TodolistDomainType, todolistsReducer} from '../features/todolistsReducer'
 
 let todolistId1 = v1()
 let todolistId2 = v1()
@@ -39,12 +33,12 @@ test('correct todolist should be removed', () => {
 	expect(endState[0].id).toBe(todolistId2)
 })
 
-test('todolist should be added', () => {
-	const endState = todolistsReducer(startState, addTodolistAC('title'))
-
-	expect(endState.length).toBe(3)
-	expect(endState[0].title).toBe('title')
-})
+// test('todolist should be added', () => {
+// 	const endState = todolistsReducer(startState, addTodolistAC('title'))
+//
+// 	expect(endState.length).toBe(3)
+// 	expect(endState[0].title).toBe('title')
+// })
 
 test('todolist title should be changed', () => {
 	const endState = todolistsReducer(

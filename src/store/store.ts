@@ -4,10 +4,10 @@ import {
 	combineReducers,
 	legacy_createStore as createStore
 } from 'redux'
-import { tasksReducer } from '../reducers/taskReducer'
+import { tasksReducer } from '../features/taskReducer'
 import thunk, { ThunkDispatch } from 'redux-thunk'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
-import { todolistsReducer } from '../reducers/todolistsReducer'
+import { todolistsReducer } from '../features/todolistsReducer'
 
 const rootReducer = combineReducers({
 	tasks: tasksReducer,
