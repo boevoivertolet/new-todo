@@ -1,5 +1,4 @@
 import React, {useCallback, useEffect} from 'react'
-import {FilterType} from './App'
 import {MyButton} from './common/components/MyButton/MyButton'
 import s from './Todolist.module.scss'
 import {AddItemForm} from './common/components/AddItemForm/AddItemForm'
@@ -10,6 +9,7 @@ import {Task} from './features/Todolist/Task/Task'
 import {TaskStatuses, TaskType} from './api/task-api'
 import {useAppDispatch} from './store/store'
 import {fetchTasksTC} from './features/taskReducer'
+import {FilterType} from "./features/TodolistsList";
 
 export const Todolist: React.FC<TodolistProps> = React.memo((props) => {
     const dispatch = useAppDispatch()
