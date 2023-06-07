@@ -4,7 +4,6 @@ import {FilterType} from "./TodolistsList";
 import {AppActionType, setAppErrorAC, setAppStatusAC} from "../app/app-reducer";
 
 
-
 const InitialState: TodolistDomainType[] = []
 
 export const todolistsReducer = (
@@ -74,9 +73,11 @@ export const changeTodolistTitleAC = (todolistId: string, title: string) => {
     } as const
 }
 
-export const addTodolistAC = (todolist: TodolistType) => ({type: 'todolists/add_todolist',  payload: {
+export const addTodolistAC = (todolist: TodolistType) => ({
+    type: 'todolists/add_todolist', payload: {
         todolist
-    }} as const)
+    }
+} as const)
 export const removeTodolistAC = (todolistId: string) => {
     return {
         type: 'todolists/remove_todolist',
@@ -87,7 +88,6 @@ export const removeTodolistAC = (todolistId: string) => {
 }
 //thunks
 export const fetchTodolistsTC = () => (dispatch: Dispatch<TodolistsActionType | AppActionType>) => {
-    dispatch(setAppErrorAC('ERROR'))
     dispatch(setAppStatusAC('loading'))
     todolistAPI.getTodolists().then((res) => {
         const todolists = res.data
@@ -100,8 +100,17 @@ export const addTodolistTC = (title: string) => {
         dispatch(setAppStatusAC('loading'))
         todolistAPI.createTodolists(title)
             .then((res) => {
-                dispatch(addTodolistAC(res.data.data.item))
-                dispatch(setAppStatusAC('succeeded'))
+                if (res.data.resultCode === 0) {
+                    dispatch(addTodolistAC(res.data.data.item))
+                    dispatch(setAppStatusAC('succeeded'))
+                } else {
+                    if (res.data.messages.length) {
+                        dispatch(setAppErrorAC(res.data.messages[0]))
+                    } else {
+                        dispatch(setAppErrorAC('Some error occured'))
+                    }
+                    dispatch(setAppStatusAC('failed'))
+                }
             })
     }
 }
@@ -133,8 +142,6 @@ export type TodolistsActionType =
     | ReturnType<typeof changeFilterAC>
     | ReturnType<typeof changeTodolistTitleAC>
     | ReturnType<typeof setTodolistAC>
-
-
 
 
 export type TodolistDomainType = TodolistType & { filter: FilterType }
