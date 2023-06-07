@@ -18,8 +18,7 @@ export default function ButtonAppBar() {
 
     return (
         <Box sx = {{flexGrow: 1}}>
-            {error !== null && alert(error)}
-            {/*{error !== null && <ErrorSnackbar />}*/}
+            {error !== null && <ErrorSnackbar />}
             <AppBar position = "static">
                 <Toolbar>
                     <IconButton
