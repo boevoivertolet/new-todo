@@ -5,10 +5,12 @@ import { v1 } from 'uuid'
 import { tasksReducer } from '../../features/taskReducer'
 import { todolistsReducer } from '../../features/todolistsReducer'
 import { AppRootStateType } from '../../app/store'
+import {appReducer, RequestStatusType} from "../../app/app-reducer";
 
 const rootReducer = combineReducers({
 	tasks: tasksReducer,
-	todolists: todolistsReducer
+	todolists: todolistsReducer,
+	app: appReducer
 })
 
 const initialGlobalState = {
@@ -85,7 +87,8 @@ const initialGlobalState = {
 				todoListId: ''
 			}
 		]
-	}
+	},
+	app: {status: 'loading' as RequestStatusType}
 }
 
 export const storyBookStore = legacy_createStore(

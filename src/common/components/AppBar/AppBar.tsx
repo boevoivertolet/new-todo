@@ -6,26 +6,33 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import {LinearProgress} from "@mui/material";
+import { useAppSelector} from "../../../app/store";
+import { RequestStatusType} from "../../../app/app-reducer";
 
 export default function ButtonAppBar() {
+    const status = useAppSelector<RequestStatusType>((state) => state.app.status)
+
+
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
+        <Box sx = {{flexGrow: 1}}>
+            <AppBar position = "static">
                 <Toolbar>
                     <IconButton
-                        size="small"
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        sx={{ mr: 2 }}
+                        size = "small"
+                        edge = "start"
+                        color = "inherit"
+                        aria-label = "menu"
+                        sx = {{mr: 2}}
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    <Typography variant = "h6" component = "div" sx = {{flexGrow: 1}}>
                         News
                     </Typography>
-                    <Button color="inherit">Login</Button>
+                    <Button color = "inherit">Login</Button>
                 </Toolbar>
+                {status === 'loading' && <LinearProgress />}
             </AppBar>
         </Box>
     );
