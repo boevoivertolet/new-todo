@@ -13,13 +13,12 @@ import {ErrorSnackbar} from "../ErrorSnackbar/ErrorSnackbar";
 
 export default function ButtonAppBar() {
     const status = useAppSelector<RequestStatusType>((state) => state.app.status)
-    const error = useAppSelector<ErrorType>((state) => state.app.error)
+
 
 
     return (
         <Box sx = {{flexGrow: 1}}>
-            {error !== null && <ErrorSnackbar />}
-            {/*{error !== null && alert(error)}*/}
+         <ErrorSnackbar/>
             <AppBar position = "static">
                 <Toolbar>
                     <IconButton

@@ -118,15 +118,7 @@ export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch<TasksAct
         dispatch(setAppStatusAC('succeeded'))
     })
 }
-// export const addTasksTC =
-//     (todolistId: string, title: string) => (dispatch: Dispatch<TasksActionType | AppActionType>) => {
-//         dispatch(setAppStatusAC('loading'))
-//         taskAPI.createTask(todolistId, title).then((res) => {
-//             const task = res.data.data.item
-//             dispatch(addAC(task))
-//             dispatch(setAppStatusAC('succeeded'))
-//         })
-//     }
+
 export const addTasksTC = (todolistId: string, title: string) => (dispatch: Dispatch<TasksActionType | AppActionType>) => {
     dispatch(setAppStatusAC('loading'))
     taskAPI.createTask(todolistId, title)
