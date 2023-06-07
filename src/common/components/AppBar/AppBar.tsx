@@ -7,17 +7,19 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import {LinearProgress} from "@mui/material";
-import { useAppSelector} from "../../../app/store";
-import { RequestStatusType} from "../../../app/app-reducer";
+import {useAppSelector} from "../../../app/store";
+import {ErrorType, RequestStatusType} from "../../../app/app-reducer";
 import {ErrorSnackbar} from "../ErrorSnackbar/ErrorSnackbar";
 
 export default function ButtonAppBar() {
     const status = useAppSelector<RequestStatusType>((state) => state.app.status)
+    const error = useAppSelector<ErrorType>((state) => state.app.error)
 
 
     return (
         <Box sx = {{flexGrow: 1}}>
-            <ErrorSnackbar/>
+            {error !== null && alert(error)}
+            {/*{error !== null && <ErrorSnackbar />}*/}
             <AppBar position = "static">
                 <Toolbar>
                     <IconButton

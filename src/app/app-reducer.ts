@@ -30,7 +30,7 @@ export const setAppErrorAC = (error: ErrorType) => {
     )
 
 }
-type ErrorType = string | null
+export type ErrorType = string | null
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 export type AppActionType =
     | ReturnType<typeof setAppStatusAC>

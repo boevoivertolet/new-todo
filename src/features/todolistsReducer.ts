@@ -1,7 +1,7 @@
 import {todolistAPI, TodolistType} from '../api/todolist-api'
 import {Dispatch} from 'redux'
 import {FilterType} from "./TodolistsList";
-import {AppActionType, setAppStatusAC} from "../app/app-reducer";
+import {AppActionType, setAppErrorAC, setAppStatusAC} from "../app/app-reducer";
 
 
 
@@ -87,6 +87,7 @@ export const removeTodolistAC = (todolistId: string) => {
 }
 //thunks
 export const fetchTodolistsTC = () => (dispatch: Dispatch<TodolistsActionType | AppActionType>) => {
+    dispatch(setAppErrorAC('ERROR'))
     dispatch(setAppStatusAC('loading'))
     todolistAPI.getTodolists().then((res) => {
         const todolists = res.data
