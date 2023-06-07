@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Snackbar from '@mui/material/Snackbar'
 import MuiAlert, { AlertProps } from '@mui/material/Alert'
+import s from '../../../app/App.module.scss'
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
     props, ref) {
@@ -17,7 +18,7 @@ export function ErrorSnackbar() {
         setOpen(false)
     }
     return (
-        <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Snackbar className={s.snackbar__position} open={open} autoHideDuration={6000} onClose={handleClose}>
             <Alert onClose={handleClose} severity='error' sx={{width: '100%'}}>
                 Error message 😠
             </Alert>

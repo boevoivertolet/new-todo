@@ -9,6 +9,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import {LinearProgress} from "@mui/material";
 import { useAppSelector} from "../../../app/store";
 import { RequestStatusType} from "../../../app/app-reducer";
+import {ErrorSnackbar} from "../ErrorSnackbar/ErrorSnackbar";
 
 export default function ButtonAppBar() {
     const status = useAppSelector<RequestStatusType>((state) => state.app.status)
@@ -16,6 +17,7 @@ export default function ButtonAppBar() {
 
     return (
         <Box sx = {{flexGrow: 1}}>
+            <ErrorSnackbar/>
             <AppBar position = "static">
                 <Toolbar>
                     <IconButton
