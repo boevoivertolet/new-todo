@@ -1,7 +1,7 @@
 import {todolistAPI, TodolistType} from '../api/todolist-api'
 import {Dispatch} from 'redux'
 import {FilterType} from "./TodolistsList";
-import {AppActionType, setAppErrorAC, setAppStatusAC} from "../app/app-reducer";
+import {AppActionType, RequestStatusType, setAppErrorAC, setAppStatusAC} from "../app/app-reducer";
 
 
 const InitialState: TodolistDomainType[] = []
@@ -12,7 +12,7 @@ export const todolistsReducer = (
 ): TodolistDomainType[] => {
     switch (action.type) {
         case 'todolists/set_todolists': {
-            return action.payload.todolists.map((tl) => ({...tl, filter: 'all'}))
+            return action.payload.todolists.map((tl) => ({...tl, filter: 'all', entityStatus:'loading'}))
         }
         case 'todolists/change_filter': {
             return state.map((tdl) =>
@@ -38,7 +38,7 @@ export const todolistsReducer = (
             return state.filter((tdl) => tdl.id !== action.payload.todolistId)
         }
         case 'todolists/add_todolist': {
-            return [{...action.payload.todolist, filter: 'all'}, ...state]
+            return [{...action.payload.todolist, filter: 'all', entityStatus:'loading'}, ...state]
         }
 
         default:
@@ -107,7 +107,7 @@ export const addTodolistTC = (title: string) => {
                     if (res.data.messages.length) {
                         dispatch(setAppErrorAC(res.data.messages[0]))
                     } else {
-                        dispatch(setAppErrorAC('Some error occured'))
+                        dispatch(setAppErrorAC('Some error occurred'))
                     }
                     dispatch(setAppStatusAC('failed'))
                 }
@@ -144,4 +144,8 @@ export type TodolistsActionType =
     | ReturnType<typeof setTodolistAC>
 
 
-export type TodolistDomainType = TodolistType & { filter: FilterType }
+// export type TodolistDomainType = TodolistType & { filter: FilterType }
+export type TodolistDomainType = TodolistType & {
+    filter: FilterType
+    entityStatus: RequestStatusType
+}

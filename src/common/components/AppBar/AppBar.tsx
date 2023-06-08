@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import {LinearProgress} from "@mui/material";
 import {useAppSelector} from "../../../app/store";
-import {ErrorType, RequestStatusType} from "../../../app/app-reducer";
+import {RequestStatusType} from "../../../app/app-reducer";
 import {ErrorSnackbar} from "../ErrorSnackbar/ErrorSnackbar";
 
 export default function ButtonAppBar() {
