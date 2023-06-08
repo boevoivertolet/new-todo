@@ -112,10 +112,7 @@ export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch<TasksAct
             dispatch(setTasksAC(todolistId, tasks))
             dispatch(setAppStatusAC('succeeded'))
         })
-        // .catch((error) => {
-        //     dispatch(setAppStatusAC('failed'))
-        //     dispatch(setAppErrorAC(error.message))
-        // })
+
         .catch((error)=>{ handleServerNetworkError(error,dispatch)
         })
 }
@@ -136,10 +133,7 @@ export const addTasksTC = (todolistId: string, title: string) => (dispatch: Disp
                 dispatch(setAppStatusAC('failed'))
             }
         })
-        // .catch((error) => {
-        //     dispatch(setAppStatusAC('failed'))
-        //     dispatch(setAppErrorAC(error.message))
-        // })
+
         .catch((error)=>{ handleServerNetworkError(error,dispatch)
         })
 }
@@ -150,10 +144,7 @@ export const removeTaskTC = (todolistId: string, taskId: string) => (dispatch: D
             dispatch(removeAC(todolistId, taskId))
             dispatch(setAppStatusAC('succeeded'))
         })
-        // .catch((error) => {
-        //     dispatch(setAppStatusAC('failed'))
-        //     dispatch(setAppErrorAC(error.message))
-        // })
+
         .catch((error)=>{ handleServerNetworkError(error,dispatch)
         })
 }
@@ -180,10 +171,6 @@ export const updateTaskTC = (todolistId: string, taskId: string, domainModel: Up
             dispatch(updateTaskAC(todolistId, taskId, domainModel))
             dispatch(setAppStatusAC('succeeded'))
         })
-        // .catch((error) => {
-        //     dispatch(setAppStatusAC('failed'))
-        //     dispatch(setAppErrorAC(error.message))
-        // })
         .catch((error)=>{ handleServerNetworkError(error,dispatch)
         })
 }

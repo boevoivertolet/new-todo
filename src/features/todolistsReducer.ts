@@ -2,7 +2,7 @@ import {todolistAPI, TodolistType} from '../api/todolist-api'
 import {Dispatch} from 'redux'
 import {FilterType} from "./TodolistsList";
 import {AppActionType, RequestStatusType, setAppErrorAC, setAppStatusAC} from "../app/app-reducer";
-import {handleServerAppError} from "../utils/error-utils";
+import {handleServerNetworkError} from "../utils/error-utils";
 
 
 const InitialState: TodolistDomainType[] = []
@@ -114,9 +114,7 @@ export const fetchTodolistsTC = () => (dispatch: Dispatch<TodolistsActionType | 
         dispatch(setTodolistAC(todolists))
         dispatch(setAppStatusAC('succeeded'))
     })
-        .catch((error)=>{
-            dispatch(setAppStatusAC('failed'))
-            dispatch(setAppErrorAC(error.message))
+        .catch((error)=>{ handleServerNetworkError(error,dispatch)
         })
 }
 export const addTodolistTC = (title: string) => {
@@ -136,11 +134,7 @@ export const addTodolistTC = (title: string) => {
                     dispatch(setAppStatusAC('failed'))
                 }
             })
-            // .catch((error)=>{
-            //     dispatch(setAppStatusAC('failed'))
-            //     dispatch(setAppErrorAC(error.message))
-            // })
-            .catch((error)=>{ handleServerAppError(error,dispatch)
+            .catch((error)=>{ handleServerNetworkError(error,dispatch)
             })
     }
 }
@@ -152,11 +146,7 @@ export const changeTodolistTitleTC = (id: string, title: string) => {
                 dispatch(changeTodolistTitleAC(id, title))
                 dispatch(setAppStatusAC('succeeded'))
             })
-            // .catch((error)=>{
-            //     dispatch(setAppStatusAC('failed'))
-            //     dispatch(setAppErrorAC(error.message))
-            // })
-            .catch((error)=>{ handleServerAppError(error,dispatch)
+            .catch((error)=>{ handleServerNetworkError(error,dispatch)
             })
     }
 }
@@ -168,12 +158,9 @@ export const removeTodolistTC = (todolistId: string) => {
                 dispatch(removeTodolistAC(todolistId))
                 dispatch(setAppStatusAC('succeeded'))
             })
-            // .catch((error)=>{
-            //     dispatch(setAppStatusAC('failed'))
-            //     dispatch(setAppErrorAC(error.message))
-            // })
-            .catch((error)=>{ handleServerAppError(error,dispatch)
+            .catch((error)=>{ handleServerNetworkError(error,dispatch)
             })
+
     }
 }
 
