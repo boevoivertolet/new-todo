@@ -12,7 +12,7 @@ export const todolistsReducer = (
 ): TodolistDomainType[] => {
     switch (action.type) {
         case 'todolists/set_todolists': {
-            return action.payload.todolists.map((tl) => ({...tl, filter: 'all', entityStatus:'loading'}))
+            return action.payload.todolists.map((tl) => ({...tl, filter: 'all', entityStatus:'idle'}))
         }
         case 'todolists/change_filter': {
             return state.map((tdl) =>
@@ -34,11 +34,22 @@ export const todolistsReducer = (
                     : tdl
             )
         }
+        case 'todolists/change_todolist_entity_status':  {
+            return state.map((tdl) =>
+                tdl.id === action.payload.todolistId
+                    ? {
+                        ...tdl,
+                        entityStatus: action.payload.status
+                    }
+                    : tdl
+            )
+        }
+
         case 'todolists/remove_todolist': {
             return state.filter((tdl) => tdl.id !== action.payload.todolistId)
         }
         case 'todolists/add_todolist': {
-            return [{...action.payload.todolist, filter: 'all', entityStatus:'loading'}, ...state]
+            return [{...action.payload.todolist, filter: 'all', entityStatus:'idle'}, ...state]
         }
 
         default:
@@ -72,6 +83,16 @@ export const changeTodolistTitleAC = (todolistId: string, title: string) => {
         }
     } as const
 }
+export const changeTodolistEntityStatusAC = (todolistId: string, status: RequestStatusType) => {
+    return {
+        type: 'todolists/change_todolist_entity_status',
+        payload: {
+            todolistId,
+            status
+        }
+    } as const
+}
+
 
 export const addTodolistAC = (todolist: TodolistType) => ({
     type: 'todolists/add_todolist', payload: {
@@ -142,6 +163,7 @@ export type TodolistsActionType =
     | ReturnType<typeof changeFilterAC>
     | ReturnType<typeof changeTodolistTitleAC>
     | ReturnType<typeof setTodolistAC>
+    | ReturnType<typeof changeTodolistEntityStatusAC>
 
 
 // export type TodolistDomainType = TodolistType & { filter: FilterType }

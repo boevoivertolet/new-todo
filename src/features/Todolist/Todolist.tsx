@@ -10,11 +10,16 @@ import {TaskStatuses, TaskType} from '../../api/task-api'
 import {useAppDispatch} from '../../app/store'
 import {fetchTasksTC} from '../taskReducer'
 import {FilterType} from "../TodolistsList";
+import {RequestStatusType} from "../../app/app-reducer";
+import IconButton from "@mui/material/IconButton";
+import {Delete} from "@mui/icons-material";
+import {changeTodolistEntityStatusAC} from "../todolistsReducer";
 
 export const Todolist: React.FC<TodolistProps> = React.memo((props) => {
     const dispatch = useAppDispatch()
     console.log('Todolist called')
     const {
+        entityStatus,
         title,
         tasks,
         changeTaskTitle,
@@ -36,15 +41,16 @@ export const Todolist: React.FC<TodolistProps> = React.memo((props) => {
 
     let filteredTasks = tasks
     if (filter === 'active') {
-    	filteredTasks = tasks.filter(t => t.status === TaskStatuses.New)
+        filteredTasks = tasks.filter(t => t.status === TaskStatuses.New)
     }
 
     if (filter === 'complete') {
-    	filteredTasks = tasks.filter(t => t.status === TaskStatuses.Completed)
+        filteredTasks = tasks.filter(t => t.status === TaskStatuses.Completed)
     }
 
     const removeTodolistHandler = useCallback(() => {
         removeTodolist(todolistId)
+        dispatch(changeTodolistEntityStatusAC(todolistId,'loading'))
     }, [removeTodolist, todolistId])
     const changeTodolistTitleHandler = useCallback(
         (title: string) => {
@@ -59,9 +65,12 @@ export const Todolist: React.FC<TodolistProps> = React.memo((props) => {
 
     return (
         <Paper elevation = {3} className = {s.todolist}>
-            <ClearOutlinedIcon
+            <IconButton
+                disabled = {entityStatus === 'loading'}
                 style = {{alignSelf: 'end'}}
-                onClick = {removeTodolistHandler}></ClearOutlinedIcon>
+                onClick = {removeTodolistHandler}>
+                <Delete />
+            </IconButton>
             <div className = {s.title__block}>
                 <EditableInput
                     changeTodolistTitle = {changeTodolistTitleHandler}
@@ -123,6 +132,7 @@ export const Todolist: React.FC<TodolistProps> = React.memo((props) => {
 })
 
 type TodolistProps = {
+    entityStatus: RequestStatusType
     changeTodolistTitle: (id: string, title: string) => void
     changeTaskTitle: (id: string, taskId: string, title: string) => void
     removeTodolist: (todolistId: string) => void
