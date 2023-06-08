@@ -2,6 +2,7 @@ import {todolistAPI, TodolistType} from '../api/todolist-api'
 import {Dispatch} from 'redux'
 import {FilterType} from "./TodolistsList";
 import {AppActionType, RequestStatusType, setAppErrorAC, setAppStatusAC} from "../app/app-reducer";
+import {handleServerAppError} from "../utils/error-utils";
 
 
 const InitialState: TodolistDomainType[] = []
@@ -44,19 +45,17 @@ export const todolistsReducer = (
                     : tdl
             )
         }
-
         case 'todolists/remove_todolist': {
             return state.filter((tdl) => tdl.id !== action.payload.todolistId)
         }
         case 'todolists/add_todolist': {
             return [{...action.payload.todolist, filter: 'all', entityStatus:'idle'}, ...state]
         }
-
         default:
             return state
     }
 }
-
+//actions
 export const setTodolistAC = (todolists: Array<TodolistType>) => {
     return {
         type: 'todolists/set_todolists',
@@ -92,8 +91,6 @@ export const changeTodolistEntityStatusAC = (todolistId: string, status: Request
         }
     } as const
 }
-
-
 export const addTodolistAC = (todolist: TodolistType) => ({
     type: 'todolists/add_todolist', payload: {
         todolist
@@ -107,6 +104,7 @@ export const removeTodolistAC = (todolistId: string) => {
         }
     } as const
 }
+
 //thunks
 export const fetchTodolistsTC = () => (dispatch: Dispatch<TodolistsActionType | AppActionType>) => {
     dispatch(setAppStatusAC('loading'))
@@ -138,9 +136,11 @@ export const addTodolistTC = (title: string) => {
                     dispatch(setAppStatusAC('failed'))
                 }
             })
-            .catch((error)=>{
-                dispatch(setAppStatusAC('failed'))
-                dispatch(setAppErrorAC(error.message))
+            // .catch((error)=>{
+            //     dispatch(setAppStatusAC('failed'))
+            //     dispatch(setAppErrorAC(error.message))
+            // })
+            .catch((error)=>{ handleServerAppError(error,dispatch)
             })
     }
 }
@@ -152,9 +152,11 @@ export const changeTodolistTitleTC = (id: string, title: string) => {
                 dispatch(changeTodolistTitleAC(id, title))
                 dispatch(setAppStatusAC('succeeded'))
             })
-            .catch((error)=>{
-                dispatch(setAppStatusAC('failed'))
-                dispatch(setAppErrorAC(error.message))
+            // .catch((error)=>{
+            //     dispatch(setAppStatusAC('failed'))
+            //     dispatch(setAppErrorAC(error.message))
+            // })
+            .catch((error)=>{ handleServerAppError(error,dispatch)
             })
     }
 }
@@ -166,14 +168,16 @@ export const removeTodolistTC = (todolistId: string) => {
                 dispatch(removeTodolistAC(todolistId))
                 dispatch(setAppStatusAC('succeeded'))
             })
-            .catch((error)=>{
-                dispatch(setAppStatusAC('failed'))
-                dispatch(setAppErrorAC(error.message))
+            // .catch((error)=>{
+            //     dispatch(setAppStatusAC('failed'))
+            //     dispatch(setAppErrorAC(error.message))
+            // })
+            .catch((error)=>{ handleServerAppError(error,dispatch)
             })
     }
 }
 
-
+//types
 export type TodolistsActionType =
     | ReturnType<typeof removeTodolistAC>
     | ReturnType<typeof addTodolistAC>
@@ -182,8 +186,6 @@ export type TodolistsActionType =
     | ReturnType<typeof setTodolistAC>
     | ReturnType<typeof changeTodolistEntityStatusAC>
 
-
-// export type TodolistDomainType = TodolistType & { filter: FilterType }
 export type TodolistDomainType = TodolistType & {
     filter: FilterType
     entityStatus: RequestStatusType
