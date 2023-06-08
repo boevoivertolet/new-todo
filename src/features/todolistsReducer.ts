@@ -110,11 +110,16 @@ export const removeTodolistAC = (todolistId: string) => {
 //thunks
 export const fetchTodolistsTC = () => (dispatch: Dispatch<TodolistsActionType | AppActionType>) => {
     dispatch(setAppStatusAC('loading'))
-    todolistAPI.getTodolists().then((res) => {
+    todolistAPI.getTodolists()
+        .then((res) => {
         const todolists = res.data
         dispatch(setTodolistAC(todolists))
         dispatch(setAppStatusAC('succeeded'))
     })
+        .catch((error)=>{
+            dispatch(setAppStatusAC('failed'))
+            dispatch(setAppErrorAC(error.message))
+        })
 }
 export const addTodolistTC = (title: string) => {
     return (dispatch: Dispatch<TodolistsActionType | AppActionType>) => {
@@ -133,6 +138,10 @@ export const addTodolistTC = (title: string) => {
                     dispatch(setAppStatusAC('failed'))
                 }
             })
+            .catch((error)=>{
+                dispatch(setAppStatusAC('failed'))
+                dispatch(setAppErrorAC(error.message))
+            })
     }
 }
 export const changeTodolistTitleTC = (id: string, title: string) => {
@@ -143,6 +152,10 @@ export const changeTodolistTitleTC = (id: string, title: string) => {
                 dispatch(changeTodolistTitleAC(id, title))
                 dispatch(setAppStatusAC('succeeded'))
             })
+            .catch((error)=>{
+                dispatch(setAppStatusAC('failed'))
+                dispatch(setAppErrorAC(error.message))
+            })
     }
 }
 export const removeTodolistTC = (todolistId: string) => {
@@ -152,6 +165,10 @@ export const removeTodolistTC = (todolistId: string) => {
             .then((res) => {
                 dispatch(removeTodolistAC(todolistId))
                 dispatch(setAppStatusAC('succeeded'))
+            })
+            .catch((error)=>{
+                dispatch(setAppStatusAC('failed'))
+                dispatch(setAppErrorAC(error.message))
             })
     }
 }
