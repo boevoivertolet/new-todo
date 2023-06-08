@@ -57,7 +57,7 @@ export const AddItemForm: React.FC<AddItemFormProps> = React.memo((props) => {
 					error={error}
 					placeholder={placeholder}
 				/>
-				<MyButton style={styleAddButton} callBack={addItemHandler}>
+				<MyButton disabled={disabled} style={styleAddButton} callBack={addItemHandler}>
 					{title}
 				</MyButton>
 			</div>

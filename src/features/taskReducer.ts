@@ -112,11 +112,16 @@ export const updateTaskAC = (
 
 export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch<TasksActionType | AppActionType>) => {
     dispatch(setAppStatusAC('loading'))
-    taskAPI.getTasks(todolistId).then((res) => {
+    taskAPI.getTasks(todolistId)
+        .then((res) => {
         const tasks = res.data.items
         dispatch(setTasksAC(todolistId, tasks))
         dispatch(setAppStatusAC('succeeded'))
     })
+        .catch((error)=>{
+            dispatch(setAppStatusAC('failed'))
+            dispatch(setAppErrorAC(error.message))
+        })
 }
 
 export const addTasksTC = (todolistId: string, title: string) => (dispatch: Dispatch<TasksActionType | AppActionType>) => {
@@ -136,16 +141,25 @@ export const addTasksTC = (todolistId: string, title: string) => (dispatch: Disp
                 dispatch(setAppStatusAC('failed'))
             }
         })
+        .catch((error)=>{
+            dispatch(setAppStatusAC('failed'))
+            dispatch(setAppErrorAC(error.message))
+        })
 }
 
 
 export const removeTaskTC =
     (todolistId: string, taskId: string) => (dispatch: Dispatch<TasksActionType | AppActionType>) => {
         dispatch(setAppStatusAC('loading'))
-        taskAPI.deleteTasks(todolistId, taskId).then(() => {
+        taskAPI.deleteTasks(todolistId, taskId)
+            .then(() => {
             dispatch(removeAC(todolistId, taskId))
             dispatch(setAppStatusAC('succeeded'))
         })
+            .catch((error)=>{
+                dispatch(setAppStatusAC('failed'))
+                dispatch(setAppErrorAC(error.message))
+            })
     }
 
 
@@ -169,10 +183,15 @@ export const updateTaskTC =
                 ...domainModel
             }
             dispatch(setAppStatusAC('loading'))
-            taskAPI.updateTask(todolistId, taskId, apiModel).then((res) => {
+            taskAPI.updateTask(todolistId, taskId, apiModel)
+                .then((res) => {
                 dispatch(updateTaskAC(todolistId, taskId, domainModel))
                 dispatch(setAppStatusAC('succeeded'))
             })
+                .catch((error)=>{
+                    dispatch(setAppStatusAC('failed'))
+                    dispatch(setAppErrorAC(error.message))
+                })
         }
 
 export type TasksActionType =

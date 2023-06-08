@@ -80,6 +80,7 @@ export const Todolist: React.FC<TodolistProps> = React.memo((props) => {
 
             <div>
                 <AddItemForm
+                    disabled={entityStatus === 'loading'}
                     placeholder = {'whats to do?'}
                     onEnterKey = {addItemHandler}
                     addItem = {addItemHandler}
