@@ -134,13 +134,16 @@ export const addTasksTC = (todolistId: string, title: string) => (dispatch: Disp
             handleServerNetworkError(error, dispatch)
         })
 }
-
 export const removeTaskTC = (todolistId: string, taskId: string) => (dispatch: Dispatch<TasksActionType | AppActionType>) => {
     dispatch(setAppStatusAC('loading'))
     taskAPI.deleteTasks(todolistId, taskId)
-        .then(() => {
-            dispatch(removeAC(todolistId, taskId))
-            dispatch(setAppStatusAC('succeeded'))
+        .then((res) => {
+            if (res.data.resultCode === 0){
+                dispatch(removeAC(todolistId, taskId))
+                dispatch(setAppStatusAC('succeeded'))
+            }else{
+                handleServerAppError(res.data, dispatch);
+            }
         })
         .catch((error) => {
             handleServerNetworkError(error, dispatch)
@@ -168,6 +171,7 @@ export const updateTaskTC = (todolistId: string, taskId: string, domainModel: Up
         .then((res) => {
             if (res.data.resultCode === 0) {
                 dispatch(updateTaskAC(todolistId, taskId, domainModel))
+                dispatch(setAppStatusAC('succeeded'))
             } else {
                 handleServerAppError(res.data, dispatch);
             }

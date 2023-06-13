@@ -27,7 +27,7 @@ export const taskAPI = {
 		return promise
 	},
 	deleteTasks(todolistId: string, taskId: string) {
-		const promise = instance.delete<TasksResponseType>(
+		const promise = instance.delete<ResponseType>(
 			`/todo-lists/${todolistId}/tasks/${taskId}`
 		)
 		return promise
@@ -83,7 +83,7 @@ type TasksResponseType<D = {}> = {
 	data: D
 }
 
-export type ResponseType<D> = {
+export type ResponseType<D={}> = {
 	resultCode: number
 	messages: Array<string>
 	fieldsErrors: Array<string>
