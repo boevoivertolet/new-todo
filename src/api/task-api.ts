@@ -18,7 +18,7 @@ export const taskAPI = {
 	},
 	createTask(todolistId: string, title: string) {
 		// const promise = instance.post<TasksResponseType<{ item: TaskType }>,AxiosResponse<{item: TaskType}>, {title: string}>(
-		const promise = instance.post<TasksResponseType<{ item: TaskType }>>(
+		const promise = instance.post<ResponseType<{ item: TaskType }>>(
 			`todo-lists/${todolistId}/tasks`,
 			{
 				title
