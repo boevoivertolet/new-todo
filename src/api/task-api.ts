@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios'
 import { instance } from './instance'
+import {RequestStatusType} from "../app/app-reducer";
 
 export const taskAPI = {
 	updateTask(todolistId: string, taskId: string, model: UpdateTaskModelType) {
@@ -48,6 +49,7 @@ export type TaskType = {
 	todoListId: string
 	order: number
 	addedDate: string
+	entityStatus?: RequestStatusType
 }
 
 export type UpdateTaskModelType = {

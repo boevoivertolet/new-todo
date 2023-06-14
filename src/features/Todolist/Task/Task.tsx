@@ -9,6 +9,7 @@ import { TaskStatuses, TaskType } from '../../../api/task-api'
 export const Task: React.FC<TaskProps> = React.memo((props) => {
 	const {
 		id,
+		disabled,
 		task,
 		removeTask,
 		todolistId,
@@ -28,12 +29,12 @@ export const Task: React.FC<TaskProps> = React.memo((props) => {
 		},
 		[removeTask, id, todolistId]
 	)
-	const onChangeCheckboxHandler = useCallback(
-		(todolistId: string, id: string, status: TaskStatuses) => {
-			changeTaskStatus(todolistId, id, status)
-		},
-		[changeTaskStatus, todolistId, id]
-	)
+	// const onChangeCheckboxHandler = useCallback(
+	// 	(todolistId: string, id: string, status: TaskStatuses) => {
+	// 		changeTaskStatus(todolistId, id, status)
+	// 	},
+	// 	[changeTaskStatus, todolistId, id]
+	// )
 
 	const changeTaskTitleHandler = useCallback(
 		(title: string) => {
@@ -48,16 +49,18 @@ export const Task: React.FC<TaskProps> = React.memo((props) => {
 			className={s.task}
 			key={id}>
 			<Checkbox
-				checked={props.task.status === TaskStatuses.Completed}
+				checked={task.status === TaskStatuses.Completed}
 				color="primary"
 				onChange={onChangeHandler}
 			/>
 
 			<EditableInput
+				disabled={disabled}
 				changeTodolistTitle={changeTaskTitleHandler}
 				value={task.title}
 			/>
 			<DeleteForeverIcon
+
 				style={{ color: '#2374CE' }}
 				onClick={() => removeTaskHandler(id, todolistId)}>
 				-
@@ -69,6 +72,7 @@ export const Task: React.FC<TaskProps> = React.memo((props) => {
 
 
 type TaskProps = {
+	disabled?: boolean
 	changeTaskTitle: (id: string, taskId: string, title: string) => void
 	todolistId: string
 	id: string

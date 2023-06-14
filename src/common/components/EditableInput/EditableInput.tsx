@@ -5,7 +5,7 @@ import s from './EditableInput.module.scss'
 export const EditableInput: React.FC<EditableInputProps> = React.memo(
 	(props) => {
 		console.log('render EditableInput')
-		const { changeTodolistTitle, ...restProps } = props
+		const { changeTodolistTitle,disabled, ...restProps } = props
 		const [editMode, setEditMode] = useState<boolean>(false)
 		const [value, setValue] = useState(restProps.value)
 
@@ -21,11 +21,12 @@ export const EditableInput: React.FC<EditableInputProps> = React.memo(
 		return (
 			<div className={s.editable__input}>
 				{!editMode ? (
-					<div className={s.editable__div} onDoubleClick={activateEditMod}>
+					<div  className={s.editable__div}  onDoubleClick={activateEditMod} >
 						{value}
 					</div>
 				) : (
 					<MyInput
+						disabled={disabled}
 						blurCallBack={deActivateEditMod}
 						callBack={setValue}
 						value={value}
@@ -37,6 +38,7 @@ export const EditableInput: React.FC<EditableInputProps> = React.memo(
 	}
 )
 type EditableInputProps = {
+	disabled?: boolean
 	value: string
 	changeTodolistTitle: (title: string) => void
 }

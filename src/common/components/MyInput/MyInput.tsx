@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 
 
 export const MyInput: React.FC<MyInputProps> = (props) => {
-    const {callBack, value, onEnterKeyCallBack, placeholder, error, blurCallBack, style, ...restProps} = props
+    const {callBack, value, onEnterKeyCallBack, placeholder, error, blurCallBack,disabled, style, ...restProps} = props
 
     const onChangeCallBackHandler = (e: ChangeEvent<HTMLInputElement>) => {
         callBack(e.currentTarget.value)
@@ -24,13 +24,14 @@ export const MyInput: React.FC<MyInputProps> = (props) => {
                        size = {'small'} className = {error ? s.error : s.input} type = {'text'}
                        onBlur = {blurCallBack}
                        onChange = {onChangeCallBackHandler}
-                       onKeyDown = {onEnterKeyHandler} value = {value} />
+                       onKeyDown = {onEnterKeyHandler} value = {value} disabled={disabled} />
 
 
     );
 };
 
 type MyInputProps = {
+    disabled?: boolean
     error?: string | null
     callBack: (value: string) => void
     value: string

@@ -50,7 +50,7 @@ export const Todolist: React.FC<TodolistProps> = React.memo((props) => {
 
     const removeTodolistHandler = useCallback(() => {
         removeTodolist(todolistId)
-        dispatch(changeTodolistEntityStatusAC(todolistId,'loading'))
+        dispatch(changeTodolistEntityStatusAC(todolistId, 'loading'))
     }, [removeTodolist, todolistId])
     const changeTodolistTitleHandler = useCallback(
         (title: string) => {
@@ -80,7 +80,7 @@ export const Todolist: React.FC<TodolistProps> = React.memo((props) => {
 
             <div>
                 <AddItemForm
-                    disabled={entityStatus === 'loading'}
+                    disabled = {entityStatus === 'loading'}
                     placeholder = {'whats to do?'}
                     onEnterKey = {addItemHandler}
                     addItem = {addItemHandler}
@@ -90,6 +90,7 @@ export const Todolist: React.FC<TodolistProps> = React.memo((props) => {
 
             <div className = {s.tasks__block}>
                 {filteredTasks.map((el) => <Task
+                        disabled = {el.entityStatus === 'loading'}
                         task = {el}
                         id = {el.id}
                         todolistId = {todolistId}
