@@ -13,7 +13,6 @@ import {
     TodolistDomainType
 } from "./todolistsReducer";
 import {TaskStatuses} from "../api/task-api";
-import {RequestStatusType} from "../app/app-reducer";
 
 export const TodolistsList = () => {
     const dispatch = useAppDispatch()

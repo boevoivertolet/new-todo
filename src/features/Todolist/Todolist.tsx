@@ -90,7 +90,6 @@ export const Todolist: React.FC<TodolistProps> = React.memo((props) => {
 
             <div className = {s.tasks__block}>
                 {filteredTasks.map((el) => <Task
-                        disabled = {el.entityStatus === 'loading'}
                         task = {el}
                         id = {el.id}
                         todolistId = {todolistId}

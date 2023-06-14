@@ -1,15 +1,15 @@
 import React, {ChangeEvent, useCallback} from 'react'
 import s from './Task.module.scss'
-
 import { EditableInput } from '../../../common/components/EditableInput/EditableInput'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import {Checkbox, Paper} from '@mui/material'
 import { TaskStatuses, TaskType } from '../../../api/task-api'
+import {changeTaskEntityStatusAC} from "../../taskReducer";
+import {useAppDispatch} from "../../../app/store";
 
 export const Task: React.FC<TaskProps> = React.memo((props) => {
 	const {
 		id,
-		disabled,
 		task,
 		removeTask,
 		todolistId,
@@ -17,6 +17,9 @@ export const Task: React.FC<TaskProps> = React.memo((props) => {
 		changeTaskTitle,
 		...restProps
 	} = props
+
+	const dispatch = useAppDispatch()
+
 	const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
 		let newIsDoneValue = e.currentTarget.checked
 		changeTaskStatus(todolistId,task.id, newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New, )
@@ -25,20 +28,17 @@ export const Task: React.FC<TaskProps> = React.memo((props) => {
 
 	const removeTaskHandler = useCallback(
 		(todolistId: string, id: string) => {
-			removeTask(id, todolistId)
+			dispatch(changeTaskEntityStatusAC(todolistId,id,'loading'))
+			removeTask(todolistId, id )
 		},
 		[removeTask, id, todolistId]
 	)
-	// const onChangeCheckboxHandler = useCallback(
-	// 	(todolistId: string, id: string, status: TaskStatuses) => {
-	// 		changeTaskStatus(todolistId, id, status)
-	// 	},
-	// 	[changeTaskStatus, todolistId, id]
-	// )
+
 
 	const changeTaskTitleHandler = useCallback(
 		(title: string) => {
 			changeTaskTitle(todolistId, id, title)
+
 		},
 		[changeTaskTitle, todolistId, id]
 	)
@@ -46,7 +46,7 @@ export const Task: React.FC<TaskProps> = React.memo((props) => {
 	return (
 		<Paper
 			style={{ transition: '1s' }}
-			className={s.task}
+			className={task.entityStatus === 'loading' ? `${s.task}`+ ' ' +`${s.disabled__task}`: `${s.task}`}
 			key={id}>
 			<Checkbox
 				checked={task.status === TaskStatuses.Completed}
@@ -55,15 +55,12 @@ export const Task: React.FC<TaskProps> = React.memo((props) => {
 			/>
 
 			<EditableInput
-				disabled={disabled}
 				changeTodolistTitle={changeTaskTitleHandler}
 				value={task.title}
 			/>
 			<DeleteForeverIcon
-
 				style={{ color: '#2374CE' }}
-				onClick={() => removeTaskHandler(id, todolistId)}>
-				-
+				onClick={() => removeTaskHandler(todolistId, id,)}>
 			</DeleteForeverIcon>
 		</Paper>
 	)
@@ -72,7 +69,6 @@ export const Task: React.FC<TaskProps> = React.memo((props) => {
 
 
 type TaskProps = {
-	disabled?: boolean
 	changeTaskTitle: (id: string, taskId: string, title: string) => void
 	todolistId: string
 	id: string
