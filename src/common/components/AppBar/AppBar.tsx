@@ -17,10 +17,10 @@ export default function ButtonAppBar() {
 
 
     return (
-        <Box sx = {{flexGrow: 1}}>
+        <Box sx = {{flexGrow: 1}} style={{marginTop:'64px'}}>
          <ErrorSnackbar/>
             <AppBar position = "static">
-                <Toolbar>
+                <Toolbar >
                     <IconButton
                         size = "small"
                         edge = "start"
