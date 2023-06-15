@@ -22,7 +22,7 @@ const LoginStyle = {
 
 export const Login = () => {
 
- type FormikErrorType = {
+    type FormikErrorType = {
         email?: string
         password?: string
         rememberMe?: boolean
@@ -40,7 +40,7 @@ export const Login = () => {
                 errors.email = 'Required'
             } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
                 errors.email = 'Invalid email address'
-            }else if(values.password.length < 3 ){
+            } else if (values.password.length < 3) {
                 errors.password = 'Must be 3 or more symbols'
             }
             return errors
@@ -51,10 +51,9 @@ export const Login = () => {
     })
 
 
-
     return <Grid style = {LoginStyle} container justifyContent = {'center'}>
         <Grid item justifyContent = {'center'}>
-            <form onSubmit={formik.handleSubmit}>
+            <form onSubmit = {formik.handleSubmit}>
                 <FormControl>
                     <FormLabel>
                         <p>To log in get registered
@@ -67,12 +66,18 @@ export const Login = () => {
                         <p>Password: free</p>
                     </FormLabel>
                     <FormGroup>
-                        <TextField label = "Email" margin = "normal" name ='email' onChange={formik.handleChange} value={formik.values.email} />
-                        {formik.errors.email ? <div style={{color:'red'}}>{formik.errors.email}</div> : null}
-                        <TextField type = "password" label = "Password" margin = "normal" name ='password' onChange={formik.handleChange} value={formik.values.password}
+                        <TextField autoComplete='off' label = "Email" margin = "normal" name = 'email' onChange = {formik.handleChange}
+                                   value = {formik.values.email} onBlur = {formik.handleBlur} />
+                        {formik.touched.email && formik.errors.email ?
+                            <div style = {{color: 'red'}}>{formik.errors.email}</div> : null}
+                        <TextField autoComplete='off' type = "password" label = "Password" margin = "normal" name = 'password'
+                                   onChange = {formik.handleChange} value = {formik.values.password}
                         />
-                        {formik.errors.password ? <div style={{color:'red'}}>{formik.errors.password}</div> : null}
-                        <FormControlLabel label = {'Remember me'} control = {<Checkbox   name ='rememberMe' onChange={formik.handleChange} checked={formik.values.rememberMe}/>} />
+                        {formik.touched.password && formik.errors.password ?
+                            <div style = {{color: 'red'}}>{formik.errors.password}</div> : null}
+                        <FormControlLabel label = {'Remember me'}
+                                          control = {<Checkbox name = 'rememberMe' onChange = {formik.handleChange}
+                                                               checked = {formik.values.rememberMe} />} />
 
                         <Button type = {'submit'} variant = {'contained'} color = {'primary'}>
                             Login
