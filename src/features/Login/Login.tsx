@@ -22,14 +22,31 @@ const LoginStyle = {
 
 export const Login = () => {
 
-  const formik = useFormik({
+ type FormikErrorType = {
+        email?: string
+        password?: string
+        rememberMe?: boolean
+    }
+
+    const formik = useFormik({
         initialValues: {
             email: '',
             password: '',
             rememberMe: false
         },
+        validate: (values) => {
+            const errors: FormikErrorType = {}
+            if (!values.email) {
+                errors.email = 'Required'
+            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+                errors.email = 'Invalid email address'
+            }else if(values.password.length < 3 ){
+                errors.password = 'Must be 3 or more symbols'
+            }
+            return errors
+        },
         onSubmit: values => {
-            alert(JSON.stringify(values));
+            alert(JSON.stringify(values))
         },
     })
 
@@ -51,9 +68,12 @@ export const Login = () => {
                     </FormLabel>
                     <FormGroup>
                         <TextField label = "Email" margin = "normal" name ='email' onChange={formik.handleChange} value={formik.values.email} />
+                        {formik.errors.email ? <div style={{color:'red'}}>{formik.errors.email}</div> : null}
                         <TextField type = "password" label = "Password" margin = "normal" name ='password' onChange={formik.handleChange} value={formik.values.password}
                         />
+                        {formik.errors.password ? <div style={{color:'red'}}>{formik.errors.password}</div> : null}
                         <FormControlLabel label = {'Remember me'} control = {<Checkbox   name ='rememberMe' onChange={formik.handleChange} checked={formik.values.rememberMe}/>} />
+
                         <Button type = {'submit'} variant = {'contained'} color = {'primary'}>
                             Login
                         </Button>
