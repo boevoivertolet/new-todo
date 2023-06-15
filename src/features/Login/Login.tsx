@@ -8,14 +8,25 @@ import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 
+const LoginStyle = {
+    zIndex: '111',
+    background: '#ffffff',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100vh'
+
+}
+
+
 export const Login = () => {
-    return <Grid container justifyContent={'center'}>
-        <Grid item justifyContent={'center'}>
+    return <Grid style = {LoginStyle} container justifyContent = {'center'}>
+        <Grid item justifyContent = {'center'}>
             <FormControl>
                 <FormLabel>
                     <p>To log in get registered
-                        <a href={'https://social-network.samuraijs.com/'}
-                           target={'_blank'}> here
+                        <a href = {'https://social-network.samuraijs.com/'}
+                           target = {'_blank'}> here
                         </a>
                     </p>
                     <p>or use common test account credentials:</p>
@@ -23,12 +34,12 @@ export const Login = () => {
                     <p>Password: free</p>
                 </FormLabel>
                 <FormGroup>
-                    <TextField label="Email" margin="normal"/>
-                    <TextField type="password" label="Password"
-                               margin="normal"
+                    <TextField label = "Email" margin = "normal" />
+                    <TextField type = "password" label = "Password"
+                               margin = "normal"
                     />
-                    <FormControlLabel label={'Remember me'} control={<Checkbox/>}/>
-                    <Button type={'submit'} variant={'contained'} color={'primary'}>
+                    <FormControlLabel label = {'Remember me'} control = {<Checkbox />} />
+                    <Button type = {'submit'} variant = {'contained'} color = {'primary'}>
                         Login
                     </Button>
                 </FormGroup>
