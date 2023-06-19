@@ -66,14 +66,23 @@ export const Login = () => {
                         <p>Password: free</p>
                     </FormLabel>
                     <FormGroup>
-                        <TextField autoComplete='off' label = "Email" margin = "normal" name = 'email' onChange = {formik.handleChange}
-                                   value = {formik.values.email} onBlur = {formik.handleBlur} />
+                        <TextField
+                            {...formik.getFieldProps('email')}
+                            autoComplete = 'off'
+                            onChange = {formik.handleChange}
+                            value = {formik.values.email}
+                            onBlur = {formik.handleBlur} />
                         {formik.touched.email && formik.errors.email ?
                             <div style = {{color: 'red'}}>{formik.errors.email}</div> : null}
-                        <TextField autoComplete='off' type = "password" label = "Password" margin = "normal" name = 'password'
-                                   onChange = {formik.handleChange} value = {formik.values.password}
+                        <TextField
+                            {...formik.getFieldProps('password')}
+                            autoComplete = 'off'
+                            name = 'password'
+                            onBlur = {formik.handleBlur}
+                            onChange = {formik.handleChange}
+                            value = {formik.values.password}
                         />
-                        {formik.touched.password && formik.errors.password ?
+                        { formik.touched.password && formik.errors.password ?
                             <div style = {{color: 'red'}}>{formik.errors.password}</div> : null}
                         <FormControlLabel label = {'Remember me'}
                                           control = {<Checkbox name = 'rememberMe' onChange = {formik.handleChange}
