@@ -8,6 +8,8 @@ import FormLabel from '@mui/material/FormLabel';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import {useFormik} from "formik";
+import {loginTC} from "./auth-reducer";
+import {useAppDispatch} from "../../app/store";
 
 const LoginStyle = {
     zIndex: '111',
@@ -21,6 +23,7 @@ const LoginStyle = {
 
 
 export const Login = () => {
+    const dispatch = useAppDispatch()
 
     type FormikErrorType = {
         email?: string
@@ -32,7 +35,8 @@ export const Login = () => {
         initialValues: {
             email: '',
             password: '',
-            rememberMe: false
+            rememberMe: false,
+            captcha: false
         },
         validate: (values) => {
             const errors: FormikErrorType = {}
@@ -46,8 +50,9 @@ export const Login = () => {
             return errors
         },
         onSubmit: values => {
-            alert(JSON.stringify(values))
+            dispatch(loginTC(values))
             formik.resetForm()
+
         },
     })
 

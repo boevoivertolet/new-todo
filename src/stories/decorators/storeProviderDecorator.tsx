@@ -93,6 +93,9 @@ const initialGlobalState = {
     app: {
         status: 'loading' as RequestStatusType,
         error: null as ErrorType
+    },
+    auth: {
+        isLoggedIn: false
     }
 }
 
