@@ -95,7 +95,9 @@ const initialGlobalState = {
         error: null as ErrorType
     },
     auth: {
-        isLoggedIn: false
+        isLoggedIn: false,
+        isInitialized: false,
+        userName:''
     }
 }
 

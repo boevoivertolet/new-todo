@@ -13,14 +13,13 @@ import {ErrorSnackbar} from "../ErrorSnackbar/ErrorSnackbar";
 
 export default function ButtonAppBar() {
     const status = useAppSelector<RequestStatusType>((state) => state.app.status)
-
-
+    const userName = useAppSelector(state => state.auth.userName)
 
     return (
-        <Box sx = {{flexGrow: 1}} style={{marginTop:'64px'}}>
-         <ErrorSnackbar/>
+        <Box sx = {{flexGrow: 1}} style = {{marginTop: '64px'}}>
+            <ErrorSnackbar />
             <AppBar position = "static">
-                <Toolbar >
+                <Toolbar>
                     <IconButton
                         size = "small"
                         edge = "start"
@@ -33,7 +32,7 @@ export default function ButtonAppBar() {
                     <Typography variant = "h6" component = "div" sx = {{flexGrow: 1}}>
                         News
                     </Typography>
-                    <Button color = "inherit">Login</Button>
+                    <Button color = "inherit">{userName}</Button>
                 </Toolbar>
                 {status === 'loading' && <LinearProgress />}
             </AppBar>

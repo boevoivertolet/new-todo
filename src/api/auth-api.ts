@@ -4,7 +4,7 @@ import {ResponseType} from "./task-api";
 
 export const authAPI = {
     me() {
-        const promise = instance.get<ResponseType<{ userId: number }>>(
+        const promise = instance.get<ResponseType<{ userId: number, login: string }>>(
             `auth/me`
         )
         return promise.then(res => res.data)

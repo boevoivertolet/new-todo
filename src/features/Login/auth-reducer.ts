@@ -4,7 +4,9 @@ import {authAPI, LoginParamsType} from "../../api/auth-api";
 import {handleServerAppError, handleServerNetworkError} from "../../utils/error-utils";
 
 const initialState = {
-    isLoggedIn: false
+    isInitialized: false,
+    isLoggedIn: false,
+    userName: ''
 }
 type InitialStateType = typeof initialState
 
@@ -12,6 +14,10 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
     switch (action.type) {
         case 'login/set_is_logged_in':
             return {...state, isLoggedIn: action.value}
+        case 'login/initialized':
+            return {...state, isInitialized: action.value}
+        case 'login/set_user_name':
+            return {...state, userName: action.value}
         default:
             return state
     }
@@ -20,8 +26,11 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
 export const setIsLoggedInAC = (value: boolean) =>
     ({type: 'login/set_is_logged_in', value} as const)
 
-// export const getAuthAC = () =>
-//     ({type: 'login/get_auth'} as const)
+export const setIsInitializedAC = (value: boolean) =>
+    ({type: 'login/initialized', value} as const)
+
+export const setUserNameAC = (value: string) =>
+    ({type: 'login/set_user_name', value} as const)
 
 // thunks
 export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch<ActionsType>) => {
@@ -44,9 +53,12 @@ export const meTC = () => (dispatch: Dispatch<ActionsType>) => {
     authAPI.me()
         .then(res => {
             if (res.resultCode === 0) {
+                dispatch(setUserNameAC(res.data.login))
                 dispatch(setIsLoggedInAC(true))
+                dispatch(setIsInitializedAC(true))
                 dispatch(setAppStatusAC('succeeded'))
             } else {
+                dispatch(setIsInitializedAC(true))
                 handleServerAppError(res, dispatch);
             }
         })
@@ -60,4 +72,5 @@ type ActionsType =
     ReturnType<typeof setIsLoggedInAC>
     | SetAppStatusActionType
     | SetAppErrorActionType
-    // | ReturnType<typeof getAuthAC>
+    | ReturnType<typeof setIsInitializedAC>
+    | ReturnType<typeof setUserNameAC>

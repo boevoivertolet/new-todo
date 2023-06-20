@@ -4,15 +4,27 @@ import s from "./App.module.scss";
 import ButtonAppBar from "../common/components/AppBar/AppBar";
 import {Login} from "../features/Login/Login";
 import {Navigate, Route, Routes} from "react-router-dom";
-import {useAppDispatch} from "./store";
-import {meTC} from "../features/Login/auth-reducer";
+import {useAppDispatch, useAppSelector} from "./store";
+import {meTC, setUserNameAC} from "../features/Login/auth-reducer";
+import {CircularProgress} from "@mui/material";
 
 
 function App() {
     const dispatch = useAppDispatch()
+    const isInitialized = useAppSelector<boolean>((state) => state.auth.isInitialized)
+
+
     useEffect(() => {
         dispatch(meTC())
     }, [])
+
+
+    if (!isInitialized) {
+        return <div
+            style = {{position: 'fixed', top: '30%', textAlign: 'center', width: '100%'}}>
+            <CircularProgress />
+        </div>
+    }
     return (
         <div className = {s.app}>
             <ButtonAppBar />
