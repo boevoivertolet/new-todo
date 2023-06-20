@@ -13,10 +13,12 @@ import {
     TodolistDomainType
 } from "./todolistsReducer";
 import {TaskStatuses} from "../api/task-api";
+import {Navigate} from "react-router-dom";
 
 export const TodolistsList = () => {
     const dispatch = useAppDispatch()
     const tasks = useAppSelector<TasksStateType>((state) => state.tasks)
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
     const todolists = useAppSelector<TodolistDomainType[]>(
         (state) => state.todolists
     )
@@ -64,9 +66,14 @@ export const TodolistsList = () => {
     }, [])
 
     useEffect(() => {
+        if(!isLoggedIn) return
         dispatch(fetchTodolistsTC())
     }, [])
 
+
+    if (!isLoggedIn) {
+        return <Navigate to = {'/login'} />
+    }
 
     return (
         <div className = {s.app__container}>
@@ -82,7 +89,7 @@ export const TodolistsList = () => {
                     let allTodolistTasks = tasks[tdl.id]
                     return (
                         <Todolist
-                            entityStatus={tdl.entityStatus}
+                            entityStatus = {tdl.entityStatus}
                             changeTodolistTitle = {changeTodolistTitle}
                             removeTodolist = {removeTodolist}
                             changeFilter = {changeFilter}

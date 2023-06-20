@@ -20,6 +20,9 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
 export const setIsLoggedInAC = (value: boolean) =>
     ({type: 'login/set_is_logged_in', value} as const)
 
+// export const getAuthAC = () =>
+//     ({type: 'login/get_auth'} as const)
+
 // thunks
 export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch<ActionsType>) => {
     dispatch(setAppStatusAC('loading'))
@@ -28,16 +31,33 @@ export const loginTC = (data: LoginParamsType) => (dispatch: Dispatch<ActionsTyp
             if (res.data.resultCode === 0) {
                 dispatch(setIsLoggedInAC(true))
                 dispatch(setAppStatusAC('succeeded'))
-
             } else {
                 handleServerAppError(res.data, dispatch);
             }
         })
-
+        .catch((error) => {
+            handleServerNetworkError(error, dispatch)
+        })
+}
+export const meTC = () => (dispatch: Dispatch<ActionsType>) => {
+    dispatch(setAppStatusAC('loading'))
+    authAPI.me()
+        .then(res => {
+            if (res.resultCode === 0) {
+                dispatch(setIsLoggedInAC(true))
+                dispatch(setAppStatusAC('succeeded'))
+            } else {
+                handleServerAppError(res, dispatch);
+            }
+        })
         .catch((error) => {
             handleServerNetworkError(error, dispatch)
         })
 }
 
 // types
-type ActionsType = ReturnType<typeof setIsLoggedInAC> | SetAppStatusActionType | SetAppErrorActionType
+type ActionsType =
+    ReturnType<typeof setIsLoggedInAC>
+    | SetAppStatusActionType
+    | SetAppErrorActionType
+    // | ReturnType<typeof getAuthAC>
