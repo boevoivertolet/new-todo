@@ -44,8 +44,11 @@ export const Login = () => {
                 errors.email = 'Required'
             } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
                 errors.email = 'Invalid email address'
+            }
+            if (!values.password) {
+                errors.password = 'Required'
             } else if (values.password.length < 3) {
-                errors.password = 'Must be 3 or more symbols'
+                errors.password = 'Should be three or more symbols'
             }
             return errors
         },
@@ -74,7 +77,8 @@ export const Login = () => {
                     <FormGroup>
                         <TextField
                             {...formik.getFieldProps('email')}
-                            autoComplete = 'off'
+                            label = {'email'}
+                            margin = {'normal'}
                             onChange = {formik.handleChange}
                             value = {formik.values.email}
                             onBlur = {formik.handleBlur} />
@@ -82,13 +86,14 @@ export const Login = () => {
                             <div style = {{color: 'red'}}>{formik.errors.email}</div> : null}
                         <TextField
                             {...formik.getFieldProps('password')}
-                            autoComplete = 'off'
-                            name = 'password'
+                            label = {'password'}
+                            margin = {'normal'}
+                            type = {'password'}
                             onBlur = {formik.handleBlur}
                             onChange = {formik.handleChange}
                             value = {formik.values.password}
                         />
-                        { formik.touched.password && formik.errors.password ?
+                        {formik.touched.password && formik.errors.password ?
                             <div style = {{color: 'red'}}>{formik.errors.password}</div> : null}
                         <FormControlLabel label = {'Remember me'}
                                           control = {<Checkbox name = 'rememberMe' onChange = {formik.handleChange}

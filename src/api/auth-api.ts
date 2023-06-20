@@ -1,13 +1,14 @@
 import {instance} from "./instance";
 import {ResponseType} from "./task-api";
+import {AxiosResponse} from "axios";
 
 export const authAPI = {
     login(data: LoginParamsType) {
-        const promise = instance.post<ResponseType<{userId:number}>>(
-            `/auth/login`,
-            {data}
+        const promise = instance.post<AxiosResponse<ResponseType<{userId:number}>>>(
+            `auth/login`,
+            data,
         )
-        return promise
+        return promise.then(res => res.data)
     },
 }
 export type LoginParamsType = {
