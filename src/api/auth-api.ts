@@ -4,11 +4,11 @@ import {AxiosResponse} from "axios";
 
 export const authAPI = {
     login(data: LoginParamsType) {
-        const promise = instance.post<AxiosResponse<ResponseType<{userId:number}>>>(
+        const promise = instance.post<ResponseType<{userId:number}>>(
             `auth/login`,
             data,
         )
-        return promise.then(res => res.data)
+        return promise
     },
 }
 export type LoginParamsType = {
