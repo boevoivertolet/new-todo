@@ -14,6 +14,9 @@ export default function AlertDialog() {
     };
 
     const handleClose = () => {
+        setOpen(false);
+    }
+    const handleYesClose = () => {
         dispatch(logoutTC())
         setOpen(false);
     };
@@ -34,7 +37,7 @@ export default function AlertDialog() {
                     <Button onClick = {handleClose} color = "primary">
                         No
                     </Button>
-                    <Button onClick = {handleClose} color = "primary" autoFocus>
+                    <Button onClick = {handleYesClose} color = "primary" autoFocus>
                         Yes
                     </Button>
                 </DialogActions>
