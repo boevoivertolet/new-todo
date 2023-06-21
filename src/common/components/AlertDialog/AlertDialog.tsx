@@ -1,9 +1,11 @@
 import React from 'react';
 import Button from "@mui/material/Button";
 import {Dialog, DialogActions, DialogTitle} from "@mui/material";
-import {useAppSelector} from "../../../app/store";
+import {useAppDispatch, useAppSelector} from "../../../app/store";
+import {logoutTC} from "../../../features/Login/auth-reducer";
 
 export default function AlertDialog() {
+    const dispatch = useAppDispatch()
     const userName = useAppSelector(state => state.auth.userName)
     const [open, setOpen] = React.useState(false);
 
@@ -12,6 +14,7 @@ export default function AlertDialog() {
     };
 
     const handleClose = () => {
+        dispatch(logoutTC())
         setOpen(false);
     };
 

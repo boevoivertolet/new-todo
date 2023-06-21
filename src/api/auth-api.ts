@@ -16,6 +16,13 @@ export const authAPI = {
         )
         return promise
     },
+    logout() {
+        const promise = instance.delete<ResponseType>(
+            `auth/login`,
+
+        )
+        return promise
+    },
 
 }
 export type LoginParamsType = {
