@@ -10,6 +10,7 @@ import {LinearProgress} from "@mui/material";
 import {useAppSelector} from "../../../app/store";
 import {RequestStatusType} from "../../../app/app-reducer";
 import {ErrorSnackbar} from "../ErrorSnackbar/ErrorSnackbar";
+import AlertDialog from "../AlertDialog/AlertDialog";
 
 export default function ButtonAppBar() {
     const status = useAppSelector<RequestStatusType>((state) => state.app.status)
@@ -32,7 +33,7 @@ export default function ButtonAppBar() {
                     <Typography variant = "h6" component = "div" sx = {{flexGrow: 1}}>
                         News
                     </Typography>
-                    <Button color = "inherit">{userName}</Button>
+                    <AlertDialog/>
                 </Toolbar>
                 {status === 'loading' && <LinearProgress />}
             </AppBar>
