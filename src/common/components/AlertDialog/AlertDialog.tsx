@@ -6,7 +6,7 @@ import {logoutTC} from "../../../features/Login/auth-reducer";
 
 export default function AlertDialog() {
     const dispatch = useAppDispatch()
-    const userName = useAppSelector(state => state.auth.userName)
+    const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -24,7 +24,7 @@ export default function AlertDialog() {
     return (
         <div>
             <Button variant = "text" color = "inherit" onClick = {handleClickOpen}>
-                {userName}
+                {isLoggedIn && 'logout'}
             </Button>
             <Dialog
                 open = {open}

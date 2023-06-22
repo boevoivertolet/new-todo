@@ -58,9 +58,9 @@ export const Todolist: React.FC<TodolistProps> = React.memo((props) => {
         [changeTodolistTitle, todolistId]
     )
 
-    useEffect(() => {
-        dispatch(fetchTasksTC(todolistId))
-    }, [])
+    // useEffect(() => {
+    //     dispatch(fetchTasksTC(todolistId))
+    // }, [])
 
     return (
         <Paper elevation = {3} className = {s.todolist}>
