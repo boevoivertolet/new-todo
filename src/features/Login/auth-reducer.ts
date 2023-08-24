@@ -1,8 +1,8 @@
-import { setAppStatusAC } from "app/app-reducer";
 import { authAPI, LoginParamsType } from "api/auth-api";
 import { handleServerAppError, handleServerNetworkError } from "utils/error-utils";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk } from "app/store";
+import { appActions } from "app/app-reducer";
 
 // const initialState = {
 //     isInitialized: false,
@@ -57,7 +57,7 @@ export const authActions = slice.actions;
 
 // thunks
 export const logoutTC = (): AppThunk => (dispatch) => {
-    dispatch(setAppStatusAC("loading"));
+    dispatch(appActions.setAppStatus({ status: "loading" }));
     authAPI
         .logout()
         .then((res) => {
@@ -66,7 +66,7 @@ export const logoutTC = (): AppThunk => (dispatch) => {
                 // dispatch(setIsLoggedInAC(false));
                 dispatch(authActions.setUserName({ userName: "" }));
                 dispatch(authActions.setIsLoggedIn({ isLoggedIn: false }));
-                dispatch(setAppStatusAC("succeeded"));
+                dispatch(appActions.setAppStatus({ status: "succeeded" }));
             } else {
                 handleServerAppError(res.data, dispatch);
             }
@@ -79,14 +79,14 @@ export const logoutTC = (): AppThunk => (dispatch) => {
 export const loginTC =
     (data: LoginParamsType): AppThunk =>
     (dispatch) => {
-        dispatch(setAppStatusAC("loading"));
+        dispatch(appActions.setAppStatus({ status: "loading" }));
         authAPI
             .login(data)
             .then((res) => {
                 if (res.data.resultCode === 0) {
                     // dispatch(setIsLoggedInAC(true));
                     dispatch(authActions.setIsLoggedIn({ isLoggedIn: true }));
-                    dispatch(setAppStatusAC("succeeded"));
+                    dispatch(appActions.setAppStatus({ status: "succeeded" }));
                 } else {
                     handleServerAppError(res.data, dispatch);
                 }
@@ -96,7 +96,7 @@ export const loginTC =
             });
     };
 export const meTC = (): AppThunk => (dispatch) => {
-    dispatch(setAppStatusAC("loading"));
+    dispatch(appActions.setAppStatus({ status: "loading" }));
     authAPI
         .me()
         .then((res) => {
@@ -107,7 +107,7 @@ export const meTC = (): AppThunk => (dispatch) => {
                 dispatch(authActions.setUserName({ userName: res.data.login }));
                 dispatch(authActions.setIsLoggedIn({ isLoggedIn: true }));
                 dispatch(authActions.setIsInitialized({ isInitialized: true }));
-                dispatch(setAppStatusAC("succeeded"));
+                dispatch(appActions.setAppStatus({ status: "succeeded" }));
             } else {
                 // dispatch(setIsInitializedAC(true));
                 dispatch(authActions.setIsInitialized({ isInitialized: true }));
