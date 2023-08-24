@@ -5,8 +5,8 @@ import {
 	removeTodolistAC,
 	TodolistDomainType,
 	todolistsReducer,
-} from "../features/todolistsReducer";
-import { FilterType } from "../features/TodolistsList";
+} from "features/todolistsReducer";
+import { FilterType } from "features/TodolistsList";
 
 let todolistId1 = v1();
 let todolistId2 = v1();

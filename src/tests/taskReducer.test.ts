@@ -1,15 +1,5 @@
-import { TasksStateType, removeAC, tasksReducer } from "../features/taskReducer";
-import { addTodolistAC, removeTodolistAC } from "../features/todolistsReducer";
-
-// type TaskType = {
-// 	id: string
-// 	title: string
-// 	isDone: boolean
-// }
-
-// type TasksType = {
-// 	[key: string]: TaskType[]
-// }
+import { removeAC, tasksReducer, TasksStateType } from "features/taskReducer";
+import { removeTodolistAC } from "features/todolistsReducer";
 
 let startState: TasksStateType;
 beforeEach(() => {

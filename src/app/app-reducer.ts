@@ -17,6 +17,7 @@ const slice = createSlice({
 });
 export const appReducer = slice.reducer;
 export const appActions = slice.actions;
+export type AppInitialState = ReturnType<typeof slice.getInitialState>;
 
 //types
 export type ErrorType = string | null;

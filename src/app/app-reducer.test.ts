@@ -1,23 +1,19 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { appActions, AppInitialState, appReducer } from "app/app-reducer";
 
-const slice = createSlice({
-	name: "app",
-	initialState: {
-		status: "loading" as RequestStatusType,
-		error: null as ErrorType,
-	},
-	reducers: {
-		setAppStatus: (state, action: PayloadAction<{ status: RequestStatusType }>) => {
-			state.status = action.payload.status;
-		},
-		setAppError: (state, action: PayloadAction<{ error: ErrorType }>) => {
-			state.error = action.payload.error;
-		},
-	},
+let startState: AppInitialState;
+beforeEach(() => {
+	startState = {
+		error: null,
+		status: "idle",
+	};
 });
-export const appReducer = slice.reducer;
-export const appActions = slice.actions;
 
-//types
-export type ErrorType = string | null;
-export type RequestStatusType = "idle" | "loading" | "succeeded" | "failed";
+test("correct message should be set", () => {
+	const endState = appReducer(startState, appActions.setAppError({ error: "some error" }));
+	expect(endState.error).toBe("some error");
+});
+
+test("correct status should be set", () => {
+	const endState = appReducer(startState, appActions.setAppStatus({ status: "loading" }));
+	expect(endState.status).toBe("loading");
+});
