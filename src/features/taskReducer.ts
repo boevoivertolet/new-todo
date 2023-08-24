@@ -1,9 +1,6 @@
 import { addTodolistAC, removeTodolistAC, setTodolistAC } from "./todolistsReducer";
-
-import { Dispatch } from "redux";
 import { taskAPI, TaskPriorities, TaskStatuses, TaskType, UpdateTaskModelType } from "api/task-api";
 import { AppRootStateType, AppThunk } from "app/store";
-// import { AppActionType, RequestStatusType, setAppStatusAC } from "../app/app-reducer";
 import { handleServerAppError, handleServerNetworkError } from "utils/error-utils";
 import { appActions, RequestStatusType } from "app/app-reducer";
 

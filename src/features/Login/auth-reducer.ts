@@ -4,13 +4,6 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppThunk } from "app/store";
 import { appActions } from "app/app-reducer";
 
-// const initialState = {
-//     isInitialized: false,
-//     isLoggedIn: false,
-//     userName: "",
-// };
-// type InitialStateType = typeof initialState;
-
 const slice = createSlice({
     name: "auth",
     initialState: {
@@ -36,25 +29,6 @@ const slice = createSlice({
 export const authReducer = slice.reducer;
 export const authActions = slice.actions;
 
-// export const authReducer = (state, action: ActionsType) => {
-//     switch (action.type) {
-//         case "login/set_is_logged_in":
-//             return { ...state, isLoggedIn: action.value };
-//         case "login/initialized":
-//             return { ...state, isInitialized: action.value };
-//         case "login/set_user_name":
-//             return { ...state, userName: action.value };
-//         default:
-//             return state;
-//     }
-// };
-// actions
-// export const setIsLoggedInAC = (value: boolean) => ({ type: "login/set_is_logged_in", value }) as const;
-
-// export const setIsInitializedAC = (value: boolean) => ({ type: "login/initialized", value }) as const;
-
-// export const setUserNameAC = (value: string) => ({ type: "login/set_user_name", value }) as const;
-
 // thunks
 export const logoutTC = (): AppThunk => (dispatch) => {
     dispatch(appActions.setAppStatus({ status: "loading" }));
@@ -62,8 +36,6 @@ export const logoutTC = (): AppThunk => (dispatch) => {
         .logout()
         .then((res) => {
             if (res.data.resultCode === 0) {
-                // dispatch(setUserNameAC(""));
-                // dispatch(setIsLoggedInAC(false));
                 dispatch(authActions.setUserName({ userName: "" }));
                 dispatch(authActions.setIsLoggedIn({ isLoggedIn: false }));
                 dispatch(appActions.setAppStatus({ status: "succeeded" }));
@@ -101,15 +73,11 @@ export const meTC = (): AppThunk => (dispatch) => {
         .me()
         .then((res) => {
             if (res.resultCode === 0) {
-                // dispatch(setUserNameAC(res.data.login));
-                // dispatch(setIsLoggedInAC(true));
-                // dispatch(setIsInitializedAC(true));
                 dispatch(authActions.setUserName({ userName: res.data.login }));
                 dispatch(authActions.setIsLoggedIn({ isLoggedIn: true }));
                 dispatch(authActions.setIsInitialized({ isInitialized: true }));
                 dispatch(appActions.setAppStatus({ status: "succeeded" }));
             } else {
-                // dispatch(setIsInitializedAC(true));
                 dispatch(authActions.setIsInitialized({ isInitialized: true }));
                 handleServerAppError(res, dispatch);
             }

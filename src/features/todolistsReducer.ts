@@ -1,10 +1,9 @@
-import { todolistAPI, TodolistType } from "../api/todolist-api";
-import { Dispatch } from "redux";
+import { todolistAPI, TodolistType } from "api/todolist-api";
 import { FilterType } from "./TodolistsList";
-import { AppActionType, RequestStatusType, setAppStatusAC } from "../app/app-reducer";
-import { handleServerAppError, handleServerNetworkError } from "../utils/error-utils";
+import { handleServerAppError, handleServerNetworkError } from "utils/error-utils";
 import { fetchTasksTC } from "./taskReducer";
-import { ThunkAction } from "redux-thunk";
+import { appActions, RequestStatusType } from "app/app-reducer";
+import { AppThunk } from "app/store";
 
 const InitialState: TodolistDomainType[] = [];
 
@@ -109,14 +108,14 @@ export const removeTodolistAC = (todolistId: string) => {
 };
 
 //thunks
-export const fetchTodolistsTC = () => (dispatch: Dispatch<any>) => {
-    dispatch(setAppStatusAC("loading"));
+export const fetchTodolistsTC = (): AppThunk => (dispatch) => {
+    dispatch(appActions.setAppStatus({ status: "loading" }));
     todolistAPI
         .getTodolists()
         .then((res) => {
             const todolists = res.data;
             dispatch(setTodolistAC(todolists));
-            dispatch(setAppStatusAC("succeeded"));
+            dispatch(appActions.setAppStatus({ status: "succeeded" }));
             return todolists;
         })
         .then((todolists) => {
@@ -129,15 +128,15 @@ export const fetchTodolistsTC = () => (dispatch: Dispatch<any>) => {
         });
 };
 
-export const addTodolistTC = (title: string) => {
-    return (dispatch: Dispatch<TodolistsActionType | AppActionType>) => {
-        dispatch(setAppStatusAC("loading"));
+export const addTodolistTC = (title: string): AppThunk => {
+    return (dispatch) => {
+        dispatch(appActions.setAppStatus({ status: "loading" }));
         todolistAPI
             .createTodolists(title)
             .then((res) => {
                 if (res.data.resultCode === 0) {
                     dispatch(addTodolistAC(res.data.data.item));
-                    dispatch(setAppStatusAC("succeeded"));
+                    dispatch(appActions.setAppStatus({ status: "succeeded" }));
                 } else {
                     handleServerAppError(res.data, dispatch);
                 }
@@ -147,15 +146,15 @@ export const addTodolistTC = (title: string) => {
             });
     };
 };
-export const changeTodolistTitleTC = (id: string, title: string) => {
-    return (dispatch: Dispatch<TodolistsActionType | AppActionType>) => {
-        dispatch(setAppStatusAC("loading"));
+export const changeTodolistTitleTC = (id: string, title: string): AppThunk => {
+    return (dispatch) => {
+        dispatch(appActions.setAppStatus({ status: "loading" }));
         todolistAPI
             .updateTodolist(id, title)
             .then((res) => {
                 if (res.data.resultCode === 0) {
                     dispatch(changeTodolistTitleAC(id, title));
-                    dispatch(setAppStatusAC("succeeded"));
+                    dispatch(appActions.setAppStatus({ status: "succeeded" }));
                 } else {
                     handleServerAppError(res.data, dispatch);
                 }
@@ -165,15 +164,15 @@ export const changeTodolistTitleTC = (id: string, title: string) => {
             });
     };
 };
-export const removeTodolistTC = (todolistId: string) => {
-    return (dispatch: Dispatch<TodolistsActionType | AppActionType>) => {
-        dispatch(setAppStatusAC("loading"));
+export const removeTodolistTC = (todolistId: string): AppThunk => {
+    return (dispatch) => {
+        dispatch(appActions.setAppStatus({ status: "loading" }));
         todolistAPI
             .deleteTodolist(todolistId)
             .then((res) => {
                 if (res.data.resultCode === 0) {
                     dispatch(removeTodolistAC(todolistId));
-                    dispatch(setAppStatusAC("succeeded"));
+                    dispatch(appActions.setAppStatus({ status: "succeeded" }));
                 } else {
                     handleServerAppError(res.data, dispatch);
                 }
