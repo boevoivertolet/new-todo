@@ -1,56 +1,51 @@
-@import '../../common/styles/sass/variables';
+@import "../../common/styles/sass/variables";
 
 .todolist {
-  /* background: #999999; */
-  box-sizing: border-box;
-  //width: max-content;
-  height: max-content;
-  min-width: 360px;
-  min-height: 300px;
-  //border: #612124 1px solid;
-  border-radius: 6px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 15px;
-  margin: 15px;
-
-  .title__block {
-    //max-width: 225px;
-    margin: 15px;
-    font-size: 27px;
-    width: 100%;
+    /* background: #999999; */
+    box-sizing: border-box;
+    //width: max-content;
+    height: max-content;
+    min-width: 360px;
+    min-height: 300px;
+    //border: #612124 1px solid;
+    border-radius: 6px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 500;
-  }
-
-
-  .tasks__block {
-    display: flex;
-    min-height: 200px;
-    width: 100%;
-    margin-bottom: 30px;
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
-
-  }
-
-
-  .btn__block {
-    width: 160px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    margin: 15px;
 
-  }
+    .title__block {
+        //max-width: 225px;
+        margin: 15px;
+        font-size: 27px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 500;
+    }
 
-  .error__message {
-    color: red;
-  }
+    .tasks__block {
+        display: flex;
+        min-height: 200px;
+        width: 100%;
+        margin-bottom: 30px;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
 
+    .btn__block {
+        width: 160px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .error__message {
+        color: red;
+    }
 }

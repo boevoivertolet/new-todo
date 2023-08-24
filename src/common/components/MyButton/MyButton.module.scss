@@ -1,18 +1,16 @@
-@import '../../styles/sass/variables';
-
+@import "../../styles/sass/variables";
 
 .btn {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-sizing: border-box;
-  border: grey 1px solid;
-  border-radius: $borderRadius;
-  background: #16BCD6;
-  color: $textColor;
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    border: grey 1px solid;
+    border-radius: $borderRadius;
+    background: #16bcd6;
+    color: $textColor;
 }
 
 .btn__active {
-  background: transparent;
+    background: transparent;
 }

@@ -1,9 +1,5 @@
-import {
-	TasksStateType,
-	removeAC,
-	tasksReducer
-} from '../features/taskReducer'
-import { addTodolistAC, removeTodolistAC } from '../features/todolistsReducer'
+import { TasksStateType, removeAC, tasksReducer } from "../features/taskReducer";
+import { addTodolistAC, removeTodolistAC } from "../features/todolistsReducer";
 
 // type TaskType = {
 // 	id: string
@@ -15,111 +11,111 @@ import { addTodolistAC, removeTodolistAC } from '../features/todolistsReducer'
 // 	[key: string]: TaskType[]
 // }
 
-let startState: TasksStateType
+let startState: TasksStateType;
 beforeEach(() => {
-	startState = {
-		todolistId1: [
-			{
-				id: '1',
-				title: 'CSS',
-				addedDate: '',
-				completed: false,
-				deadline: '',
-				description: '',
-				order: 0,
-				priority: 0,
-				startDate: '',
-				status: 0,
-				todoListId: ''
-			},
-			{
-				id: '2',
-				title: 'JS',
-				addedDate: '',
-				completed: false,
-				deadline: '',
-				description: '',
-				order: 0,
-				priority: 0,
-				startDate: '',
-				status: 0,
-				todoListId: ''
-			},
-			{
-				id: '3',
-				title: 'React',
-				addedDate: '',
-				completed: false,
-				deadline: '',
-				description: '',
-				order: 0,
-				priority: 0,
-				startDate: '',
-				status: 0,
-				todoListId: ''
-			}
-		],
-		todolistId2: [
-			{
-				id: '1',
-				title: 'bread',
-				addedDate: '',
-				completed: false,
-				deadline: '',
-				description: '',
-				order: 0,
-				priority: 0,
-				startDate: '',
-				status: 0,
-				todoListId: ''
-			},
-			{
-				id: '2',
-				title: 'milk',
-				addedDate: '',
-				completed: false,
-				deadline: '',
-				description: '',
-				order: 0,
-				priority: 0,
-				startDate: '',
-				status: 0,
-				todoListId: ''
-			},
-			{
-				id: '3',
-				title: 'tea',
-				addedDate: '',
-				completed: false,
-				deadline: '',
-				description: '',
-				order: 0,
-				priority: 0,
-				startDate: '',
-				status: 0,
-				todoListId: ''
-			}
-		]
-	}
-})
+    startState = {
+        todolistId1: [
+            {
+                id: "1",
+                title: "CSS",
+                addedDate: "",
+                completed: false,
+                deadline: "",
+                description: "",
+                order: 0,
+                priority: 0,
+                startDate: "",
+                status: 0,
+                todoListId: "",
+            },
+            {
+                id: "2",
+                title: "JS",
+                addedDate: "",
+                completed: false,
+                deadline: "",
+                description: "",
+                order: 0,
+                priority: 0,
+                startDate: "",
+                status: 0,
+                todoListId: "",
+            },
+            {
+                id: "3",
+                title: "React",
+                addedDate: "",
+                completed: false,
+                deadline: "",
+                description: "",
+                order: 0,
+                priority: 0,
+                startDate: "",
+                status: 0,
+                todoListId: "",
+            },
+        ],
+        todolistId2: [
+            {
+                id: "1",
+                title: "bread",
+                addedDate: "",
+                completed: false,
+                deadline: "",
+                description: "",
+                order: 0,
+                priority: 0,
+                startDate: "",
+                status: 0,
+                todoListId: "",
+            },
+            {
+                id: "2",
+                title: "milk",
+                addedDate: "",
+                completed: false,
+                deadline: "",
+                description: "",
+                order: 0,
+                priority: 0,
+                startDate: "",
+                status: 0,
+                todoListId: "",
+            },
+            {
+                id: "3",
+                title: "tea",
+                addedDate: "",
+                completed: false,
+                deadline: "",
+                description: "",
+                order: 0,
+                priority: 0,
+                startDate: "",
+                status: 0,
+                todoListId: "",
+            },
+        ],
+    };
+});
 
-test('correct task should be deleted from correct array', () => {
-	const action = removeAC('todolistId2', '2')
+test("correct task should be deleted from correct array", () => {
+    const action = removeAC("todolistId2", "2");
 
-	const endState = tasksReducer(startState, action)
+    const endState = tasksReducer(startState, action);
 
-	expect(endState).toEqual({
-		todolistId1: [
-			{ id: '1', title: 'CSS', isDone: false },
-			{ id: '2', title: 'JS', isDone: true },
-			{ id: '3', title: 'React', isDone: false }
-		],
-		todolistId2: [
-			{ id: '1', title: 'bread', isDone: false },
-			{ id: '3', title: 'tea', isDone: false }
-		]
-	})
-})
+    expect(endState).toEqual({
+        todolistId1: [
+            { id: "1", title: "CSS", isDone: false },
+            { id: "2", title: "JS", isDone: true },
+            { id: "3", title: "React", isDone: false },
+        ],
+        todolistId2: [
+            { id: "1", title: "bread", isDone: false },
+            { id: "3", title: "tea", isDone: false },
+        ],
+    });
+});
 // test('correct task should be added to correct array', () => {
 // 	const action = addAC('todolistId2', 'juce')
 
@@ -161,13 +157,13 @@ test('correct task should be deleted from correct array', () => {
 // 	expect(keys.length).toBe(3)
 // 	expect(endState[newKey]).toEqual([])
 // })
-test('property with todolistId should be deleted', () => {
-	const action = removeTodolistAC('todolistId2')
+test("property with todolistId should be deleted", () => {
+    const action = removeTodolistAC("todolistId2");
 
-	const endState = tasksReducer(startState, action)
+    const endState = tasksReducer(startState, action);
 
-	const keys = Object.keys(endState)
+    const keys = Object.keys(endState);
 
-	expect(keys.length).toBe(1)
-	expect(endState['todolistId2']).not.toBeDefined()
-})
+    expect(keys.length).toBe(1);
+    expect(endState["todolistId2"]).not.toBeDefined();
+});
