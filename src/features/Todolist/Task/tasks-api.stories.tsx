@@ -2,45 +2,45 @@ import React, { useEffect, useState } from "react";
 import { taskAPI } from "../../../api/task-api";
 
 export default {
-    title: "API",
+	title: "API",
 };
 
 export const GetTasks = () => {
-    const [state, setState] = useState<any>(null);
-    const todolistId = "4380d5b6-88d7-4adc-ac5e-b41a8dfb73a2";
-    useEffect(() => {
-        taskAPI.getTasks(todolistId).then((res) => {
-            setState(res.data.items);
-        });
-    }, []);
+	const [state, setState] = useState<any>(null);
+	const todolistId = "4380d5b6-88d7-4adc-ac5e-b41a8dfb73a2";
+	useEffect(() => {
+		taskAPI.getTasks(todolistId).then((res) => {
+			setState(res.data.items);
+		});
+	}, []);
 
-    return <div>{JSON.stringify(state)}</div>;
+	return <div>{JSON.stringify(state)}</div>;
 };
 export const CreateTask = () => {
-    const [state, setState] = useState<any>(null);
+	const [state, setState] = useState<any>(null);
 
-    useEffect(() => {
-        const todolistId = "4380d5b6-88d7-4adc-ac5e-b41a8dfb73a2";
-        const title = "Create Task another one";
-        taskAPI.createTask(todolistId, title).then((res) => {
-            setState(res.data.data);
-        });
-    }, []);
+	useEffect(() => {
+		const todolistId = "4380d5b6-88d7-4adc-ac5e-b41a8dfb73a2";
+		const title = "Create Task another one";
+		taskAPI.createTask(todolistId, title).then((res) => {
+			setState(res.data.data);
+		});
+	}, []);
 
-    return <div>{JSON.stringify(state)}</div>;
+	return <div>{JSON.stringify(state)}</div>;
 };
 
 export const DeleteTask = () => {
-    const [state, setState] = useState<any>(null);
-    useEffect(() => {
-        const todolistId = "4380d5b6-88d7-4adc-ac5e-b41a8dfb73a2";
-        const taskId = "19f9ff3b-9bc3-498a-96cc-eefce61d67dd";
-        taskAPI.deleteTasks(todolistId, taskId).then((res) => {
-            setState(res.data);
-        });
-    }, []);
+	const [state, setState] = useState<any>(null);
+	useEffect(() => {
+		const todolistId = "4380d5b6-88d7-4adc-ac5e-b41a8dfb73a2";
+		const taskId = "19f9ff3b-9bc3-498a-96cc-eefce61d67dd";
+		taskAPI.deleteTasks(todolistId, taskId).then((res) => {
+			setState(res.data);
+		});
+	}, []);
 
-    return <div>{JSON.stringify(state)}</div>;
+	return <div>{JSON.stringify(state)}</div>;
 };
 
 // export const UpdateTaskTitle = () => {

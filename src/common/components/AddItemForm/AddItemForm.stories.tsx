@@ -4,24 +4,24 @@ import { action } from "@storybook/addon-actions";
 import { AddItemForm } from "./AddItemForm";
 
 const meta: Meta<typeof AddItemForm> = {
-    title: "TODOLISTS/AddItemForm",
-    component: AddItemForm,
+	title: "TODOLISTS/AddItemForm",
+	component: AddItemForm,
 
-    tags: ["autodocs"],
+	tags: ["autodocs"],
 
-    argTypes: {
-        addItem: {
-            description: "Button clicked inside form",
-            action: "clicked",
-        },
-    },
+	argTypes: {
+		addItem: {
+			description: "Button clicked inside form",
+			action: "clicked",
+		},
+	},
 };
 
 export default meta;
 type Story = StoryObj<typeof AddItemForm>;
 
 export const AddItemFormStory: Story = {
-    args: {
-        addItem: action("Button clicked inside form"),
-    },
+	args: {
+		addItem: action("Button clicked inside form"),
+	},
 };

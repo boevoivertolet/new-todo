@@ -1,14 +1,14 @@
 @import "../../styles/sass/variables";
 
 .input {
-    border: none;
-    border-bottom: black 1px solid;
-    background: transparent;
-    outline: none;
+	border: none;
+	border-bottom: black 1px solid;
+	background: transparent;
+	outline: none;
 }
 
 .error {
-    background: transparent;
-    border: none;
-    border-bottom: $textColor 3px solid;
+	background: transparent;
+	border: none;
+	border-bottom: $textColor 3px solid;
 }

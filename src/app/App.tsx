@@ -9,38 +9,38 @@ import { meTC } from "features/Login/auth-reducer";
 import { CircularProgress } from "@mui/material";
 
 function App() {
-    const dispatch = useAppDispatch();
-    const isInitialized = useAppSelector<boolean>((state) => state.auth.isInitialized);
+	const dispatch = useAppDispatch();
+	const isInitialized = useAppSelector<boolean>((state) => state.auth.isInitialized);
 
-    useEffect(() => {
-        dispatch(meTC());
-    }, []);
+	useEffect(() => {
+		dispatch(meTC());
+	}, []);
 
-    if (!isInitialized) {
-        return (
-            <div
-                style={{
-                    position: "fixed",
-                    top: "30%",
-                    textAlign: "center",
-                    width: "100%",
-                }}
-            >
-                <CircularProgress />
-            </div>
-        );
-    }
-    return (
-        <div className={s.app}>
-            <ButtonAppBar />
-            <Routes>
-                <Route path="/" element={<TodolistsList />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/404" element={<h1 style={{ textAlign: "center" }}>404: PAGE NOT FOUND</h1>} />
-                <Route path="*" element={<Navigate to={"/404"} />} />
-            </Routes>
-        </div>
-    );
+	if (!isInitialized) {
+		return (
+			<div
+				style={{
+					position: "fixed",
+					top: "30%",
+					textAlign: "center",
+					width: "100%",
+				}}
+			>
+				<CircularProgress />
+			</div>
+		);
+	}
+	return (
+		<div className={s.app}>
+			<ButtonAppBar />
+			<Routes>
+				<Route path="/" element={<TodolistsList />} />
+				<Route path="/login" element={<Login />} />
+				<Route path="/404" element={<h1 style={{ textAlign: "center" }}>404: PAGE NOT FOUND</h1>} />
+				<Route path="*" element={<Navigate to={"/404"} />} />
+			</Routes>
+		</div>
+	);
 }
 
 export default App;
