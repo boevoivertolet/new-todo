@@ -4,15 +4,18 @@ import { handleServerAppError, handleServerNetworkError } from 'utils/error-util
 import { fetchTasksTC } from './taskReducer';
 import { appActions, RequestStatusType } from 'app/app-reducer';
 import { AppThunk } from 'app/store';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, current, PayloadAction } from '@reduxjs/toolkit';
 
 const slice = createSlice({
     name: 'todolists',
     initialState: [] as TodolistDomainType[],
     reducers: {
         setTodolist: (state, action: PayloadAction<{ todolists: TodolistType[] }>) => {
-            // state = action.payload.todolists.map((tl) => ({ ...tl, filter: 'all', entityStatus: 'idle' }));
-            return action.payload.todolists.map((tl) => ({ ...tl, filter: 'all', entityStatus: 'idle' }));
+            // return action.payload.todolists.map((tl) => ({ ...tl, filter: 'all', entityStatus: 'idle' })); 1st variant
+            console.log(current(state));
+            action.payload.todolists.forEach((tl) => {
+                state.push({ ...tl, filter: 'all', entityStatus: 'idle' });
+            });
         },
         changeFilter: (state, action: PayloadAction<{ todolistId: string; filter: FilterType }>) => {
             const index = state.findIndex((todo) => todo.id === action.payload.todolistId);

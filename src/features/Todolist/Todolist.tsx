@@ -46,7 +46,7 @@ export const Todolist: React.FC<TodolistProps> = React.memo((props) => {
 
     const removeTodolistHandler = useCallback(() => {
         removeTodolist(todolistId);
-        dispatch(todolistActions.changeTodolistEntityStatus({ todolistId, status: 'loading' }));
+        dispatch(todolistActions.changeTodolistEntityStatus({ todolistId, entityStatus: 'loading' }));
     }, [removeTodolist, todolistId]);
     const changeTodolistTitleHandler = useCallback(
         (title: string) => {
@@ -83,7 +83,7 @@ export const Todolist: React.FC<TodolistProps> = React.memo((props) => {
             </div>
 
             <div className={s.tasks__block}>
-                {filteredTasks.map((el) => (
+                {filteredTasks?.map((el) => (
                     <Task
                         task={el}
                         id={el.id}
