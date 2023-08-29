@@ -1,6 +1,5 @@
 import { removeAC, tasksReducer, TasksStateType } from 'features/taskReducer';
 import { todolistActions } from 'features/todolistsReducer';
-// import { removeTodolistAC } from "features/todolistsReducer";
 
 let startState: TasksStateType;
 beforeEach(() => {
