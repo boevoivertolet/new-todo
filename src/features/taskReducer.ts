@@ -10,18 +10,10 @@ const InitialState: TasksStateType = {};
 
 export const _tasksReducer = (state: TasksStateType = InitialState, action: TasksActionType): TasksStateType => {
     switch (action.type) {
-        case 'todolists/set_tasks': {
-            const stateCopy = { ...state };
-            stateCopy[action.payload.todolistId] = action.payload.tasks;
-            return stateCopy;
-        }
-        // case 'tasks/update': {
-        //     return {
-        //         ...state,
-        //         [action.payload.todolistId]: state[action.payload.todolistId].map((t) =>
-        //             t.id === action.payload.taskId ? { ...t, ...action.payload.model } : t,
-        //         ),
-        //     };
+        // case 'todolists/set_tasks': {
+        //     const stateCopy = { ...state };
+        //     stateCopy[action.payload.todolistId] = action.payload.tasks;
+        //     return stateCopy;
         // }
         case 'tasks/change_task_entity_status': {
             return {
@@ -55,17 +47,14 @@ const slice = createSlice({
             state,
             action: PayloadAction<{ todolistId: string; taskId: string; model: UpdateDomainTaskModelType }>,
         ) => {
-            // return {
-            //         ...state,
-            //         [action.payload.todolistId]: state[action.payload.todolistId].map((t) =>
-            //             t.id === action.payload.taskId ? { ...t, ...action.payload.model } : t,
-            //         ),
-            // };
             const taskForTodolist = state[action.payload.todolistId];
             const index = taskForTodolist.findIndex((task) => task.id === action.payload.taskId);
             if (index !== -1) {
                 taskForTodolist[index] = { ...taskForTodolist[index], ...action.payload.model };
             }
+        },
+        setTasks: (state, action: PayloadAction<{ todolistId: string; tasks: TaskType[] }>) => {
+            state[action.payload.todolistId] = action.payload.tasks;
         },
     },
     extraReducers: (builder) => {
@@ -93,15 +82,6 @@ export const changeTaskEntityStatusAC = (todolistId: string, taskId: string, sta
             todolistId,
             taskId,
             status,
-        },
-    } as const;
-};
-export const setTasksAC = (todolistId: string, tasks: TaskType[]) => {
-    return {
-        type: 'todolists/set_tasks',
-        payload: {
-            todolistId,
-            tasks,
         },
     } as const;
 };
