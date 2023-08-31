@@ -4,80 +4,82 @@ import { handleServerAppError, handleServerNetworkError } from 'utils/error-util
 import { appActions, RequestStatusType } from 'app/app-reducer';
 import { createSlice, current, PayloadAction } from '@reduxjs/toolkit';
 import { TodolistType } from 'api/todolist-api';
+import { todolistActions } from 'features/todolistsReducer';
 
 // const InitialState: TasksStateType = {};
 
-// export const tasksReducer = (state: TasksStateType = InitialState, action: TasksActionType): TasksStateType => {
-//     switch (action.type) {
-//         case 'todolists/set_todolists': {
-//             const stateCopy = { ...state };
-//             action.payload.todolists.forEach((tl) => {
-//                 stateCopy[tl.id] = [];
-//             });
-//             return stateCopy;
-//         }
-//         case 'todolists/set_tasks': {
-//             const stateCopy = { ...state };
-//             stateCopy[action.payload.todolistId] = action.payload.tasks;
-//             return stateCopy;
-//         }
-//         case 'tasks/remove': {
-//             return {
-//                 ...state,
-//                 [action.payload.todolistId]: state[action.payload.todolistId].filter((t) => t.id !== action.payload.id),
-//             };
-//         }
-//         case 'todolists/remove_todolist': {
-//             let copyState = { ...state };
-//             delete copyState[action.payload.todolistId];
-//             return copyState;
-//         }
-//         case 'tasks/add': {
-//             return {
-//                 ...state,
-//                 [action.payload.task.todoListId]: [action.payload.task, ...state[action.payload.task.todoListId]],
-//             };
-//         }
-//         case 'tasks/update': {
-//             return {
-//                 ...state,
-//                 [action.payload.todolistId]: state[action.payload.todolistId].map((t) =>
-//                     t.id === action.payload.taskId ? { ...t, ...action.payload.model } : t,
-//                 ),
-//             };
-//         }
-//         case 'todolists/add_todolist': {
-//             return { ...state, [action.payload.todolist.id]: [] };
-//         }
-//         case 'tasks/change_task_entity_status': {
-//             return {
-//                 ...state,
-//                 [action.payload.todolistId]: state[action.payload.todolistId].map((t) =>
-//                     t.id === action.payload.taskId ? { ...t, entityStatus: action.payload.status } : t,
-//                 ),
-//             };
-//         }
-//
-//         default:
-//             return state;
-//     }
-// };
+export const _tasksReducer = (state: TasksStateType = InitialState, action: TasksActionType): TasksStateType => {
+    switch (action.type) {
+        case 'todolists/set_todolists': {
+            const stateCopy = { ...state };
+            action.payload.todolists.forEach((tl) => {
+                stateCopy[tl.id] = [];
+            });
+            return stateCopy;
+        }
+        case 'todolists/set_tasks': {
+            const stateCopy = { ...state };
+            stateCopy[action.payload.todolistId] = action.payload.tasks;
+            return stateCopy;
+        }
+        case 'tasks/remove': {
+            return {
+                ...state,
+                [action.payload.todolistId]: state[action.payload.todolistId].filter((t) => t.id !== action.payload.id),
+            };
+        }
+        case 'todolists/remove_todolist': {
+            let copyState = { ...state };
+            delete copyState[action.payload.todolistId];
+            return copyState;
+        }
+        case 'tasks/add': {
+            return {
+                ...state,
+                [action.payload.task.todoListId]: [action.payload.task, ...state[action.payload.task.todoListId]],
+            };
+        }
+        case 'tasks/update': {
+            return {
+                ...state,
+                [action.payload.todolistId]: state[action.payload.todolistId].map((t) =>
+                    t.id === action.payload.taskId ? { ...t, ...action.payload.model } : t,
+                ),
+            };
+        }
+        case 'todolists/add_todolist': {
+            return { ...state, [action.payload.todolist.id]: [] };
+        }
+        case 'tasks/change_task_entity_status': {
+            return {
+                ...state,
+                [action.payload.todolistId]: state[action.payload.todolistId].map((t) =>
+                    t.id === action.payload.taskId ? { ...t, entityStatus: action.payload.status } : t,
+                ),
+            };
+        }
+
+        default:
+            return state;
+    }
+};
 //actions
 
 const slice = createSlice({
     name: 'tasks',
     initialState: {} as TasksStateType,
-    reducers: {
-        changeTaskEntityStatus: (
-            state,
-            action: PayloadAction<{
-                todolistId: string;
-                taskId: string;
-                status: RequestStatusType;
-            }>,
-        ) => {},
+    reducers: {},
+    extraReducers: (builder) => {
+        builder.addCase(todolistActions.addTodolist, (state, action) => {
+            //code
+            // return { ...state, [action.payload.todolist.id]: [] };
+            state[action.payload.todolist.id] = [];
+        });
     },
 });
+export const tasksReducer = slice.reducer;
+export const tasksActions = slice.actions;
+export type tasksInitialState = ReturnType<typeof slice.getInitialState>;
 
 export const changeTaskEntityStatusAC = (todolistId: string, taskId: string, status: RequestStatusType) => {
     return {

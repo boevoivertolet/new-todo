@@ -1,21 +1,21 @@
-import { AnyAction, combineReducers } from "redux";
-import { tasksReducer } from "features/taskReducer";
-import { ThunkAction, ThunkDispatch } from "redux-thunk";
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import { todolistsReducer } from "features/todolistsReducer";
-import { appReducer } from "./app-reducer";
-import { authReducer } from "features/Login/auth-reducer";
-import { configureStore } from "@reduxjs/toolkit";
-
-const rootReducer = combineReducers({
-	tasks: tasksReducer,
-	todolists: todolistsReducer,
-	app: appReducer,
-	auth: authReducer,
-});
+import { AnyAction, combineReducers } from 'redux';
+import { tasksReducer } from 'features/taskReducer';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import { todolistsReducer } from 'features/todolistsReducer';
+import { appReducer } from './app-reducer';
+import { authReducer } from 'features/Login/auth-reducer';
+import { configureStore } from '@reduxjs/toolkit';
 
 // export const store = createStore(rootReducer, applyMiddleware(thunk)); redux store
-export const store = configureStore({ reducer: rootReducer }); // toolkit store
+export const store = configureStore({
+    reducer: {
+        tasks: tasksReducer,
+        todolists: todolistsReducer,
+        app: appReducer,
+        auth: authReducer,
+    },
+}); // toolkit store
 
 // export type AppRootStateType = ReturnType<typeof rootReducer>; // redux type
 export type AppRootStateType = ReturnType<typeof store.getState>; // toolkit type
