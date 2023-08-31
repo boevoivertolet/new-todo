@@ -6,32 +6,35 @@ import { createSlice, current, PayloadAction } from '@reduxjs/toolkit';
 import { TodolistType } from 'api/todolist-api';
 import { todolistActions } from 'features/todolistsReducer';
 
-// const InitialState: TasksStateType = {};
+const InitialState: TasksStateType = {};
 
 export const _tasksReducer = (state: TasksStateType = InitialState, action: TasksActionType): TasksStateType => {
     switch (action.type) {
-        case 'todolists/set_todolists': {
-            const stateCopy = { ...state };
-            action.payload.todolists.forEach((tl) => {
-                stateCopy[tl.id] = [];
-            });
-            return stateCopy;
-        }
+        // case 'todolists/set_todolists': {
+        //     const stateCopy = { ...state };
+        //     action.payload.todolists.forEach((tl) => {
+        //         stateCopy[tl.id] = [];
+        //     });
+        //     return stateCopy;
+        // }
+        // case 'tasks/remove': {
+        //     return {
+        //         ...state,
+        //         [action.payload.todolistId]: state[action.payload.todolistId].filter((t) => t.id !== action.payload.id),
+        //     };
+        // }
+        // case 'todolists/remove_todolist': {
+        //     let copyState = { ...state };
+        //     delete copyState[action.payload.todolistId];
+        //     return copyState;
+        // }
+        // case 'todolists/add_todolist': {
+        //     return { ...state, [action.payload.todolist.id]: [] };
+        // }
         case 'todolists/set_tasks': {
             const stateCopy = { ...state };
             stateCopy[action.payload.todolistId] = action.payload.tasks;
             return stateCopy;
-        }
-        case 'tasks/remove': {
-            return {
-                ...state,
-                [action.payload.todolistId]: state[action.payload.todolistId].filter((t) => t.id !== action.payload.id),
-            };
-        }
-        case 'todolists/remove_todolist': {
-            let copyState = { ...state };
-            delete copyState[action.payload.todolistId];
-            return copyState;
         }
         case 'tasks/add': {
             return {
@@ -46,9 +49,6 @@ export const _tasksReducer = (state: TasksStateType = InitialState, action: Task
                     t.id === action.payload.taskId ? { ...t, ...action.payload.model } : t,
                 ),
             };
-        }
-        case 'todolists/add_todolist': {
-            return { ...state, [action.payload.todolist.id]: [] };
         }
         case 'tasks/change_task_entity_status': {
             return {
@@ -68,12 +68,24 @@ export const _tasksReducer = (state: TasksStateType = InitialState, action: Task
 const slice = createSlice({
     name: 'tasks',
     initialState: {} as TasksStateType,
-    reducers: {},
+    reducers: {
+        removeTask: (state, action: PayloadAction<{ todolistId: string; id: string }>) => {
+            const taskForTodolist = state[action.payload.todolistId];
+            const index = taskForTodolist.findIndex((task) => task.id === action.payload.id);
+            if (index !== -1) taskForTodolist.splice(index, 1);
+        },
+    },
     extraReducers: (builder) => {
         builder.addCase(todolistActions.addTodolist, (state, action) => {
-            //code
-            // return { ...state, [action.payload.todolist.id]: [] };
             state[action.payload.todolist.id] = [];
+        });
+        builder.addCase(todolistActions.removeTodolist, (state, action) => {
+            delete state[action.payload.todolistId];
+        });
+        builder.addCase(todolistActions.setTodolist, (state, action) => {
+            action.payload.todolists.forEach((tl) => {
+                state[tl.id] = [];
+            });
         });
     },
 });
@@ -100,23 +112,7 @@ export const setTasksAC = (todolistId: string, tasks: TaskType[]) => {
         },
     } as const;
 };
-export const removeAC = (todolistId: string, id: string) => {
-    return {
-        type: 'tasks/remove',
-        payload: {
-            todolistId,
-            id,
-        },
-    } as const;
-};
-export const addAC = (task: TaskType) => {
-    return {
-        type: 'tasks/add',
-        payload: {
-            task,
-        },
-    } as const;
-};
+
 export const updateTaskAC = (todolistId: string, taskId: string, model: UpdateDomainTaskModelType) => {
     return {
         type: 'tasks/update',
