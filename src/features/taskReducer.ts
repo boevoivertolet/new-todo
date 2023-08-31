@@ -6,55 +6,41 @@ import { createSlice, current, PayloadAction } from '@reduxjs/toolkit';
 
 import { todolistActions } from 'features/todolistsReducer';
 
-const InitialState: TasksStateType = {};
-
-export const _tasksReducer = (state: TasksStateType = InitialState, action: TasksActionType): TasksStateType => {
-    switch (action.type) {
-        // case 'todolists/set_tasks': {
-        //     const stateCopy = { ...state };
-        //     stateCopy[action.payload.todolistId] = action.payload.tasks;
-        //     return stateCopy;
-        // }
-        case 'tasks/change_task_entity_status': {
-            return {
-                ...state,
-                [action.payload.todolistId]: state[action.payload.todolistId].map((t) =>
-                    t.id === action.payload.taskId ? { ...t, entityStatus: action.payload.status } : t,
-                ),
-            };
-        }
-
-        default:
-            return state;
-    }
-};
-//actions
-
 const slice = createSlice({
     name: 'tasks',
     initialState: {} as TasksStateType,
     reducers: {
-        removeTask: (state, action: PayloadAction<{ todolistId: string; id: string }>) => {
+        removeTask: (state, action: PayloadAction<{ todolistId: string; taskId: string }>) => {
             const taskForTodolist = state[action.payload.todolistId];
-            const index = taskForTodolist.findIndex((task) => task.id === action.payload.id);
+            const index = taskForTodolist.findIndex((task) => task.id === action.payload.taskId);
             if (index !== -1) taskForTodolist.splice(index, 1);
         },
         addTask: (state, action: PayloadAction<{ task: TaskType }>) => {
-            const tasksForCurrentTodolist = state[action.payload.task.id];
+            const tasksForCurrentTodolist = state[action.payload.task.todoListId];
             tasksForCurrentTodolist.unshift(action.payload.task);
         },
         updateTask: (
             state,
-            action: PayloadAction<{ todolistId: string; taskId: string; model: UpdateDomainTaskModelType }>,
+            action: PayloadAction<{ todolistId: string; taskId: string; domainModel: UpdateDomainTaskModelType }>,
         ) => {
             const taskForTodolist = state[action.payload.todolistId];
             const index = taskForTodolist.findIndex((task) => task.id === action.payload.taskId);
             if (index !== -1) {
-                taskForTodolist[index] = { ...taskForTodolist[index], ...action.payload.model };
+                taskForTodolist[index] = { ...taskForTodolist[index], ...action.payload.domainModel };
             }
         },
         setTasks: (state, action: PayloadAction<{ todolistId: string; tasks: TaskType[] }>) => {
             state[action.payload.todolistId] = action.payload.tasks;
+        },
+        changeTaskEntityStatus: (
+            state,
+            action: PayloadAction<{ todolistId: string; taskId: string; entityStatus: RequestStatusType }>,
+        ) => {
+            const tasksForTodolist = state[action.payload.todolistId];
+            const index = tasksForTodolist.findIndex((todo) => todo.id === action.payload.todolistId);
+            if (index !== -1) {
+                tasksForTodolist[index] = { ...tasksForTodolist[index], entityStatus: action.payload.entityStatus };
+            }
         },
     },
     extraReducers: (builder) => {
@@ -75,16 +61,7 @@ export const tasksReducer = slice.reducer;
 export const tasksActions = slice.actions;
 export type tasksInitialState = ReturnType<typeof slice.getInitialState>;
 
-export const changeTaskEntityStatusAC = (todolistId: string, taskId: string, status: RequestStatusType) => {
-    return {
-        type: 'tasks/change_task_entity_status',
-        payload: {
-            todolistId,
-            taskId,
-            status,
-        },
-    } as const;
-};
+//
 
 //thunks
 export const fetchTasksTC =
@@ -95,7 +72,7 @@ export const fetchTasksTC =
             .getTasks(todolistId)
             .then((res) => {
                 const tasks = res.data.items;
-                dispatch(setTasksAC(todolistId, tasks));
+                dispatch(tasksActions.setTasks({ todolistId, tasks }));
                 dispatch(appActions.setAppStatus({ status: 'succeeded' }));
             })
 
@@ -106,13 +83,14 @@ export const fetchTasksTC =
 export const addTasksTC =
     (todolistId: string, title: string): AppThunk =>
     (dispatch) => {
+        console.log(title);
         dispatch(appActions.setAppStatus({ status: 'loading' }));
         taskAPI
             .createTask(todolistId, title)
             .then((res) => {
                 if (res.data.resultCode === 0) {
                     const task = res.data.data.item;
-                    dispatch(addAC(task));
+                    dispatch(tasksActions.addTask({ task }));
                     dispatch(appActions.setAppStatus({ status: 'succeeded' }));
                 } else {
                     handleServerAppError(res.data, dispatch);
@@ -131,8 +109,8 @@ export const removeTaskTC =
             .deleteTasks(todolistId, taskId)
             .then((res) => {
                 if (res.data.resultCode === 0) {
-                    dispatch(changeTaskEntityStatusAC(todolistId, taskId, 'loading'));
-                    dispatch(removeAC(todolistId, taskId));
+                    dispatch(tasksActions.changeTaskEntityStatus({ todolistId, taskId, entityStatus: 'loading' }));
+                    dispatch(tasksActions.removeTask({ todolistId, taskId }));
                     dispatch(appActions.setAppStatus({ status: 'succeeded' }));
                 } else {
                     handleServerAppError(res.data, dispatch);
@@ -145,7 +123,7 @@ export const removeTaskTC =
 export const updateTaskTC =
     (todolistId: string, taskId: string, domainModel: UpdateDomainTaskModelType): AppThunk =>
     (dispatch, getState: () => AppRootStateType) => {
-        dispatch(changeTaskEntityStatusAC(todolistId, taskId, 'loading'));
+        dispatch(tasksActions.changeTaskEntityStatus({ todolistId, taskId, entityStatus: 'loading' }));
         const state = getState();
         const task = state.tasks[todolistId].find((t) => t.id === taskId);
         if (!task) {
@@ -167,9 +145,9 @@ export const updateTaskTC =
             .updateTask(todolistId, taskId, apiModel)
             .then((res) => {
                 if (res.data.resultCode === 0) {
-                    dispatch(updateTaskAC(todolistId, taskId, domainModel));
+                    dispatch(tasksActions.updateTask({ todolistId, taskId, domainModel }));
                     dispatch(appActions.setAppStatus({ status: 'succeeded' }));
-                    dispatch(changeTaskEntityStatusAC(todolistId, taskId, 'succeeded'));
+                    dispatch(tasksActions.changeTaskEntityStatus({ todolistId, taskId, entityStatus: 'succeeded' }));
                 } else {
                     handleServerAppError(res.data, dispatch);
                 }
@@ -179,15 +157,6 @@ export const updateTaskTC =
             });
     };
 //types
-export type TasksActionType =
-    | ReturnType<typeof removeAC>
-    | ReturnType<typeof addAC>
-    | ReturnType<typeof updateTaskAC>
-    // | ReturnType<typeof addTodolistAC>
-    // | ReturnType<typeof removeTodolistAC>
-    // | ReturnType<typeof setTodolistAC>
-    | ReturnType<typeof setTasksAC>
-    | ReturnType<typeof changeTaskEntityStatusAC>;
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>;

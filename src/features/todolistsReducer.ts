@@ -11,7 +11,6 @@ const slice = createSlice({
     initialState: [] as TodolistDomainType[],
     reducers: {
         setTodolist: (state, action: PayloadAction<{ todolists: TodolistType[] }>) => {
-            console.log(current(state));
             action.payload.todolists.forEach((tl) => {
                 state.push({ ...tl, filter: 'all', entityStatus: 'idle' });
             });
