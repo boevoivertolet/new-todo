@@ -2,8 +2,8 @@ import React, { useCallback, useEffect } from 'react';
 import s from '../app/App.module.scss';
 import { AddItemForm } from 'common/components/AddItemForm/AddItemForm';
 import { Todolist } from './Todolist/Todolist';
-import { useAppDispatch, useAppSelector } from 'app/store';
-import { addTasksTC, removeTaskTC, TasksStateType, updateTaskTC } from './taskReducer';
+import { useAppDispatch } from 'app/store';
+import { addTasksTC, removeTaskTC, updateTaskTC } from './taskReducer';
 import {
     addTodolistTC,
     changeTodolistTitleTC,
@@ -14,12 +14,17 @@ import {
 } from './todolistsReducer';
 import { TaskStatuses } from 'api/task-api';
 import { Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectIsLoggedIn, selectTasks, selectTodolists } from 'features/Login/auth.selectors';
 
 export const TodolistsList = () => {
     const dispatch = useAppDispatch();
-    const tasks = useAppSelector<TasksStateType>((state) => state.tasks);
-    const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
-    const todolists = useAppSelector<TodolistDomainType[]>((state) => state.todolists);
+    // const tasks = useAppSelector<TasksStateType>((state) => state.tasks);
+    const tasks = useSelector(selectTasks);
+    // const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
+    const isLoggedIn = useSelector(selectIsLoggedIn);
+    // const todolists = useAppSelector<TodolistDomainType[]>((state) => state.todolists);
+    const todolists = useSelector(selectTodolists);
 
     // Tasks
     const removeTask = useCallback((todolistId: string, id: string) => {

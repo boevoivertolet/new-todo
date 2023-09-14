@@ -37,6 +37,7 @@ const slice = createSlice({
             const index = state.findIndex((todo) => todo.id === action.payload.todolistId);
             if (index !== -1) state.splice(index, 1);
         },
+        clearData: (state, action: PayloadAction) => {},
     },
 });
 export const todolistsReducer = slice.reducer;

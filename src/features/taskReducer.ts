@@ -83,7 +83,6 @@ export const fetchTasksTC =
 export const addTasksTC =
     (todolistId: string, title: string): AppThunk =>
     (dispatch) => {
-        console.log(title);
         dispatch(appActions.setAppStatus({ status: 'loading' }));
         taskAPI
             .createTask(todolistId, title)

@@ -7,7 +7,6 @@ import { ButtonGroup, Paper } from '@mui/material';
 import { Task } from './Task/Task';
 import { TaskStatuses, TaskType } from 'api/task-api';
 import { useAppDispatch } from 'app/store';
-
 import { FilterType } from '../TodolistsList';
 import { RequestStatusType } from 'app/app-reducer';
 import IconButton from '@mui/material/IconButton';
@@ -16,7 +15,6 @@ import { todolistActions } from 'features/todolistsReducer';
 
 export const Todolist: React.FC<TodolistProps> = React.memo((props) => {
     const dispatch = useAppDispatch();
-    console.log('Todolist called');
     const {
         entityStatus,
         title,
